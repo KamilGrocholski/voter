@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+    // Further reading: 
+    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    url      = env("DATABASE_URL")
+}
+
+model Example {
+    id String @id @default(cuid())
+}
+
+// Necessary for Next auth
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? // @db.Text
+    access_token      String? // @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? // @db.Text
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+    id               String           @id @default(cuid())
+    role             String           @default("base")
+    name             String?
+    email            String?          @unique
+    emailVerified    DateTime?
+    image            String?
+    accounts         Account[]
+    sessions         Session[]
+    votes            Vote[]
+    voteSets         VoteSet[]
+    likedVoteSets    VoteSetLike[]
+    dislikedVoteSets VoteSetDislike[]
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
+
+model VoteSetLike {
+    id String @id @default(cuid())
+
+    userId  String
+    likedBy User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    voteSetId String
+    voteSet   VoteSet @relation(fields: [voteSetId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@index([userId, voteSetId])
+}
+
+model VoteSetDislike {
+    id String @id @default(cuid())
+
+    userId     String
+    dislikedBy User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    voteSetId String
+    voteSet   VoteSet @relation(fields: [voteSetId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@index([userId, voteSetId])
+}
+
+model VoteSet {
+    id          String  @id @default(cuid())
+    name        String  @unique
+    image       String
+    isPublished Boolean @default(false)
+
+    voteItems VoteItem[]
+    likes     VoteSetLike[]
+    dislikes  VoteSetDislike[]
+
+    ownerId String
+    owner   User   @relation(fields: [ownerId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([id])
+    @@index([name])
+}
+
+model VoteItem {
+    id    String @id @default(cuid())
+    name  String
+    image String
+
+    votesFor     Vote[] @relation("votesFor")
+    votesAgainst Vote[] @relation("votesAgainst")
+
+    voteSet   VoteSet @relation(fields: [voteSetId], references: [id], onDelete: Cascade)
+    voteSetId String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([id])
+    @@index([voteSetId])
+}
+
+model Vote {
+    id String @id @default(cuid())
+
+    votedForId     String
+    votedFor       VoteItem @relation(name: "votesFor", fields: [votedForId], references: [id])
+    votedAgainstId String
+    votedAgainst   VoteItem @relation(name: "votesAgainst", fields: [votedAgainstId], references: [id])
+    voterId        String?
+    voter          User?    @relation(fields: [voterId], references: [id])
+
+    createdAt DateTime @default(now())
+
+    @@index([votedForId])
+    @@index([votedAgainstId])
+}
