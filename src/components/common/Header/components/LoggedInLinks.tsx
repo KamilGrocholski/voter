@@ -21,6 +21,10 @@ const COMMON_LOGGED_IN_LINKS: Link[] = [
         label: 'Home',
         href: '/'
     },
+    {
+        label: 'Vote sets',
+        href: '/vote-sets'
+    }
 ]
 
 const ROLE_BASED_LINKS: RoleBasedLinks = {

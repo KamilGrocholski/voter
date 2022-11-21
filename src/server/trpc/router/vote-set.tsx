@@ -1,6 +1,6 @@
 import { router, publicProcedure, protectedProcedure } from "../trpc"
 import { voteSetSchema } from "../schemas/voteSetSchema"
-import { z } from "zod"
+import { voteSetSchemaBase } from '../schemas/voteSetSchema'
 import { isVoteSetOwner } from "../../utils/isVoteSetOwner"
 
 export const voteSetRouter = router({
@@ -48,11 +48,8 @@ export const voteSetRouter = router({
         }),
 
     getOneById: publicProcedure
-        .input(z.object({
-            voteSetId: z.string().cuid()
-        }))
-        .query(({ ctx, input }) => {
-            const { voteSetId } = input
+        .input(voteSetSchemaBase.id)
+        .query(({ ctx, input: voteSetId }) => {
 
             return ctx.prisma.voteSet.findFirst({
                 where: {
@@ -147,5 +144,57 @@ export const voteSetRouter = router({
                     id: voteSetId
                 }
             })
-        })
+        }),
+
+    pagination: publicProcedure
+        .input(voteSetSchema.pagination)
+        .query(({ ctx, input }) => {
+            const { cursor, take } = input
+
+            return ctx.prisma.voteSet.findMany({
+                where: {
+                    isPublished: true   
+                },
+                // take,
+                // cursor: {
+                    // id: cursor
+                // },
+                select: {
+                    id: true,
+                    image: true,
+                    name: true,
+                    updatedAt: true,
+                    createdAt: true,
+                    owner: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true
+                        }
+                    },
+                    _count: {
+                        select: {
+                            likes: true,
+                            dislikes: true,
+                            voteItems: true
+                        }
+                    },
+                    voteItems: {
+                        select: {
+                            id: true,
+                            image: true,
+                            name: true,
+                            createdAt: true,
+                            updatedAt: true,
+                            _count: {
+                                select: {
+                                    votesAgainst: true,
+                                    votesFor: true
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }),
 })

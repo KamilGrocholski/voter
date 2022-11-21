@@ -1,9 +1,10 @@
+import { VoteItem } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { Context } from '../trpc/context';
 
 export const isVoteItemOwner = async (
   ctx: Context,
-  voteItemId: string
+  voteItemId: VoteItem['id']
 ) => {
   const voteItem = await ctx.prisma.voteItem.findUnique({
     where: {

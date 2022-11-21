@@ -7,3 +7,5 @@ export type AllVoteSetsByUserIdProtected = GetInferenceHelpers<typeof voteSetRou
 export type VoteSetByIdPublic = NonNullable<GetInferenceHelpers<typeof voteSetRouter>['getOneById']['output']>
 
 export type VoteItemPair = GetInferenceHelpers<typeof voteItemRouter>['getPair']['output']
+
+export type VotesSetsPagination = GetInferenceHelpers<typeof voteSetRouter>['pagination']['output']

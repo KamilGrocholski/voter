@@ -1,21 +1,25 @@
 import { z } from "zod"
-import { base as voteItemSchema } from './voteItemSchema'
-import { base as voteSetSchema } from './voteSetSchema'
-import { base as userSchema } from './userSchema'
+import { voteItemSchemaBase } from './voteItemSchema'
+import { voteSetSchemaBase } from './voteSetSchema'
+import { userSchemaBase } from './userSchema'
 
 export type CastVoteSchema = z.infer<typeof voteSchema.create>
 
 const base = {
     id: z.string().cuid(),
-    votedForId: voteItemSchema.id,
-    votedAgainstId: voteItemSchema.id,
-    voterId: userSchema.id
+    votedForId: voteItemSchemaBase.id,
+    votedAgainstId: voteItemSchemaBase.id,
+    voterId: userSchemaBase.id
 }
 
 export const voteSchema = {
     create: z.object({
         votedForId: base.votedForId,
         votedAgainstId: base.votedAgainstId,
-        voteSetId: voteSetSchema.id
+        voteSetId: voteSetSchemaBase.id
     })
+}
+
+export {
+    base as voteSchemaBase
 }

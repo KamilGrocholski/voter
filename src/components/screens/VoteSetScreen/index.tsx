@@ -1,3 +1,4 @@
+import { VoteItem } from "@prisma/client"
 import { useRouter } from "next/router"
 import MainLayout from "../../../layouts/MainLayout"
 import { trpc } from "../../../utils/trpc"
@@ -7,8 +8,8 @@ import ItemsList from "./components/ItemsList"
 
 const VoteSetScreen: React.FC = () => {
     const router = useRouter()
-    const { voteSetId } = router.query as { voteSetId: string }
-    const voteSet = trpc.voteSet.getOneById.useQuery({ voteSetId })
+    const { voteSetId } = router.query as { voteSetId: VoteItem['id'] }
+    const voteSet = trpc.voteSet.getOneById.useQuery(voteSetId)
 
     return (
         <MainLayout useContainer={false}>

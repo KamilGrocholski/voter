@@ -1,5 +1,9 @@
 import { z } from 'zod'
 
-export const base = {
+const base = {
     id: z.string().cuid()
+}
+
+export {
+    base as userSchemaBase
 }

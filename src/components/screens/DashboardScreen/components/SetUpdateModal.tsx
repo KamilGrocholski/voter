@@ -1,6 +1,8 @@
+import { Switch } from "@headlessui/react"
 import React, { useState } from "react"
 import { AllVoteSetsByUserIdProtected } from "../../../../types/trpcOutputTypes"
 import { trpc } from "../../../../utils/trpc"
+import { FormGroup } from "../../../common/Form"
 import { Modal, ModalActions } from "../../../common/Modal"
 
 interface Props {
@@ -25,7 +27,8 @@ const SetUpdateModal: React.FC<Props> = ({
         }
     })
 
-    const handleUpdateSet = () => {
+    const handleUpdateSet = (e: React.FormEvent) => {
+        e.preventDefault()
         updateSet({ ...updated, voteSetId: voteSet.id })
     }
 
@@ -48,19 +51,54 @@ const SetUpdateModal: React.FC<Props> = ({
             title='Update the vote set'
             description=''
         >
-            <div className='flex flex-col space-y-3'>
-                <div>Name: { updated.name }</div>
-                <div>Image: { updated.image }</div>
-                <div>
-                    <div>Is published: { updated.isPublished ? 'YES' : 'NO'}</div>
-                    <button onClick={ handleIsPublished }>Toggle publish</button>
-                </div>
-            </div>
-
-            <ModalActions>
-                <button onClick={ handleUpdateSet }>Confirm</button>
-                <button onClick={ close }>Cancel</button>
-            </ModalActions>
+            <form onSubmit={handleUpdateSet}>
+                <FormGroup 
+                    label='Name'
+                    name='vote-set-name'
+                >
+                    <input 
+                        id='vote-set-name'
+                        value={updated.name}
+                        onChange={handleName}
+                        className='text-black'
+                    />
+                </FormGroup>
+                <FormGroup 
+                    label='Image'
+                    name='vote-set-image'
+                    >
+                    <input 
+                        id='vote-set-image'
+                        value={updated.image}
+                        onChange={handleImage}
+                        className='text-black'
+                    />
+                </FormGroup>
+                <FormGroup
+                    label='Published'
+                    name='vote-set-published'
+                >
+                    <Switch
+                        checked={updated.isPublished}
+                        onChange={handleIsPublished}
+                        className={`${
+                            updated.isPublished ? 'bg-green-500' : 'bg-red-500'
+                        } relative inline-flex h-6 w-11 items-center rounded-full`}
+                    >
+                        <span className="sr-only">Enable notifications</span>
+                        <span
+                            className={`${
+                            updated.isPublished ? 'translate-x-6' : 'translate-x-1'
+                            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                        />
+                    </Switch>
+                </FormGroup>
+                
+                <ModalActions>
+                    <button type='submit'>Confirm</button>
+                    <button onClick={ close }>Cancel</button>
+                </ModalActions>
+            </form>
         </Modal>
     )
 }

@@ -3,7 +3,7 @@ import { voteItemSchema } from "./voteItemSchema";
 
 export type VoteSetSchemaUpdate = z.infer<typeof voteSetSchema.update>
 
-export const base = {
+const base = {
     id: z.string().cuid(),
     name: z.string().min(5),
     image: z.string().url(),
@@ -14,7 +14,7 @@ export const voteSetSchema = {
     create: z.object({
         name: base.name,
         image: base.image,
-        items: voteItemSchema.create
+        items: z.array(voteItemSchema.create)
     }),
     update: z.object({
         voteSetId: base.id,
@@ -24,5 +24,13 @@ export const voteSetSchema = {
     }),
     delete: z.object({
         voteSetId: base.id
+    }),
+    pagination: z.object({
+        take: z.number().min(1).max(100).optional(),
+        cursor: z.optional(base.id)
     })
+}
+
+export {
+    base as voteSetSchemaBase
 }

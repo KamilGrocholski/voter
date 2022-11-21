@@ -1,3 +1,3 @@
 export const parseDate = (date: Date) => {
-    return date.toLocaleString()
+    return date.toLocaleString().split(',')[0]
 }

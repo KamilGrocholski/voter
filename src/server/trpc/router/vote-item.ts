@@ -1,16 +1,13 @@
 import { router, publicProcedure, protectedProcedure } from "../trpc"
-import { z } from "zod"
 import getTwoDifferentRandomInts from "../../../utils/getTwoDifferentRandomInts"
 import { voteItemSchema } from "../schemas/voteItemSchema"
+import { voteSetSchemaBase } from '../schemas/voteSetSchema'
 import { isVoteItemOwner } from "../../utils/isVoteItemOwner"
 
 export const voteItemRouter = router({
     getPair: publicProcedure
-        .input(z.object({
-            voteSetId: z.string().cuid()
-        }))
-        .query(async ({ ctx, input }) => {
-            const { voteSetId } = input
+        .input(voteSetSchemaBase.id)
+        .query(async ({ ctx, input: voteSetId }) => {
 
             const foundItems = await ctx.prisma.voteItem.findMany({
                 where: {
@@ -50,7 +47,6 @@ export const voteItemRouter = router({
                 }
             })
         }),
-    
 
     delete: protectedProcedure
         .input(voteItemSchema.delete)

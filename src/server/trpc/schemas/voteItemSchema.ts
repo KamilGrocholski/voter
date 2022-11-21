@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const base = {
+const base = {
     id: z.string().cuid(),
     name: z.string().min(1),
     image: z.string().url()
@@ -19,4 +19,8 @@ export const voteItemSchema = {
     delete: z.object({
         voteItemId: base.id
     })
+}
+
+export {
+    base as voteItemSchemaBase
 }
