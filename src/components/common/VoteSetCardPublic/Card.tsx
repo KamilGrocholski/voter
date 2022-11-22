@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import React from 'react'
-import placeholder from '../../../../assets/placeholders/dashboard-card-placeholder.jpg'
+import placeholder from '../../../assets/placeholders/dashboard-card-placeholder.jpg'
 import Image from 'next/image'
-import { VotesSetsPagination } from '../../../../types/trpcOutputTypes'
-import { parseDate } from '../../../../utils/parseDate'
-import { sumSetVotes } from '../../../../utils/sumVotes'
+import { VotesSetsPagination } from '../../../types/trpcOutputTypes'
+import { parseDate } from '../../../utils/parseDate'
+import { sumSetVotes } from '../../../utils/sumVotes'
 import { useRouter } from 'next/router'
-import { RepIcons } from '../../../../assets/placeholders/repIcons'
+import { RepIcons } from '../../../assets/placeholders/repIcons'
+import { trpc } from '../../../utils/trpc'
+import { VoteSet } from '@prisma/client'
 
 const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
 
@@ -23,7 +25,7 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
                         layout='responsive'
                     />
                     <div className='absolute top-0 bottom-0 left-0 right-0 p-3'>
-                        <div className='h-[85%]'>
+                        <div className='h-[85%] flex flex-col space-y-1'>
                             <Name 
                                 name={props.name}
                             />
@@ -47,6 +49,7 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
                             <LikesDislikes 
                                 likes={props._count.likes}
                                 dislikes={props._count.dislikes}
+                                voteSetId={props.id}
                             />
                         </div>
                     </div>
@@ -104,21 +107,47 @@ const Timestamps: React.FC<{
 
 const LikesDislikes: React.FC<{
     likes: number
-    dislikes: number
+    dislikes: number,
+    voteSetId: VoteSet['id']
 }> = ({
     likes,
-    dislikes
+    dislikes,
+    voteSetId
 }) => {
+    const utils = trpc.useContext()
+
+    const { mutate: likeDislike, isLoading } = trpc.voteSet.likeDislike.useMutation({
+        onSuccess: () => utils.voteSet.pagination.invalidate()
+    })
+
+    const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        likeDislike({ action: 'like', voteSetId })
+    }
+
+    const handleDislike = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        likeDislike({ action: 'dislike', voteSetId })
+    }
+
     return (
         <div className='flex flex-row space-x-3'>
-            <div className='flex flex-row space-x-1'>
+            <button 
+                onClick={handleLike}
+                disabled={isLoading}
+                className='flex flex-row space-x-1'
+            >
                 <div className='text-green-500'>{RepIcons.like}</div>
                 <div>{likes}</div>
-            </div>
-            <div className='flex flex-row space-x-1'>
+            </button>
+            <button 
+                onClick={handleDislike}
+                disabled={isLoading}
+                className='flex flex-row space-x-1'
+            >
                 <div className='text-red-500'>{RepIcons.dislike}</div>
                 <div>{dislikes}</div>
-            </div>
+            </button>
         </div>
     )
 }

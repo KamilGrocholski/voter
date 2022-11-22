@@ -1,6 +1,6 @@
 import React from 'react'
-import { VotesSetsPagination } from '../../../../types/trpcOutputTypes'
-import VoteSetCard from './VoteSetCard'
+import { VotesSetsPagination } from '../../../types/trpcOutputTypes'
+import VoteSetCard from './Card'
 
 interface Props {
     votesSets: VotesSetsPagination

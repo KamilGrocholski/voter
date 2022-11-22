@@ -20,7 +20,7 @@ const AccountMenu = () => {
     )
 
     return (
-        <div>
+        <div className='flex flex-row space-x-3'>
             <Link href='/profile'>
                 Profile
             </Link> 

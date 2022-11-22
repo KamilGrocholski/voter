@@ -2,8 +2,31 @@ import { router, publicProcedure, protectedProcedure } from "../trpc"
 import { voteSetSchema } from "../schemas/voteSetSchema"
 import { voteSetSchemaBase } from '../schemas/voteSetSchema'
 import { isVoteSetOwner } from "../../utils/isVoteSetOwner"
+import { TRPCError } from "@trpc/server"
+import { createDateFromNow } from "../../utils/createDateFromNow"
+import { voteSetSelects } from "../../utils/selects/voteSetSelect"
 
 export const voteSetRouter = router({
+    getRecentlyPopular: publicProcedure
+        .query(({ ctx }) => {
+            return ctx.prisma.voteSet.findMany({
+                where: {
+                    isPublished: true,
+                    createdAt: {
+                        gte: createDateFromNow('past', {
+                            week: 2
+                        })
+                    }
+                },
+                orderBy: {
+                    likes: {
+                        _count: 'desc'
+                    }
+                },
+                select: voteSetSelects.publicMainSelect
+            })
+        }),
+
     getAllByUserIdProtected: protectedProcedure
         .query(({ ctx }) => {
             return ctx.prisma.voteSet.findMany({
@@ -58,42 +81,7 @@ export const voteSetRouter = router({
                         isPublished: true
                     }
                 },
-                select: {
-                    id: true,
-                    image: true,
-                    name: true,
-                    updatedAt: true,
-                    createdAt: true,
-                    owner: {
-                        select: {
-                            id: true,
-                            name: true,
-                            image: true
-                        }
-                    },
-                    _count: {
-                        select: {
-                            likes: true,
-                            dislikes: true,
-                            voteItems: true
-                        }
-                    },
-                    voteItems: {
-                        select: {
-                            id: true,
-                            image: true,
-                            name: true,
-                            createdAt: true,
-                            updatedAt: true,
-                            _count: {
-                                select: {
-                                    votesAgainst: true,
-                                    votesFor: true
-                                }
-                            }
-                        }
-                    }
-                }
+                select: voteSetSelects.publicMainSelect
             })
         }),
 
@@ -116,9 +104,26 @@ export const voteSetRouter = router({
 
     update: protectedProcedure
         .input(voteSetSchema.update)
-        .mutation(({ ctx, input }) => {
+        .mutation(async ({ ctx, input }) => {
             const { name, image, isPublished, voteSetId } = input 
             isVoteSetOwner(ctx, voteSetId)
+
+            const itemsCounter = await ctx.prisma.voteSet.findUnique({
+                where: {
+                    id: voteSetId
+                },
+                select: {
+                    _count: {
+                        select: {
+                            voteItems: true
+                        }
+                    }
+                }
+            }) 
+
+            if (!itemsCounter || itemsCounter._count.voteItems < 2) {
+                throw new TRPCError({ code: 'FORBIDDEN' })
+            }
 
             return ctx.prisma.voteSet.update({
                 where: {
@@ -159,42 +164,94 @@ export const voteSetRouter = router({
                 // cursor: {
                     // id: cursor
                 // },
-                select: {
-                    id: true,
-                    image: true,
-                    name: true,
-                    updatedAt: true,
-                    createdAt: true,
-                    owner: {
-                        select: {
-                            id: true,
-                            name: true,
-                            image: true
-                        }
-                    },
-                    _count: {
-                        select: {
-                            likes: true,
-                            dislikes: true,
-                            voteItems: true
-                        }
-                    },
-                    voteItems: {
-                        select: {
-                            id: true,
-                            image: true,
-                            name: true,
-                            createdAt: true,
-                            updatedAt: true,
-                            _count: {
-                                select: {
-                                    votesAgainst: true,
-                                    votesFor: true
-                                }
-                            }
-                        }
-                    }
-                }
+                select: voteSetSelects.publicMainSelect
             })
         }),
+
+        likeDislike: protectedProcedure
+            .input(voteSetSchema.likeDislike)
+            .mutation(async ({ ctx, input }) => {
+                const { voteSetId, action } = input
+                const userId = ctx.session.user.id 
+
+                const foundVoteSet = await ctx.prisma.voteSet.findUnique({
+                    where: {
+                        id: voteSetId
+                    }
+                }) 
+
+                if (foundVoteSet?.ownerId === userId) {
+                    throw new TRPCError({ code: 'FORBIDDEN' })
+                } 
+
+                const foundLike = await ctx.prisma.voteSetLike.findFirst({
+                    where: {
+                        AND: {
+                            userId,
+                            voteSetId
+                        }
+                    }
+                })
+
+                const foundDislike = await ctx.prisma.voteSetDislike.findFirst({
+                    where: {
+                        AND: {
+                            userId,
+                            voteSetId
+                        }
+                    }
+                })
+
+                if (action === 'like') {
+
+                    if (!foundLike && !foundDislike) {
+                        return ctx.prisma.voteSetLike.create({
+                            data: {
+                                voteSetId,
+                                userId
+                            }
+                        })
+                    }
+
+                    if (!foundLike && foundDislike) {
+                        await ctx.prisma.voteSetDislike.delete({
+                            where: {
+                                id: foundDislike.id
+                            }
+                        })
+                        return ctx.prisma.voteSetLike.create({
+                            data: {
+                                voteSetId,
+                                userId
+                            }
+                        })
+                    }
+                }
+
+                else if (action === 'dislike') {
+                    if (!foundLike && !foundDislike) {
+                        return ctx.prisma.voteSetDislike.create({
+                            data: {
+                                voteSetId,
+                                userId
+                            }
+                        })
+                    }
+
+                    if (foundLike && !foundDislike) {
+                        await ctx.prisma.voteSetLike.delete({
+                            where: {
+                                id: foundLike.id
+                            }
+                        })
+                        return ctx.prisma.voteSetDislike.create({
+                            data: {
+                                voteSetId,
+                                userId
+                            }
+                        })
+                    }
+                }
+            }),
 })
+

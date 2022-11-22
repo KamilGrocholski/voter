@@ -28,6 +28,10 @@ export const voteSetSchema = {
     pagination: z.object({
         take: z.number().min(1).max(100).optional(),
         cursor: z.optional(base.id)
+    }),
+    likeDislike: z.object({
+        voteSetId: base.id,
+        action: z.enum(['like', 'dislike'])
     })
 }
 

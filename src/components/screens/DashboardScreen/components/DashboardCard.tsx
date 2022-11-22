@@ -7,7 +7,7 @@ import { parseDate } from '../../../../utils/parseDate'
 import React, { useState } from 'react'
 import SetDeletionModal from './SetDeletionModal'
 import SetUpdateModal from './SetUpdateModal'
-
+import { RepIcons } from '../../../../assets/repIcons'
 
 const DashboardCard: React.FC<AllVoteSetsByUserIdProtected[number]> = (props) => {
     const [isOpenDeletion, setIsOpenDeletion] = useState<boolean>(false)
@@ -44,8 +44,10 @@ const DashboardCard: React.FC<AllVoteSetsByUserIdProtected[number]> = (props) =>
                         layout='responsive'
                     />
                     <div className='absolute top-0 bottom-0 left-0 right-0 p-3'>
-                        <button className='border px-3 text-gray-500' onClick={ handleOpenUpdate }>EDIT</button>
-                        <button className='border px-3 text-red-500' onClick={ handleOpenDeletion }>DELETE</button>
+                        <div className='flex flex-row space-x-3 justify-end'>
+                            <button className='text-yellow-500' onClick={ handleOpenUpdate }>{RepIcons.edit}</button>
+                            <button className='text-red-500' onClick={ handleOpenDeletion }>{RepIcons.delete}</button>
+                        </div>
                         <p>{ props.name }</p>
                         <div>
                             <div>Likes: { props._count.likes }</div>
@@ -55,7 +57,7 @@ const DashboardCard: React.FC<AllVoteSetsByUserIdProtected[number]> = (props) =>
                             <div>Created at: { parseDate(props.createdAt) }</div>
                             <div>Updated at: { parseDate(props.updatedAt) }</div>
                         </div>
-                        <div className={ `${ props.isPublished ? 'bg-green-900/20 border-green-900' : 'bg-red-900/20 border-red-900' } border` }>
+                        <div className={ `${ props.isPublished ? 'bg-green-900/20 border-green-900' : 'bg-red-900/20 border-red-900' } border px-2` }>
                             { props.isPublished ? 'Published' : 'Not published' }
                         </div>
                     </div>

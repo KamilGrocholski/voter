@@ -4,7 +4,7 @@ import MainLayout from "../../../layouts/MainLayout"
 import { VotesSetsPagination } from "../../../types/trpcOutputTypes"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../../common/EmptyStateWrapper"
-import VotesSetsList from "./components/VotesSetsList"
+import VotesSetsList from "../../common/VoteSetCardPublic/List"
 
 const VotesSetsPaginationScreen: React.FC = () => {
     const [currentCursor, setCurrontCursor] = useState<VoteSet['id'] | undefined>(undefined)

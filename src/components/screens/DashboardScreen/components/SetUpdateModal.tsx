@@ -77,6 +77,7 @@ const SetUpdateModal: React.FC<Props> = ({
                 <FormGroup
                     label='Published'
                     name='vote-set-published'
+                    error={voteSet._count.voteItems < 2 ? 'Must have at least 2 items to bo published' : undefined}
                 >
                     <Switch
                         checked={updated.isPublished}
@@ -84,6 +85,7 @@ const SetUpdateModal: React.FC<Props> = ({
                         className={`${
                             updated.isPublished ? 'bg-green-500' : 'bg-red-500'
                         } relative inline-flex h-6 w-11 items-center rounded-full`}
+                        disabled={voteSet._count.voteItems < 2}
                     >
                         <span className="sr-only">Enable notifications</span>
                         <span

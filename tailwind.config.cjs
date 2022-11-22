@@ -8,6 +8,9 @@ module.exports = {
         dark: {
           bgMain: 'hsl(250, 24%, 9%)',
           bgSecondary: 'hsl(250, 21%, 11%)'
+        },
+        muted: {
+          light: 'rgba(255,255,255,30%)'
         }
       },
     },

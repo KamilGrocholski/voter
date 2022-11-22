@@ -18,7 +18,7 @@ const LOGGED_OUT_LINKS: Link[] = [
 
 const LoggedOutLinks: React.FC = () => {
     return (
-        <>
+        <div>
             {LOGGED_OUT_LINKS.map((link, i) => (
                 <Link 
                     key={ link.href + i }
@@ -28,7 +28,7 @@ const LoggedOutLinks: React.FC = () => {
                     { link.label }
                 </Link>
             ))}
-        </>
+        </div>
     )
 }
 

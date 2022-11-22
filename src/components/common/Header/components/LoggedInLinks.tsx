@@ -18,10 +18,6 @@ type RoleBasedLinks = Record<Role, Link[]>
 
 const COMMON_LOGGED_IN_LINKS: Link[] = [
     {
-        label: 'Home',
-        href: '/'
-    },
-    {
         label: 'Vote sets',
         href: '/vote-sets'
     }
@@ -50,13 +46,17 @@ const LoggedInLinks: React.FC<Props> = ({
     return (
         <>
             {ROLE_BASED_LINKS.base.map((link, i) => (
-                <Link 
+                <div
                     key={ link.href + i }
-                    href={ link.href }
-                    aria-current={ 'page' }
+                    className='hover:text-white text-muted-light'
                 >
-                    { link.label }
-                </Link>
+                    <Link 
+                        href={ link.href }
+                        aria-current={ 'page' }
+                        >
+                        { link.label }
+                    </Link>
+                </div>
             ))}
         </>
     )

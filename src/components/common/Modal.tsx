@@ -44,7 +44,7 @@ export const ModalActions = ({ children }: { children: JSX.Element | JSX.Element
 type ModalFormProps = {
     children: JSX.Element | JSX.Element[]
     [x: string]: unknown
-  };
+}
 export const ModalForm: React.FC<ModalFormProps> = ({ children, ...rest }) => {
   return (
     <form

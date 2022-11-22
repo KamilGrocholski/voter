@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    * {
+      @apply box-border;
+    } 
+  }
+
 body {
-    @apply text-white bg-dark-bgMain
+    @apply text-white bg-dark-bgMain;
 }
 
 @layer components {
     .button-default {
-        @apply text-white 
+      @apply text-white;
     }
 }
