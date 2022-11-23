@@ -1,5 +1,5 @@
 import { router, protectedProcedure, publicProcedure } from "../trpc"
-import { voteSchema } from "../schemas/voteSchema"
+import { voteSchema } from "../schemes/voteSchema"
 
 export const voteRouter = router({
     castProtected: protectedProcedure

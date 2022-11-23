@@ -1,7 +1,7 @@
 import { router, publicProcedure, protectedProcedure } from "../trpc"
 import getTwoDifferentRandomInts from "../../../utils/getTwoDifferentRandomInts"
-import { voteItemSchema } from "../schemas/voteItemSchema"
-import { voteSetSchemaBase } from '../schemas/voteSetSchema'
+import { voteItemSchema } from "../schemes/voteItemSchema"
+import { voteSetSchemaBase } from '../schemes/voteSetSchema'
 import { isVoteItemOwner } from "../../utils/isVoteItemOwner"
 
 export const voteItemRouter = router({

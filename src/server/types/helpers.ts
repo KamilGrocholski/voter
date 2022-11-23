@@ -1,0 +1,1 @@
+export type InferSchemesObject<Obj> = Record<keyof Obj, Obj[keyof Obj]>

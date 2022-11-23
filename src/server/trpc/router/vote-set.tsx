@@ -1,10 +1,11 @@
 import { router, publicProcedure, protectedProcedure } from "../trpc"
-import { voteSetSchema } from "../schemas/voteSetSchema"
-import { voteSetSchemaBase } from '../schemas/voteSetSchema'
+import { voteSetSchema } from "../schemes/voteSetSchema"
+import { voteSetSchemaBase } from '../schemes/voteSetSchema'
 import { isVoteSetOwner } from "../../utils/isVoteSetOwner"
 import { TRPCError } from "@trpc/server"
 import { createDateFromNow } from "../../utils/createDateFromNow"
 import { voteSetSelects } from "../../utils/selects/voteSetSelect"
+import { deleteImage, uploadImage } from "../../lib/cloudinary"
 
 export const voteSetRouter = router({
     getRecentlyPopular: publicProcedure
@@ -87,13 +88,19 @@ export const voteSetRouter = router({
 
     create: protectedProcedure
         .input(voteSetSchema.create)
-        .mutation(({ ctx, input }) => {
+        .mutation(async ({ ctx, input }) => {
             const { name, image, items } = input
+
+            const uploadResultUrl = await uploadImage(image)
+
+            if (!uploadResultUrl) {
+                throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
+            }
 
             return ctx.prisma.voteSet.create({
                 data: {
                     name,
-                    image,
+                    image: uploadResultUrl,
                     voteItems: {
                         create: items
                     },
@@ -107,7 +114,7 @@ export const voteSetRouter = router({
         .mutation(async ({ ctx, input }) => {
             const { name, image, isPublished, voteSetId } = input 
             isVoteSetOwner(ctx, voteSetId)
-
+            
             const itemsCounter = await ctx.prisma.voteSet.findUnique({
                 where: {
                     id: voteSetId
@@ -125,13 +132,15 @@ export const voteSetRouter = router({
                 throw new TRPCError({ code: 'FORBIDDEN' })
             }
 
+            const uploadResultUrl = image ? await uploadImage(image) : undefined
+
             return ctx.prisma.voteSet.update({
                 where: {
                     id: voteSetId,
                 },
                 data: {
                     name,
-                    image,
+                    image: uploadResultUrl,
                     isPublished
                 }
             })
@@ -139,16 +148,25 @@ export const voteSetRouter = router({
 
     delete: protectedProcedure
         .input(voteSetSchema.delete)
-        .mutation(({ ctx, input }) => {
+        .mutation(async ({ ctx, input }) => {
             const { voteSetId } = input
 
             isVoteSetOwner(ctx, voteSetId)
 
-            return ctx.prisma.voteSet.delete({
+            const deletedSet = await ctx.prisma.voteSet.delete({
                 where: {
                     id: voteSetId
+                },
+                select: {
+                    image: true
                 }
             })
+
+            if (deletedSet) {
+                await deleteImage(deletedSet.image)
+            }
+
+            return deletedSet
         }),
 
     pagination: publicProcedure

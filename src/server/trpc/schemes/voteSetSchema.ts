@@ -1,11 +1,12 @@
 import { z } from "zod";
+import { InferSchemesObject } from "../../types/helpers";
 import { voteItemSchema } from "./voteItemSchema";
 
-export type VoteSetSchemaUpdate = z.infer<typeof voteSetSchema.update>
+export type VoteSetSchemes = InferSchemesObject<typeof voteSetSchema>
 
 const base = {
     id: z.string().cuid(),
-    name: z.string().min(5),
+    name: z.string().min(5).max(20),
     image: z.string().url(),
     isPublished: z.boolean()
 }

@@ -124,7 +124,7 @@ model VoteItem {
     votesFor     Vote[] @relation("votesFor")
     votesAgainst Vote[] @relation("votesAgainst")
 
-    voteSet   VoteSet @relation(fields: [voteSetId], references: [id], onDelete: Cascade)
+    voteSet   VoteSet @relation(fields: [voteSetId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     voteSetId String
 
     createdAt DateTime @default(now())
@@ -138,9 +138,9 @@ model Vote {
     id String @id @default(cuid())
 
     votedForId     String
-    votedFor       VoteItem @relation(name: "votesFor", fields: [votedForId], references: [id])
+    votedFor       VoteItem @relation(name: "votesFor", fields: [votedForId], references: [id], onDelete: Cascade)
     votedAgainstId String
-    votedAgainst   VoteItem @relation(name: "votesAgainst", fields: [votedAgainstId], references: [id])
+    votedAgainst   VoteItem @relation(name: "votesAgainst", fields: [votedAgainstId], references: [id], onDelete: Cascade)
     voterId        String?
     voter          User?    @relation(fields: [voterId], references: [id])
 

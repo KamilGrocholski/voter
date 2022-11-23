@@ -1,4 +1,7 @@
 import { z } from 'zod'
+import { InferSchemesObject } from '../../types/helpers'
+
+export type VoteItemSchemes = InferSchemesObject<typeof voteItemSchema>
 
 const base = {
     id: z.string().cuid(),

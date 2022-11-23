@@ -1,14 +1,13 @@
 import Link from 'next/link'
 import React from 'react'
-import placeholder from '../../../assets/placeholders/dashboard-card-placeholder.jpg'
 import Image from 'next/image'
 import { VotesSetsPagination } from '../../../types/trpcOutputTypes'
 import { parseDate } from '../../../utils/parseDate'
 import { sumSetVotes } from '../../../utils/sumVotes'
-import { useRouter } from 'next/router'
-import { RepIcons } from '../../../assets/placeholders/repIcons'
+import { RepIcons } from '../../../assets/repIcons'
 import { trpc } from '../../../utils/trpc'
 import { VoteSet } from '@prisma/client'
+import UserInfoSmall from '../UserThings/UserInfoSmall'
 
 const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
 
@@ -17,14 +16,16 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
             <Link
                 href={ `/vote-sets/${props.id}/voting` }
             >
-                <div className='relative h-min-[180px] h-full rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
+                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
                     <Image 
-                        src={ placeholder }
+                        src={props.image}
                         alt={ 'xd' }
+                        layout='fill'
+                        objectFit='cover'
+                        objectPosition='center'
                         className='absolute top-0 bottom-0 left-0 right-0'
-                        layout='responsive'
                     />
-                    <div className='absolute top-0 bottom-0 left-0 right-0 p-3'>
+                    <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-black/50'>
                         <div className='h-[85%] flex flex-col space-y-1'>
                             <Name 
                                 name={props.name}
@@ -33,6 +34,7 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
                                 id={props.owner.id}
                                 name={props.owner.name}
                                 image={props.owner.image}
+                                role={props.owner.role} 
                             />
                             <Items 
                                 quantity={props._count.voteItems}
@@ -168,32 +170,18 @@ const Votes: React.FC<{
 const Owner: React.FC<VotesSetsPagination[number]['owner']> = ({
     id,
     image,
-    name
+    name,
+    role
 }) => {
-    const router = useRouter()
-
-    const handleGoToUserProfile = () => {
-        router.push(`/users/${ id }`)
-    }
-
     return (
         <div className='flex flex-row space-x-3 items-center text-xs'>
             <div>owned by </div>
-            <button
-                onClick={ handleGoToUserProfile }
-                className='flex flex-row space-x-1 hover:outline outline-purple-500 items-center pl-1 pr-3'
-            >
-                <div className='h-[25px] w-[25px] overflow-hidden rounded-full'>
-                    <Image 
-                        src={ placeholder }
-                        alt='Avatar'
-                        layout='responsive'
-                        width={25}
-                        height={25}
-                    />
-                </div>
-                <div>{ name }</div>
-            </button>
+            <UserInfoSmall
+                id={id}
+                image={image}
+                name={name as string}
+                role={role}
+            />
         </div>
     )
 }

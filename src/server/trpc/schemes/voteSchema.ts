@@ -2,8 +2,9 @@ import { z } from "zod"
 import { voteItemSchemaBase } from './voteItemSchema'
 import { voteSetSchemaBase } from './voteSetSchema'
 import { userSchemaBase } from './userSchema'
+import { InferSchemesObject } from "../../types/helpers"
 
-export type CastVoteSchema = z.infer<typeof voteSchema.create>
+export type VoteSchemes = InferSchemesObject<typeof voteSchema>
 
 const base = {
     id: z.string().cuid(),

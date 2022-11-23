@@ -1,4 +1,3 @@
-import placeholder from '../../../../assets/placeholders/dashboard-card-placeholder.jpg'
 import Link from "next/link"
 import Image from 'next/image'
 import { AllVoteSetsByUserIdProtected } from '../../../../types/trpcOutputTypes'
@@ -36,14 +35,16 @@ const DashboardCard: React.FC<AllVoteSetsByUserIdProtected[number]> = (props) =>
             <Link
                 href={ `/vote-sets/${props.id}` }
             >
-                <div className='relative h-min-[180px] h-full rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
+                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
                     <Image 
-                        src={ placeholder }
+                        src={ props.image }
                         alt={ 'xd' }
+                        layout='fill'
+                        objectFit='cover'
+                        objectPosition='center'
                         className='absolute top-0 bottom-0 left-0 right-0'
-                        layout='responsive'
                     />
-                    <div className='absolute top-0 bottom-0 left-0 right-0 p-3'>
+                    <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-black/50'>
                         <div className='flex flex-row space-x-3 justify-end'>
                             <button className='text-yellow-500' onClick={ handleOpenUpdate }>{RepIcons.edit}</button>
                             <button className='text-red-500' onClick={ handleOpenDeletion }>{RepIcons.delete}</button>

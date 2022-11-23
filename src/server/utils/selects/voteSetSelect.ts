@@ -9,7 +9,8 @@ export const voteSetSelects = {
             select: {
                 id: true,
                 name: true,
-                image: true
+                image: true,
+                role: true
             }
         },
         _count: {

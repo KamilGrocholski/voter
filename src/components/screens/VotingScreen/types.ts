@@ -1,7 +1,7 @@
-import { CastVoteSchema } from "../../../server/trpc/schemas/voteSchema";
+import { VoteSchemes } from "../../../server/trpc/schemes/voteSchema";
 import { VoteItemPair } from "../../../types/trpcOutputTypes";
 
-export type HandleCastVote = (params: CastVoteSchema) => void
+export type HandleCastVote = (params: VoteSchemes['create']) => void
 
 export type VoteItem = VoteItemPair['firstItem']
 

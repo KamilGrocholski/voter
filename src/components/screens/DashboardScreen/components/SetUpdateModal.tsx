@@ -4,6 +4,7 @@ import { AllVoteSetsByUserIdProtected } from "../../../../types/trpcOutputTypes"
 import { trpc } from "../../../../utils/trpc"
 import { FormGroup } from "../../../common/Form"
 import { Modal, ModalActions } from "../../../common/Modal"
+import ImageWidget from "./ImageWidget"
 
 interface Props {
     isOpen: boolean
@@ -95,6 +96,8 @@ const SetUpdateModal: React.FC<Props> = ({
                         />
                     </Switch>
                 </FormGroup>
+
+                <ImageWidget />
                 
                 <ModalActions>
                     <button type='submit'>Confirm</button>
