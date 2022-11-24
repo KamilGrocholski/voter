@@ -7,7 +7,7 @@ export type UserSchemes = InferSchemesObject<typeof userSchema>
 const base: PrismaToZod<User> = {
     id: z.string().cuid(),
     name: z.string().min(1),
-    image: z.string().url(),
+    image: z.string().url().optional(),
     email: z.string().email(),
     emailVerified: z.date(),
     role: z.string(),
