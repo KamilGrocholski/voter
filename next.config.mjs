@@ -26,5 +26,5 @@ export default defineNextConfig({
       'res.cloudinary.com',
       'cdn.discordapp.com'
     ],
-  },
+  }
 });

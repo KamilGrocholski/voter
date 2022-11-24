@@ -7,12 +7,12 @@ import { Vote } from "@prisma/client"
 
 export type VoteSchemes = InferSchemesObject<typeof voteSchema>
 
-const base: PrismaToZod<Vote> = {
+const base = {
     id: z.string().cuid(),
     votedForId: voteItemSchemaBase.id,
     votedAgainstId: voteItemSchemaBase.id,
-    voterId: userSchemaBase.id,
-    createdAt: z.date()
+    // voterId: userSchemaBase.id,
+    // createdAt: z.date()
 }
 
 export const voteSchema = {
@@ -21,7 +21,7 @@ export const voteSchema = {
         votedAgainstId: base.votedAgainstId,
         voteSetId: voteSetSchemaBase.id
     })
-} as const
+}
 
 export {
     base as voteSchemaBase

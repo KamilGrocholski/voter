@@ -4,8 +4,11 @@ export type InferSchemesObject<Obj extends Record<string, z.Schema>> = {
     [K in keyof Obj]: z.infer<Obj[K]>
 }
 
+/**
+ * Non nullable Prisma table columns
+ */
 export type PrismaToZod<Table extends Record<string, unknown>> = {
-    [Column in keyof Table]: z.ZodType<ChangeNullToUndefined<Table[Column]>>
+    [Column in keyof Table]: z.ZodType<NonNullable<Table[Column]>>
 }
 
 export type ChangeNullToUndefined<T> = T extends null ? NonNullable<T> | undefined : T

@@ -5,13 +5,13 @@ import { voteSetSchemaBase } from './voteSetSchema'
 
 export type VoteItemSchemes = InferSchemesObject<typeof voteItemSchema>
 
-const base: PrismaToZod<VoteItem> = {
+const base = {
     id: z.string().cuid(),
     name: z.string().min(1),
     image: z.string().url(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-    voteSetId: voteSetSchemaBase.id
+    // createdAt: z.date(),
+    // updatedAt: z.date(),
+    // voteSetId: voteSetSchemaBase.id
 }
 
 export const voteItemSchema = {
@@ -27,7 +27,7 @@ export const voteItemSchema = {
     delete: z.object({
         voteItemId: base.id
     })
-} as const
+}
 
 export {
     base as voteItemSchemaBase
