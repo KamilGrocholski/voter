@@ -1,14 +1,18 @@
+import { VoteSet } from "@prisma/client";
 import { z } from "zod";
-import { InferSchemesObject } from "../../types/helpers";
+import { PrismaToZod, InferSchemesObject } from "../../types/helpers";
 import { voteItemSchema } from "./voteItemSchema";
 
-export type VoteSetSchemes = InferSchemesObject<typeof voteSetSchema>
+export type VoteSetSchemes = InferSchemesObject<typeof voteItemSchema>
 
-const base = {
+const base: PrismaToZod<VoteSet> = {
     id: z.string().cuid(),
     name: z.string().min(5).max(20),
     image: z.string().url(),
-    isPublished: z.boolean()
+    isPublished: z.boolean(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+    ownerId: z.string().cuid()
 }
 
 export const voteSetSchema = {
@@ -34,7 +38,7 @@ export const voteSetSchema = {
         voteSetId: base.id,
         action: z.enum(['like', 'dislike'])
     })
-}
+} as const
 
 export {
     base as voteSetSchemaBase

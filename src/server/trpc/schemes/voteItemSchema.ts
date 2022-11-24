@@ -1,12 +1,17 @@
+import { VoteItem } from '@prisma/client'
 import { z } from 'zod'
-import { InferSchemesObject } from '../../types/helpers'
+import { InferSchemesObject, PrismaToZod } from '../../types/helpers'
+import { voteSetSchemaBase } from './voteSetSchema'
 
 export type VoteItemSchemes = InferSchemesObject<typeof voteItemSchema>
 
-const base = {
+const base: PrismaToZod<VoteItem> = {
     id: z.string().cuid(),
     name: z.string().min(1),
-    image: z.string().url()
+    image: z.string().url(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+    voteSetId: voteSetSchemaBase.id
 }
 
 export const voteItemSchema = {
@@ -22,7 +27,7 @@ export const voteItemSchema = {
     delete: z.object({
         voteItemId: base.id
     })
-}
+} as const
 
 export {
     base as voteItemSchemaBase

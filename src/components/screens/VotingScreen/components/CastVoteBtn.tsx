@@ -1,4 +1,3 @@
-import placeholder from '../../../../assets/placeholders/dashboard-card-placeholder.jpg'
 import { VoteItem } from "../types"
 import Image from 'next/image'
 
@@ -23,7 +22,7 @@ const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
             >
                 <div className='flex flex-col space-y-3 items-center'>
                     <Image 
-                        src={ placeholder }
+                        src={ item.image }
                         alt='xd'
                         layout='fixed'
                         width={300}

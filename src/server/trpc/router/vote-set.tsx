@@ -92,8 +92,12 @@ export const voteSetRouter = router({
             const { name, image, items } = input
 
             const uploadResultUrl = await uploadImage(image)
+            
+            const itemsUploadResultUrls = await Promise.all(
+                items.map((item) => uploadImage(item.image))
+            )
 
-            if (!uploadResultUrl) {
+            if (!uploadResultUrl || !itemsUploadResultUrls) {
                 throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
             }
 
@@ -102,7 +106,12 @@ export const voteSetRouter = router({
                     name,
                     image: uploadResultUrl,
                     voteItems: {
-                        create: items
+                        create: items.map((item, i) => {
+                            return {
+                                name: item.name,
+                                image: itemsUploadResultUrls[i]
+                            }
+                        }) as typeof items
                     },
                     ownerId: ctx.session.user.id
                 }
