@@ -8,7 +8,7 @@ import NameBar from "./components/NameBar"
 
 const NewScreen: React.FC = () => {
     return (
-        <MainLayout useContainer={false}>
+        <MainLayout useContainer={true}>
             <div className='flex flex-col space-y-3'>
                 <CreateSet />
                 <NameBar />

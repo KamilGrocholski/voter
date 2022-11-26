@@ -18,16 +18,16 @@ const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
             <button
                 onClick={handleCastVote}
                 disabled={isDisabled}
-                className='flex flex-col rounded-md justify-center items-center hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'
+                className='flex flex-col rounded-md justify-center items-center hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black overflow-hidden'
             >
-                <div className='relative w-[25vw] h-[20vh] overflow-hidden'>
+                <div className='relative w-[25vw] h-[20vh]'>
                     <Image 
                         src={item.image}
                         alt={'xd'}
                         layout='fill'
                     />
                 </div>
-                <div className='bg-black w-full flex items-center justify-center h-12 font-semibold text-xl'>
+                <div className='bg-black w-full flex items-center justify-center h-12 font-semibold text-xl rounded-md'>
                     {item.name}
                 </div>
             </button>

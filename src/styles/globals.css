@@ -9,11 +9,15 @@
   }
 
 body {
-    @apply text-white bg-dark-bgMain;
+    @apply text-[#efefef] bg-dark-bgMain;
 }
 
 @layer components {
     .button-default {
       @apply text-white;
+    }
+
+    input {
+      @apply bg-dark-bgThird outline-dark-border outline outline-1 hover:outline-purple-900 px-2 py-1 rounded-md text-[#efefef]
     }
 }

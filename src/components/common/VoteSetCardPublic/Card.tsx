@@ -8,6 +8,7 @@ import { RepIcons } from '../../../assets/repIcons'
 import { trpc } from '../../../utils/trpc'
 import { VoteSet } from '@prisma/client'
 import UserInfoSmall from '../UserThings/UserInfoSmall'
+import { useRouter } from 'next/router'
 
 const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
 
@@ -27,9 +28,14 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
                     />
                     <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-black/50'>
                         <div className='h-[85%] flex flex-col space-y-1'>
-                            <Name 
-                                name={props.name}
-                            />
+                            <div className='flex flex-row justify-between'>
+                                <Name 
+                                    name={props.name}
+                                />
+                                <GoToVoteSetPage  
+                                    voteSetId={props.id}
+                                />
+                            </div>
                             <Owner
                                 id={props.owner.id}
                                 name={props.owner.name}
@@ -62,6 +68,24 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
 }
 
 export default VoteSetCard
+
+const GoToVoteSetPage: React.FC<{ voteSetId: VoteSet['id'] }> = ({ voteSetId }) => {
+    const router = useRouter()
+
+    const handleGoToVoteSetPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        router.push(`/vote-sets/${ voteSetId }`)
+    }
+
+    return (
+        <button
+            onClick={ handleGoToVoteSetPage }
+            className='px-3 py-1 border rounded-md'
+        >
+            View
+        </button>
+    )
+}
 
 const Name: React.FC<{ name: VotesSetsPagination[number]['name'] }> = ({
     name

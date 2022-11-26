@@ -61,7 +61,6 @@ const SetUpdateModal: React.FC<Props> = ({
                         id='vote-set-name'
                         value={updated.name}
                         onChange={handleName}
-                        className='text-black'
                     />
                 </FormGroup>
                 <FormGroup 
@@ -72,7 +71,6 @@ const SetUpdateModal: React.FC<Props> = ({
                         id='vote-set-image'
                         value={updated.image}
                         onChange={handleImage}
-                        className='text-black'
                     />
                 </FormGroup>
                 <FormGroup

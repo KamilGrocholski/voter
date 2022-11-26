@@ -11,7 +11,7 @@ const MainLayout: React.FC<Props> = ({ children, useContainer = true }) => {
         <>
             <Header />
 
-            <main className={ `${ useContainer && 'container' } mx-auto flex flex-col min-h-screen px-2 py-12` }>
+            <main className={ `${ useContainer && 'container' } mx-auto flex flex-col min-h-screen py-12` }>
                 { children }
             </main>
 

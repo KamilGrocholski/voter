@@ -3,10 +3,18 @@ import Image from "next/image"
 import { parseDate } from '../../../../utils/parseDate'
 import { VoteSet } from '../types'
 import { sumSetVotes } from '../../../../utils/sumVotes'
+import { useRouter } from 'next/router'
 
-type VoteSetHero = VoteSet
+export type VoteSetHeroProps = VoteSet
 
-const VoteSetHero: React.FC<VoteSetHero> = (props) => {
+const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
+    const router = useRouter()
+
+    const handleGoToVoting = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        router.push(`/vote-sets/${ props.id }/voting`)
+    }
+
     return (
         <div>
             <div className='relative rounded-md overflow-hidden w-full max-h-[300px] bg-black/20'>
@@ -24,6 +32,12 @@ const VoteSetHero: React.FC<VoteSetHero> = (props) => {
                     <div>Votes: { sumSetVotes(props.voteItems) }</div>
                     <div>Likes: { props._count.likes }</div>
                     <div>Dislikes: { props._count.dislikes }</div>
+                    <button 
+                        onClick={handleGoToVoting}
+                        className='px-3 py-1 border rounded-md'
+                    >
+                        Voting
+                    </button>
                 </div>
             </div>
         </div>

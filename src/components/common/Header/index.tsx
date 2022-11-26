@@ -10,7 +10,7 @@ const Header = () => {
     const userData = data?.user
 
     return (
-        <header className='h-16 w-full px-3 z-50 border-b items-center flex'>
+        <header className='h-16 w-full px-3 z-50 border-b border-dark-border items-center flex'>
             <Logo />
             <nav className='flex flex-row space-x-8 items-center'>
                 {data?.user ? (
