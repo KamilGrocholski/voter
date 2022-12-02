@@ -4,6 +4,7 @@ import { parseDate } from '../../../../utils/parseDate'
 import { VoteSet } from '../types'
 import { sumSetVotes } from '../../../../utils/sumVotes'
 import { useRouter } from 'next/router'
+import UserInfoSmall from '../../../common/UserThings/UserInfoSmall'
 
 export type VoteSetHeroProps = VoteSet
 
@@ -25,19 +26,7 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
                     className='absolute top-0 left-0 right-0 blur-sm'
                 />
                 <div className='absolute top-0 bottom-0 left-0 right-0 p-3 flex flex-col space-y-3'>
-                    <div>{ props.name }</div>
-                    <div>Created at: { parseDate(props.createdAt) }</div>
-                    <div>Updated at: { parseDate(props.updatedAt) }</div>
-                    <div>Items: { props._count.voteItems }</div>
-                    <div>Votes: { sumSetVotes(props.voteItems) }</div>
-                    <div>Likes: { props._count.likes }</div>
-                    <div>Dislikes: { props._count.dislikes }</div>
-                    <button 
-                        onClick={handleGoToVoting}
-                        className='px-3 py-1 border rounded-md'
-                    >
-                        Voting
-                    </button>
+                    <Info {...props} />
                 </div>
             </div>
         </div>
@@ -45,3 +34,69 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
 }
 
 export default VoteSetHero
+
+const Info: React.FC<VoteSetHeroProps> = (props) => {
+    return (
+        <div className='bg-black/50'>
+            <Name {...props} />
+            <Owner {...props} />
+            <ItemsVotesCounter {...props} />
+            <Timestamps {...props} />
+        </div>
+    )
+}
+
+const Owner: React.FC<Pick<VoteSetHeroProps, 'owner'>> = ({
+    owner
+}) => {
+    return (
+        <div className='flex flex-row space-x-3'>
+            <span className='text-xs text-white/50'>by</span>
+            <UserInfoSmall 
+                id={owner.id}
+                name={owner.name ?? ''}
+                image={owner.image ?? ''}
+                role={owner.role}
+            />
+        </div>
+    )
+}
+
+const Name: React.FC<Pick<VoteSetHeroProps, 'name'>> = ({
+    name
+}) => {
+    return (
+        <div className='font-bold text-3xl'>
+            {name}
+        </div>
+    )
+}
+
+const Timestamps: React.FC<Pick<VoteSetHeroProps, 'createdAt' | 'updatedAt'>> = ({
+    createdAt,
+    updatedAt
+}) => {
+    return (
+        <div className='flex flex-col space-y-1 text-xs text-white/50'>
+            <span>
+                created on {parseDate(createdAt)}
+            </span>
+            <span>
+                updated on {parseDate(updatedAt)}
+            </span>
+        </div>
+    )
+}
+
+const ItemsVotesCounter: React.FC<Pick<VoteSetHeroProps, '_count' | 'voteItems'>> = ({
+    _count,
+    voteItems
+}) => {
+    return (
+        <div>
+           <div>Items: {_count.voteItems}</div> 
+           <div>Votes: {sumSetVotes(voteItems)}</div> 
+        </div>
+    )
+}
+

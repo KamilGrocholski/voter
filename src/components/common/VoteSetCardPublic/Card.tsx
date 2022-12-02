@@ -17,7 +17,7 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
             <Link
                 href={ `/vote-sets/${props.id}/voting` }
             >
-                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
+                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-dark-accent-0 shadow-lg shadow-black'>
                     <Image 
                         src={props.image}
                         alt={ 'xd' }
@@ -80,7 +80,7 @@ const GoToVoteSetPage: React.FC<{ voteSetId: VoteSet['id'] }> = ({ voteSetId }) 
     return (
         <button
             onClick={ handleGoToVoteSetPage }
-            className='px-3 py-1 border rounded-md'
+            className='px-3 py-1 rounded-md bg-dark-shade-10/50'
         >
             View
         </button>
@@ -118,7 +118,7 @@ const Timestamps: React.FC<{
     updatedAt
 }) => {
     return (
-        <div className='flex flex-col space-y-1 text-xs'>
+        <div className='flex flex-col space-y-1 text-xs text-dark-shade-0/80'>
             <div className='flex flex-row space-x-1'>
                 <div>created at </div>
                 <div>{ parseDate(createdAt) }</div>
@@ -199,7 +199,7 @@ const Owner: React.FC<VotesSetsPagination[number]['owner']> = ({
 }) => {
     return (
         <div className='flex flex-row space-x-3 items-center text-xs'>
-            <div>owned by </div>
+            <div>by</div>
             <UserInfoSmall
                 id={id}
                 image={image}

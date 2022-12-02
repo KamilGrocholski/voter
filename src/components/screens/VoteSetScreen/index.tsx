@@ -17,13 +17,12 @@ const VoteSetScreen: React.FC = () => {
                 <EmptyStateWrapper 
                     data={voteSet.data}
                     isLoading={voteSet.isLoading}
-                    NonEmptyComponent={<VoteSetHero {...voteSet.data as VoteSetHeroProps } />}
-                    EmptyComponent={<div>xd</div>}
-                />
-                <EmptyStateWrapper 
-                    data={voteSet.data}
-                    isLoading={voteSet.isLoading}
-                    NonEmptyComponent={<ItemsRanking items={voteSet.data?.voteItems ?? []} />}
+                    NonEmptyComponent={
+                        <>
+                            <VoteSetHero {...voteSet.data as VoteSetHeroProps } />
+                            <ItemsRanking items={voteSet.data?.voteItems ?? []} />
+                        </>
+                    }
                     EmptyComponent={<div>xd</div>}
                 />
             </div>

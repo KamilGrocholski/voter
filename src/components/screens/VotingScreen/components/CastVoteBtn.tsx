@@ -27,7 +27,7 @@ const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
                         layout='fill'
                     />
                 </div>
-                <div className='bg-black w-full flex items-center justify-center h-12 font-semibold text-xl rounded-md'>
+                <div className='bg-dark-shade-10 w-full flex items-center justify-center h-12 font-semibold text-xl rounded-md'>
                     {item.name}
                 </div>
             </button>

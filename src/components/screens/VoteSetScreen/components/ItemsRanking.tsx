@@ -10,7 +10,7 @@ const ItemsRanking: React.FC<ItemsRankingProps> = ({
     items
 }) => {
     return (
-        <div className='flex flex-col space-y-3 bg-dark-bgSecondary p-3'>
+        <div className='flex flex-col bg-dark-shade-7 p-3'>
             {sortByTopVotesForPercentage(items).map((item, i) => (
                 <ItemCard 
                     key={i}

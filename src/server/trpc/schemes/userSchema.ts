@@ -14,7 +14,9 @@ const base = {
 }
 
 export const userSchema = {
-
+    get: z.object({
+        id: base.id
+    })
 }
 
 export {

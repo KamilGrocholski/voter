@@ -11,7 +11,7 @@ const HomeScreen = () => {
         <MainLayout useContainer={ false }>
             <HeroSection />
             <div className='container mx-auto flex flex-col space-y-8'>
-                <div className='text-2xl font-semibold'>Recently popular</div>
+                <h2>Recently popular</h2>
                 <EmptyStateWrapper 
                     isLoading={isLoading}
                     data={recentlyPopularVoteSets}

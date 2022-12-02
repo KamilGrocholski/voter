@@ -1,4 +1,5 @@
 import { GetInferenceHelpers } from "@trpc/server";
+import { userRouter } from "../server/trpc/router/user";
 import { voteItemRouter } from "../server/trpc/router/vote-item";
 import { voteSetRouter } from "../server/trpc/router/vote-set";
 
@@ -9,3 +10,5 @@ export type VoteSetByIdPublic = NonNullable<GetInferenceHelpers<typeof voteSetRo
 export type VoteItemPair = GetInferenceHelpers<typeof voteItemRouter>['getPair']['output']
 
 export type VotesSetsPagination = GetInferenceHelpers<typeof voteSetRouter>['pagination']['output']
+
+export type UserSmallInfoByIdPublic = NonNullable<GetInferenceHelpers<typeof userRouter>['getSmallInfoByIdPublic']['output']>

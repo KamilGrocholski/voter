@@ -6,7 +6,7 @@ type ItemCardProps = VoteSetByIdPublic['voteItems'][number] & { position: number
 
 const ItemCard: React.FC<ItemCardProps> = (props) => {
     return (
-        <div className='flex flex-row space-x-3 items-center'>
+        <div className='flex flex-row space-x-3 items-center odd:bg-dark-shade-8 p-2'>
             <div>#{props.position}</div>
             <div className='relative w-[80px] h-[40px]'>
                 <Image 
@@ -20,8 +20,8 @@ const ItemCard: React.FC<ItemCardProps> = (props) => {
             </div>
             <div>{props.name}</div>
             <div>{getVotesPercentage(props._count.votesFor, props._count.votesAgainst)}%</div>
-            <div className='text-green-400'>{props._count.votesFor}</div>
-            <div className='text-red-400'>{props._count.votesAgainst}</div>
+            <div className='text-indicative-success'>{props._count.votesFor}</div>
+            <div className='text-indicative-danger'>{props._count.votesAgainst}</div>
         </div>
     )
 }
