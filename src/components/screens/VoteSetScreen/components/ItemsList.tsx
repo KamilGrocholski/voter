@@ -7,7 +7,7 @@ interface Props {
 
 const ItemsList: React.FC<Props> = ({ voteItemsList }) => {
     return (
-        <div className='flex flex-col space-y-3'>
+        <div className='flex flex-col space-y-3 rounded-md'>
             {voteItemsList.map((item, i) => (
                 <Item key={ i } { ...item } />
             ))}

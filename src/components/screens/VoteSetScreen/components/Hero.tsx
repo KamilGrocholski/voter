@@ -18,15 +18,21 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
 
     return (
         <div>
-            <div className='relative rounded-md overflow-hidden w-full max-h-[300px] bg-black/20'>
+            <div className='relative rounded-md overflow-hidden w-full max-h-[300px]'>
                 <Image 
                     src={placeholder}
                     alt='xd'
                     layout='responsive'
                     className='absolute top-0 left-0 right-0 blur-sm'
                 />
-                <div className='absolute top-0 bottom-0 left-0 right-0 p-3 flex flex-col space-y-3'>
+                <div className='absolute top-0 bottom-0 left-0 right-0 p-3 flex flex-col space-y-3 bg-black/50'>
                     <Info {...props} />
+                    <button 
+                        onClick={handleGoToVoting}
+                        className='w-48 rounded-md text-dark-accent-0 font-semibold hover:text-white/50 hover:bg-dark-accent-0/30'
+                    >
+                        Go to voting page
+                    </button>
                 </div>
             </div>
         </div>
@@ -37,7 +43,7 @@ export default VoteSetHero
 
 const Info: React.FC<VoteSetHeroProps> = (props) => {
     return (
-        <div className='bg-black/50'>
+        <div className='space-y-2 h-full'>
             <Name {...props} />
             <Owner {...props} />
             <ItemsVotesCounter {...props} />

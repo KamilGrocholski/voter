@@ -18,7 +18,7 @@ const Header = () => {
                 ) : (
                     <LoggedOutLinks />
                 )}
-                <hr className='text-white w-2'/>
+                {/* <hr className='text-white w-2'/> */}
                 <AccountMenu />
             </nav>
         </header>

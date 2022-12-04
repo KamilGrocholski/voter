@@ -8,7 +8,7 @@ export type VoteSetSchemes = InferSchemesObject<typeof voteItemSchema>
 
 const base = {
     id: z.string().cuid(),
-    name: z.string().min(5).max(20),
+    name: z.string().min(5).max(45),
     image: z.string().url(),
     isPublished: z.boolean(),
     // createdAt: z.date(),

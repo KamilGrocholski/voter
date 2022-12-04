@@ -40,8 +40,8 @@ const AccountMenu = () => {
                 </Menu.Button>
             </div>
 
-            <Menu.Items className='absolute right-0 p-3 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md bg-dark-bgThird shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                <div className='flex flex-col'>
+            <Menu.Items className='absolute right-0 p-3 space-y-1 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md bg-dark-bgThird shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                <div className='flex flex-col space-y-1'>
                     <Menu.Item>
                         <span className={styles.normalItem}>Your profile</span>
                     </Menu.Item>
@@ -49,9 +49,9 @@ const AccountMenu = () => {
                         <span className={styles.normalItem}>Settings</span>
                     </Menu.Item>
                 </div>
-                <div className='flex flex-col'>
-                    <Menu.Item as='button' onClick={handleSignOut}>
-                        <span className={styles.logoutItem}>Logout</span>
+                <div className='flex flex-col pt-1'>
+                    <Menu.Item>
+                        <span onClick={handleSignOut} className={styles.logoutItem}>Logout</span>
                     </Menu.Item>
                 </div>
             </Menu.Items>
@@ -62,6 +62,6 @@ const AccountMenu = () => {
 export default AccountMenu
 
 const styles = {
-    normalItem: 'hover:bg-purple-500 px-3 rounded-md cursor-pointer',
-    logoutItem: 'hover:bg-red-500 text-white rounded-md px-3 cursor-pointer'
+    normalItem: 'hover:bg-purple-500 px-3 rounded-md cursor-pointer w-full',
+    logoutItem: 'hover:bg-red-500 text-white rounded-md px-3 cursor-pointer w-full'
 }

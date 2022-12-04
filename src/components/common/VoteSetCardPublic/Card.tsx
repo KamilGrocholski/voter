@@ -27,7 +27,7 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
                         className='absolute top-0 bottom-0 left-0 right-0'
                     />
                     <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-black/50'>
-                        <div className='h-[85%] flex flex-col space-y-1'>
+                        <div className='h-[85%] flex flex-col'>
                             <div className='flex flex-row justify-between'>
                                 <Name 
                                     name={props.name}
