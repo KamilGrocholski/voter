@@ -10,7 +10,9 @@ cloudinary.config({
 })
 
 export const uploadImage = async (url: string) => {
-    return (await cloudinary.uploader.upload(url)).url
+    return (await cloudinary.uploader.upload(url, {
+        folder: 'voter'
+    })).url
 }
 
 export const deleteImage = async (url: string) => {

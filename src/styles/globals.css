@@ -2,17 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @layer base {
-    * {
+    *,
+    ::after,
+    ::before {
       @apply box-border;
     } 
-  }
 
-body {
-    @apply text-dark-shade-0 bg-dark-shade-9;
+    body {
+        @apply text-dark-shade-0 bg-dark-shade-9;
+    }
 }
 
+
 @layer components {
+    .hidden-input {
+      @apply hidden
+    }
+
     .button-default {
       @apply text-white;
     }

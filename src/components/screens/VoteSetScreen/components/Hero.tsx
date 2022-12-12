@@ -13,21 +13,21 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
 
     const handleGoToVoting = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
-        router.push(`/vote-sets/${ props.id }/voting`)
+        router.push(`/vote-sets/${props.id}/voting`)
     }
 
     return (
         <div>
-            <div className='relative rounded-md overflow-hidden w-full max-h-[300px]'>
-                <Image 
-                    src={placeholder}
+            <div className='relative rounded-md overflow-hidden w-full max-h-[300px] min-h-[300px]'>
+                <Image
+                    src={props.image ?? 'd'}
                     alt='xd'
-                    layout='responsive'
+                    layout='fill'
                     className='absolute top-0 left-0 right-0 blur-sm'
                 />
                 <div className='absolute top-0 bottom-0 left-0 right-0 p-3 flex flex-col space-y-3 bg-black/50'>
                     <Info {...props} />
-                    <button 
+                    <button
                         onClick={handleGoToVoting}
                         className='w-48 rounded-md text-dark-accent-0 font-semibold hover:text-white/50 hover:bg-dark-accent-0/30'
                     >
@@ -58,7 +58,7 @@ const Owner: React.FC<Pick<VoteSetHeroProps, 'owner'>> = ({
     return (
         <div className='flex flex-row space-x-3'>
             <span className='text-xs text-white/50'>by</span>
-            <UserInfoSmall 
+            <UserInfoSmall
                 id={owner.id}
                 name={owner.name ?? ''}
                 image={owner.image ?? ''}
@@ -100,8 +100,8 @@ const ItemsVotesCounter: React.FC<Pick<VoteSetHeroProps, '_count' | 'voteItems'>
 }) => {
     return (
         <div>
-           <div>Items: {_count.voteItems}</div> 
-           <div>Votes: {sumSetVotes(voteItems)}</div> 
+            <div>Items: {_count.voteItems}</div>
+            <div>Votes: {sumSetVotes(voteItems)}</div>
         </div>
     )
 }

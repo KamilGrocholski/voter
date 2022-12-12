@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useNewVoteSetStore } from "../store"
 import { NewVoteItem } from "../types"
+import Image from "next/image"
 
 const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
     const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -14,7 +15,7 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
     const handleEditItem = () => {
         editItem(index, { name: newName, image: newImage })
         setIsEditing(false)
-    } 
+    }
 
     const handleCancelEditing = () => {
         setNewName(name)
@@ -38,35 +39,43 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-md border p-1'>
             <div className='flex flex-row space-x-3'>
                 {isEditing ?
-                (
-                <>
-                <input 
-                    type='text'
-                    value={ newName }
-                    onChange={ handleSetNewName }    
-                    className='bg-gray-700'
-                />
-                <input 
-                    type='text'
-                    value={ newImage }
-                    onChange={ handleSetNewImage }    
-                    className='bg-gray-700'
-                />
-                <button onClick={ handleEditItem }>Save</button>
-                <button onClick={ handleCancelEditing }>Cancel</button>
-                </>
-                ) :
-                (<>
-                <div>{ newName }</div>
-                <div>{ newImage }</div>
-                <button 
-                    onClick={ handleStartEditing }
-                >
-                    Edit
-                </button>
-                </>)}
+                    (
+                        <>
+                            <input
+                                type='text'
+                                value={newName}
+                                onChange={handleSetNewName}
+                                className='bg-gray-700'
+                            />
+                            <input
+                                type='text'
+                                value={newImage}
+                                onChange={handleSetNewImage}
+                                className='bg-gray-700'
+                            />
+                            <button onClick={handleEditItem}>Save</button>
+                            <button onClick={handleCancelEditing}>Cancel</button>
+                        </>
+                    ) :
+                    (<>
+                        <div>{newName}</div>
+                        <div>
+                            <Image
+                                src={newImage}
+                                alt='image'
+                                layout="fixed"
+                                width={100}
+                                height={80}
+                            />
+                        </div>
+                        <button
+                            onClick={handleStartEditing}
+                        >
+                            Edit
+                        </button>
+                    </>)}
             </div>
-            <button onClick={ handleRemoveItem }>
+            <button onClick={handleRemoveItem}>
                 Remove
             </button>
         </div>

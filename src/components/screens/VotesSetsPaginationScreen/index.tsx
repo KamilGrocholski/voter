@@ -12,11 +12,11 @@ const VotesSetsPaginationScreen: React.FC = () => {
 
     return (
         <MainLayout useContainer={true}>
-            <EmptyStateWrapper 
+            <EmptyStateWrapper
                 isLoading={isLoading}
                 data={votesSets}
                 NonEmptyComponent={<VotesSetsList votesSets={votesSets ?? []} />}
-                EmptyComponent={<div>Loading...</div>}
+                EmptyComponent={<div>There are no vote sets.</div>}
             />
         </MainLayout>
     )

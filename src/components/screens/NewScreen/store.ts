@@ -3,6 +3,11 @@ import { PickVoteItem } from './types'
 
 interface State {
     isCreatorOpen: boolean
+    isCreatorStateOpen: boolean
+    isLoading: boolean
+    isError: boolean
+    error?: string
+    
 
     name: string | undefined
     image: string | undefined
@@ -12,6 +17,10 @@ interface State {
 
 interface Actions { 
     setIsCreatorOpen: (bool: boolean) => void
+    setIsCreatorStateOpen: (bool: boolean) => void
+    setIsLoading: (bool: boolean) => void 
+    setIsError: (bool: boolean) => void
+    setError: (str?: string) => void
 
     setName: (name: string) => void
     setImage: (image: string) => void
@@ -24,6 +33,14 @@ interface Actions {
 export const useNewVoteSetStore = create<State & Actions>(set => ({
     isCreatorOpen: false,
     setIsCreatorOpen: (bool) => set(() => ({ isCreatorOpen: bool })),
+    isCreatorStateOpen: false,
+    setIsCreatorStateOpen: (bool) => set(() => ({ isCreatorStateOpen: bool })),
+    isLoading: false,
+    setIsLoading: (bool) => set(() => ({ isLoading: bool })),
+    isError: false,
+    setIsError: (bool) => set(() => ({ isError: bool })),
+    error: undefined,
+    setError: (error) => set(() => ({ error })),
 
     name: undefined,
     image: undefined,

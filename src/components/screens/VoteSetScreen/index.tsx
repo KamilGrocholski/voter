@@ -1,5 +1,6 @@
 import { VoteItem } from "@prisma/client"
 import { useRouter } from "next/router"
+import { Suspense } from "react"
 import MainLayout from "../../../layouts/MainLayout"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../../common/EmptyStateWrapper"
@@ -14,16 +15,16 @@ const VoteSetScreen: React.FC = () => {
     return (
         <MainLayout useContainer={true}>
             <div className='flex flex-col space-y-3'>
-                <EmptyStateWrapper 
+                <EmptyStateWrapper
                     data={voteSet.data}
                     isLoading={voteSet.isLoading}
                     NonEmptyComponent={
                         <>
-                            <VoteSetHero {...voteSet.data as VoteSetHeroProps } />
+                            <VoteSetHero {...voteSet.data as VoteSetHeroProps} />
                             <ItemsRanking items={voteSet.data?.voteItems ?? []} />
                         </>
                     }
-                    EmptyComponent={<div>xd</div>}
+                    EmptyComponent={<div>There are no vote sets.</div>}
                 />
             </div>
         </MainLayout>

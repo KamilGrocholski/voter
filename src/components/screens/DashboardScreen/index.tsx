@@ -14,7 +14,7 @@ const DashboardScreen: React.FC = () => {
                 isLoading={isLoading}
                 data={voteSets}
                 NonEmptyComponent={<DashboardGrid voteSets={voteSets ?? []} />}
-                EmptyComponent={<div>xd</div>}
+                EmptyComponent={<div>You have no vote sets.</div>}
             />
         </MainLayout>
     )

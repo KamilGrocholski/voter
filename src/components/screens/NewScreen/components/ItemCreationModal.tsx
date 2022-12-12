@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { FormGroup } from "../../../common/Form"
+import ImageUpload from "../../../common/ImageUpload/ImageUpload"
 import { Modal, ModalForm, ModalActions } from "../../../common/Modal"
 import { useNewVoteSetStore } from "../store"
 import { PickVoteItem } from "../types"
@@ -13,8 +14,8 @@ const ItemCreationModal: React.FC = () => {
         setNewItem(prev => ({ ...prev, name: e.target.value }))
     }
 
-    const handleSetImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNewItem(prev => ({ ...prev, image: e.target.value }))
+    const handleSetImage = (url: string) => {
+        setNewItem(prev => ({ ...prev, image: url }))
     }
 
     const handleCancelCreation = () => {
@@ -32,39 +33,37 @@ const ItemCreationModal: React.FC = () => {
 
     return (
         <Modal
-            isOpen={ isOpen }
-            handleCancel={ handleCancelCreation }
+            isOpen={isOpen}
+            handleCancel={handleCancelCreation}
             title='Create a new item'
             description='Enter the name and the image'
-        >   
-            <ModalForm onSubmit={ onSubmit }>
-                <FormGroup 
+        >
+            <ModalForm onSubmit={onSubmit}>
+                <FormGroup
                     label='Name'
                     name='newItemName'
                 >
-                    <input 
+                    <input
                         type='text'
-                        value={ newItem?.name }
-                        onChange={ handleSetName }
+                        value={newItem?.name}
+                        onChange={handleSetName}
                         className='bg-gray-900'
                     />
                 </FormGroup>
-                <FormGroup 
+                <FormGroup
                     label='Image'
                     name='newItemImage'
                 >
-                    <input 
-                        type='text'
-                        value={ newItem?.image }
-                        onChange={ handleSetImage }
-                        className='bg-gray-900'
+                    <ImageUpload
+                        storeImage={newItem.image}
+                        storeImageFn={handleSetImage}
                     />
                 </FormGroup>
                 <ModalActions>
                     <button type='submit'>
                         Create
                     </button>
-                    <button onClick={ handleCancelCreation }>
+                    <button onClick={handleCancelCreation}>
                         Cancel
                     </button>
                 </ModalActions>
