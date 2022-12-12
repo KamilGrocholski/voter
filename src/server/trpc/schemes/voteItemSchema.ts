@@ -17,7 +17,13 @@ const base = {
 export const voteItemSchema = {
     create: z.object({
         name: base.name,
-        image: base.image
+        image: base.image,
+    }),
+    createAlone: z.object({
+                name: base.name,
+        image: base.image,
+        // voteSetId: voteSetSchemaBase.id
+        voteSetId: z.string().cuid()
     }),
     update: z.object({
         voteItemId: base.id,

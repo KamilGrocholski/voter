@@ -4,13 +4,12 @@ import { useNewVoteSetStore } from "../store"
 
 const Create: React.FC = () => {
     const { push } = useRouter()
-    const { name, image, items, setIsLoading, setIsError, setError, isError, error: errorSetCreation, setIsCreatorStateOpen } = useNewVoteSetStore()
+    const { name, image, items, setIsLoading, setIsError, setError, isError, error: errorSetCreation, setIsCreatorStateOpen, resetStore } = useNewVoteSetStore()
 
     const { mutate: createSet, isLoading, error } = trpc.voteSet.create.useMutation({
         onSuccess: () => {
             push('/dashboard')
-            setIsError(false)
-            setError(undefined)
+            resetStore()
         },
         onError: () => {
             setIsError(true)

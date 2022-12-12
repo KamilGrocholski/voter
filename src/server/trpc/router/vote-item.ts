@@ -3,6 +3,7 @@ import getTwoDifferentRandomInts from "../../../utils/getTwoDifferentRandomInts"
 import { voteItemSchema } from "../schemes/voteItemSchema"
 import { voteSetSchemaBase } from '../schemes/voteSetSchema'
 import { isVoteItemOwner } from "../../utils/isVoteItemOwner"
+import { isVoteSetOwner } from "../../utils/isVoteSetOwner"
 
 export const voteItemRouter = router({
     getPair: publicProcedure
@@ -28,6 +29,22 @@ export const voteItemRouter = router({
             const twoRandomIndexes = getTwoDifferentRandomInts(0, foundItems.length - 1)
 
             return { firstItem: foundItems[twoRandomIndexes[0]], secondItem: foundItems[twoRandomIndexes[1]] }
+        }),
+
+    create: protectedProcedure
+        .input(voteItemSchema.createAlone)
+        .mutation(({ ctx, input }) => {
+            const { name, image, voteSetId } = input
+
+            isVoteSetOwner(ctx, voteSetId)
+
+            return ctx.prisma.voteItem.create({
+                data: {
+                    name,
+                    image,
+                    voteSetId
+                }
+            })
         }),
 
     update: protectedProcedure

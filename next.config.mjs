@@ -25,6 +25,6 @@ export default defineNextConfig({
     domains: [
       'res.cloudinary.com',
       'cdn.discordapp.com'
-    ],
+    ]
   }
 });

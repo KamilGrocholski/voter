@@ -92,7 +92,7 @@ export const voteSetRouter = router({
             const { name, image, items } = input
 
             const uploadResultUrl = await uploadImage(image)
-            
+
             const itemsUploadResultUrls = await Promise.all(
                 items.map((item) => uploadImage(item.image))
             )
@@ -121,9 +121,9 @@ export const voteSetRouter = router({
     update: protectedProcedure
         .input(voteSetSchema.update)
         .mutation(async ({ ctx, input }) => {
-            const { name, image, isPublished, voteSetId } = input 
+            const { name, image, isPublished, voteSetId } = input
             isVoteSetOwner(ctx, voteSetId)
-            
+
             const itemsCounter = await ctx.prisma.voteSet.findUnique({
                 where: {
                     id: voteSetId
@@ -135,7 +135,7 @@ export const voteSetRouter = router({
                         }
                     }
                 }
-            }) 
+            })
 
             if (!itemsCounter || itemsCounter._count.voteItems < 2) {
                 throw new TRPCError({ code: 'FORBIDDEN' })
@@ -185,100 +185,100 @@ export const voteSetRouter = router({
 
             return ctx.prisma.voteSet.findMany({
                 where: {
-                    isPublished: true   
+                    isPublished: true
                 },
                 // take,
                 // cursor: {
-                    // id: cursor
+                // id: cursor
                 // },
                 select: voteSetSelects.publicMainSelect
             })
         }),
 
-        likeDislike: protectedProcedure
-            .input(voteSetSchema.likeDislike)
-            .mutation(async ({ ctx, input }) => {
-                const { voteSetId, action } = input
-                const userId = ctx.session.user.id 
+    likeDislike: protectedProcedure
+        .input(voteSetSchema.likeDislike)
+        .mutation(async ({ ctx, input }) => {
+            const { voteSetId, action } = input
+            const userId = ctx.session.user.id
 
-                const foundVoteSet = await ctx.prisma.voteSet.findUnique({
-                    where: {
-                        id: voteSetId
-                    }
-                }) 
+            const foundVoteSet = await ctx.prisma.voteSet.findUnique({
+                where: {
+                    id: voteSetId
+                }
+            })
 
-                if (foundVoteSet?.ownerId === userId) {
-                    throw new TRPCError({ code: 'FORBIDDEN' })
-                } 
+            if (foundVoteSet?.ownerId === userId) {
+                throw new TRPCError({ code: 'FORBIDDEN' })
+            }
 
-                const foundLike = await ctx.prisma.voteSetLike.findFirst({
-                    where: {
-                        AND: {
-                            userId,
-                            voteSetId
-                        }
-                    }
-                })
-
-                const foundDislike = await ctx.prisma.voteSetDislike.findFirst({
-                    where: {
-                        AND: {
-                            userId,
-                            voteSetId
-                        }
-                    }
-                })
-
-                if (action === 'like') {
-
-                    if (!foundLike && !foundDislike) {
-                        return ctx.prisma.voteSetLike.create({
-                            data: {
-                                voteSetId,
-                                userId
-                            }
-                        })
-                    }
-
-                    if (!foundLike && foundDislike) {
-                        await ctx.prisma.voteSetDislike.delete({
-                            where: {
-                                id: foundDislike.id
-                            }
-                        })
-                        return ctx.prisma.voteSetLike.create({
-                            data: {
-                                voteSetId,
-                                userId
-                            }
-                        })
+            const foundLike = await ctx.prisma.voteSetLike.findFirst({
+                where: {
+                    AND: {
+                        userId,
+                        voteSetId
                     }
                 }
+            })
 
-                else if (action === 'dislike') {
-                    if (!foundLike && !foundDislike) {
-                        return ctx.prisma.voteSetDislike.create({
-                            data: {
-                                voteSetId,
-                                userId
-                            }
-                        })
-                    }
-
-                    if (foundLike && !foundDislike) {
-                        await ctx.prisma.voteSetLike.delete({
-                            where: {
-                                id: foundLike.id
-                            }
-                        })
-                        return ctx.prisma.voteSetDislike.create({
-                            data: {
-                                voteSetId,
-                                userId
-                            }
-                        })
+            const foundDislike = await ctx.prisma.voteSetDislike.findFirst({
+                where: {
+                    AND: {
+                        userId,
+                        voteSetId
                     }
                 }
-            }),
+            })
+
+            if (action === 'like') {
+
+                if (!foundLike && !foundDislike) {
+                    return ctx.prisma.voteSetLike.create({
+                        data: {
+                            voteSetId,
+                            userId
+                        }
+                    })
+                }
+
+                if (!foundLike && foundDislike) {
+                    await ctx.prisma.voteSetDislike.delete({
+                        where: {
+                            id: foundDislike.id
+                        }
+                    })
+                    return ctx.prisma.voteSetLike.create({
+                        data: {
+                            voteSetId,
+                            userId
+                        }
+                    })
+                }
+            }
+
+            else if (action === 'dislike') {
+                if (!foundLike && !foundDislike) {
+                    return ctx.prisma.voteSetDislike.create({
+                        data: {
+                            voteSetId,
+                            userId
+                        }
+                    })
+                }
+
+                if (foundLike && !foundDislike) {
+                    await ctx.prisma.voteSetLike.delete({
+                        where: {
+                            id: foundLike.id
+                        }
+                    })
+                    return ctx.prisma.voteSetDislike.create({
+                        data: {
+                            voteSetId,
+                            userId
+                        }
+                    })
+                }
+            }
+        }),
 })
 

@@ -28,6 +28,8 @@ interface Actions {
     addItem: (item: PickVoteItem) => void
     removeItem: (index: number) => void
     editItem: (index: number, editedFields: Partial<PickVoteItem>) => void
+
+    resetStore: () => void
 }
 
 export const useNewVoteSetStore = create<State & Actions>(set => ({
@@ -52,4 +54,15 @@ export const useNewVoteSetStore = create<State & Actions>(set => ({
     addItem: (item) => set((state) => ({ items: [...state.items, item] })),
     removeItem: (index) => set((state) => ({ items: state.items.filter((_, i) => i !== index) })),
     editItem: (index, editedFields) => set((state) => ({ items: state.items.map((item, i) => i === index ? { ...item, editedFields } : item) })),
+
+    resetStore: () => set(() => ({
+        name: undefined,
+        image: undefined,
+        items: [],
+        isCreatorOpen: false,
+        isCreatorStateOpen: false,
+        isLoading: false,
+        isError: false,
+        error: undefined,
+    }))
 }))
