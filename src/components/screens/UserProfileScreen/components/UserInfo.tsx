@@ -8,7 +8,7 @@ type UserInfoProps = {
 
 const UserInfo: React.FC<UserInfoProps> = (props) => {
     return (
-        <div>
+        <div className='bg-dark-shade-7 p-3'>
             <Image
                 src={props.image}
                 alt={'Avatar'}
@@ -17,7 +17,7 @@ const UserInfo: React.FC<UserInfoProps> = (props) => {
                 height={120}
             />
             <div>
-                <span>props.name</span>
+                <span>{props.name}</span>
             </div>
         </div>
     )

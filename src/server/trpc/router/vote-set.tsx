@@ -6,6 +6,7 @@ import { TRPCError } from "@trpc/server"
 import { createDateFromNow } from "../../utils/createDateFromNow"
 import { voteSetSelects } from "../../utils/selects/voteSetSelect"
 import { deleteImage, uploadImage } from "../../lib/cloudinary"
+import { userSchemaBase } from "../schemes/userSchema"
 
 export const voteSetRouter = router({
     getRecentlyPopular: publicProcedure
@@ -79,6 +80,21 @@ export const voteSetRouter = router({
                 where: {
                     AND: {
                         id: voteSetId,
+                        isPublished: true
+                    }
+                },
+                select: voteSetSelects.publicMainSelect
+            })
+        }),
+
+    getAllByUserIdPublic: publicProcedure
+        .input(userSchemaBase.id)
+        .query(({ ctx, input: userId }) => {
+
+            return ctx.prisma.voteSet.findMany({
+                where: {
+                    AND: {
+                        ownerId: userId,
                         isPublished: true
                     }
                 },
@@ -180,19 +196,31 @@ export const voteSetRouter = router({
 
     pagination: publicProcedure
         .input(voteSetSchema.pagination)
-        .query(({ ctx, input }) => {
+        .query(async ({ ctx, input }) => {
             const { cursor, take } = input
 
-            return ctx.prisma.voteSet.findMany({
+            const voteSets = await ctx.prisma.voteSet.findMany({
                 where: {
                     isPublished: true
                 },
-                // take,
-                // cursor: {
-                // id: cursor
-                // },
+                orderBy: {
+                    createdAt: 'asc'
+                },
+                take: take + 1,
+                cursor: cursor ? { id: cursor } : undefined,
                 select: voteSetSelects.publicMainSelect
             })
+
+            let nextCursor: typeof cursor | undefined = undefined
+            if (voteSets.length > take) {
+                const nextItem = voteSets.pop()
+                nextCursor = nextItem?.id
+            }
+
+            return {
+                voteSets,
+                nextCursor
+            }
         }),
 
     likeDislike: protectedProcedure

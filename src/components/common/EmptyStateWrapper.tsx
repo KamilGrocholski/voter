@@ -15,13 +15,17 @@ const EmptyStateWrapper: React.FC<StateWrapperProps> = ({
     NonEmptyComponent,
     EmptyComponent
 }) => {
-    if (isLoading) return <div>Loading...</div>
-
-    if (Array.isArray(data) && data.length < 1) return <>{EmptyComponent}</>
-
-    if (!data) return <>{EmptyComponent}</>
-
-    return <>{NonEmptyComponent}</>
+    return (
+        <>
+            {isLoading
+                ? <div>Loading...</div>
+                : Array.isArray(data) && data.length < 1
+                    ? <>{EmptyComponent}</>
+                    : !data
+                        ? <>{EmptyComponent}</>
+                        : <>{NonEmptyComponent}</>}
+        </>
+    )
 }
 
 export default EmptyStateWrapper

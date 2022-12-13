@@ -32,7 +32,7 @@ const voteSetSchema = {
         voteSetId: base.id
     }),
     pagination: z.object({
-        take: z.number().min(1).max(100).optional(),
+        take: z.number().min(1).max(100),
         cursor: z.optional(base.id)
     }),
     likeDislike: z.object({

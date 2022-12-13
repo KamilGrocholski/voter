@@ -1,9 +1,9 @@
 import React from 'react'
-import { VotesSetsPagination } from '../../../types/trpcOutputTypes'
+import { VotesSetsList } from '../../../types/trpcOutputTypes'
 import VoteSetCard from './Card'
 
 interface Props {
-    votesSets: VotesSetsPagination
+    votesSets: VotesSetsList
 }
 
 const VotesSetsList: React.FC<Props> = ({
@@ -12,8 +12,8 @@ const VotesSetsList: React.FC<Props> = ({
     return (
         <div className='grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
             {votesSets.map((set, i) => (
-                <VoteSetCard key={ i } { ...set } />
-            ))}           
+                <VoteSetCard key={i} {...set} />
+            ))}
         </div>
     )
 }
