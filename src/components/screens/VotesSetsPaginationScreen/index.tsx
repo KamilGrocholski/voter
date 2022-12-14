@@ -10,7 +10,7 @@ const VotesSetsPaginationScreen: React.FC = () => {
 
     const handleFetchNextPage = async () => {
         await infinityVotesSets.fetchNextPage()
-        setPage(prevPage => prevPage + 1)
+        setPage(prevPage => infinityVotesSets.hasNextPage ? prevPage + 1 : prevPage)
     }
 
     const handleFetchPrevPage = () => {

@@ -36,7 +36,7 @@ const ItemCreationModal: React.FC = () => {
             isOpen={isOpen}
             handleCancel={handleCancelCreation}
             title='Create a new item'
-            description='Enter the name and the image'
+            description='Choose a name and an image'
         >
             <ModalForm onSubmit={onSubmit}>
                 <FormGroup

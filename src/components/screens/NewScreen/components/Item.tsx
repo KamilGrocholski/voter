@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useNewVoteSetStore } from "../store"
 import { NewVoteItem } from "../types"
 import Image from "next/image"
+import ImageUpload from "../../../common/ImageUpload/ImageUpload"
 
 const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
     const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -18,8 +19,6 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
     }
 
     const handleCancelEditing = () => {
-        setNewName(name)
-        setNewImage(image)
         setIsEditing(false)
     }
 
@@ -31,8 +30,8 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
         setNewName(e.currentTarget.value)
     }
 
-    const handleSetNewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNewImage(e.currentTarget.value)
+    const handleSetNewImage = (url: string) => {
+        setNewImage(url)
     }
 
     return (
@@ -47,18 +46,15 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
                                 onChange={handleSetNewName}
                                 className='bg-gray-700'
                             />
-                            <input
-                                type='text'
-                                value={newImage}
-                                onChange={handleSetNewImage}
-                                className='bg-gray-700'
+                            <ImageUpload
+                                storeImage={newImage}
+                                storeImageFn={handleSetNewImage}
                             />
                             <button onClick={handleEditItem}>Save</button>
                             <button onClick={handleCancelEditing}>Cancel</button>
                         </>
                     ) :
                     (<>
-                        <div>{newName}</div>
                         <div>
                             <Image
                                 src={newImage}
@@ -68,6 +64,7 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
                                 height={80}
                             />
                         </div>
+                        <div>{newName}</div>
                         <button
                             onClick={handleStartEditing}
                         >

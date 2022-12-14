@@ -20,8 +20,8 @@ const NewScreen: React.FC = () => {
                     storeImage={image}
                     storeImageFn={setImage}
                 />
-                <ItemsList />
                 <CreateItem />
+                <ItemsList />
                 <CreationStateModal />
                 <ItemCreationModal />
             </div>

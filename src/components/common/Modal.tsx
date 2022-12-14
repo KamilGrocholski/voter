@@ -27,7 +27,7 @@ export const Modal = ({
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <Dialog.Panel className="mx-auto max-w-md bg-dark-shade-8 p-8 rounded-xl flex flex-col gap-4">
-          <Dialog.Title className="font-bold text-2xl">{title}</Dialog.Title>
+          <Dialog.Title className="font-bold text-2xl text-center">{title}</Dialog.Title>
           <Dialog.Description>{description}</Dialog.Description>
 
           <div className="flex flex-col gap-4">{children}</div>
@@ -42,8 +42,8 @@ export const ModalActions = ({ children }: { children: JSX.Element | JSX.Element
 };
 
 type ModalFormProps = {
-    children: JSX.Element | JSX.Element[]
-    [x: string]: unknown
+  children: JSX.Element | JSX.Element[]
+  [x: string]: unknown
 }
 export const ModalForm: React.FC<ModalFormProps> = ({ children, ...rest }) => {
   return (

@@ -204,7 +204,7 @@ export const voteSetRouter = router({
                     isPublished: true
                 },
                 orderBy: {
-                    createdAt: 'asc'
+                    createdAt: 'desc'
                 },
                 take: take + 1,
                 cursor: cursor ? { id: cursor } : undefined,

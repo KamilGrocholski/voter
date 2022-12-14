@@ -7,7 +7,10 @@ export type VoteItemSchemes = InferSchemesObject<typeof voteItemSchema>
 
 const base = {
     id: z.string().cuid(),
-    name: z.string().min(1),
+    name: z.string({
+        required_error: 'name must be in range from 1 to 55 characters',
+        invalid_type_error: 'name must be a string'
+    }).min(1).max(55),
     image: z.string().url(),
     // createdAt: z.date(),
     // updatedAt: z.date(),
