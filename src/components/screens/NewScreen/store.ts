@@ -7,7 +7,6 @@ interface State {
     isLoading: boolean
     isError: boolean
     error?: string
-    
 
     name: string | undefined
     image: string | undefined

@@ -54,7 +54,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 />) : null}
             <button
                 onClick={handleChooseFile}
-                className='px-2 py-1 border border-1 border-black bg-dark-accent-0/20'
+                className='px-2 py-1 border border-1 border-black'
             >
                 Choose a file
             </button>

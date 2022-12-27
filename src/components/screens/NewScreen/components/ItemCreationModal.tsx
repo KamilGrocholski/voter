@@ -45,9 +45,10 @@ const ItemCreationModal: React.FC = () => {
                 >
                     <input
                         type='text'
-                        value={newItem?.name}
+                        value={newItem?.name ?? ''}
                         onChange={handleSetName}
-                        className='bg-gray-900'
+                        placeholder='Name'
+                        className='input-normal'
                     />
                 </FormGroup>
                 <FormGroup
@@ -60,10 +61,10 @@ const ItemCreationModal: React.FC = () => {
                     />
                 </FormGroup>
                 <ModalActions>
-                    <button type='submit'>
+                    <button type='submit' className='btn btn-normal'>
                         Create
                     </button>
-                    <button onClick={handleCancelCreation}>
+                    <button onClick={handleCancelCreation} className='btn btn-normal'>
                         Cancel
                     </button>
                 </ModalActions>

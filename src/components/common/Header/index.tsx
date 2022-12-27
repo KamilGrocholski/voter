@@ -10,11 +10,11 @@ const Header = () => {
     const userData = data?.user
 
     return (
-        <header className='h-16 w-full px-3 z-50 border-b border-dark-border items-center flex'>
+        <header className='w-full h-11 py-2 px-3 z-50 items-center flex bg-dark-shade-900'>
             <Logo />
             <nav className='flex flex-row space-x-8 items-center'>
                 {data?.user ? (
-                    <LoggedInLinks role={ data.user.role } />
+                    <LoggedInLinks role={data.user.role} />
                 ) : (
                     <LoggedOutLinks />
                 )}

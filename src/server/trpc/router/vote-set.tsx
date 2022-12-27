@@ -16,7 +16,7 @@ export const voteSetRouter = router({
                     isPublished: true,
                     createdAt: {
                         gte: createDateFromNow('past', {
-                            week: 2
+                            week: 10
                         })
                     }
                 },

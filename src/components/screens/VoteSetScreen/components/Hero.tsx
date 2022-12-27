@@ -1,4 +1,3 @@
-import placeholder from '../../../../assets/placeholders/dashboard-card-placeholder.jpg'
 import Image from "next/image"
 import { parseDate } from '../../../../utils/parseDate'
 import { VoteSet } from '../types'
@@ -17,7 +16,7 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
     }
 
     return (
-        <div>
+        <div className='w-full bg-dark-shade-800'>
             <div className='relative rounded-md overflow-hidden w-full max-h-[300px] min-h-[300px]'>
                 <Image
                     src={props.image ?? 'd'}
@@ -29,7 +28,7 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
                     <Info {...props} />
                     <button
                         onClick={handleGoToVoting}
-                        className='w-48 rounded-md text-dark-accent-0 font-semibold hover:text-white/50 hover:bg-dark-accent-0/30'
+                        className='w-48 rounded-sm font-semibold btn hover:text-purple-800'
                     >
                         Go to voting page
                     </button>

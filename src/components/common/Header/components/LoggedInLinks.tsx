@@ -47,14 +47,14 @@ const LoggedInLinks: React.FC<Props> = ({
         <>
             {ROLE_BASED_LINKS.base.map((link, i) => (
                 <div
-                    key={ link.href + i }
-                    className='hover:text-white text-muted-light'
+                    key={link.href + i}
+                    className='hover:text-white'
                 >
-                    <Link 
-                        href={ link.href }
-                        aria-current={ 'page' }
-                        >
-                        { link.label }
+                    <Link
+                        href={link.href}
+                        aria-current={'page'}
+                    >
+                        {link.label}
                     </Link>
                 </div>
             ))}

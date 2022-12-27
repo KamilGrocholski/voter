@@ -35,46 +35,53 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
     }
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-md border p-1'>
+        <div className='flex flex-col space-y-3 brd brd-normal p-3'>
             <div className='flex flex-row space-x-3'>
                 {isEditing ?
                     (
-                        <>
+                        <div className='flex flex-col space-y-3'>
                             <input
                                 type='text'
                                 value={newName}
                                 onChange={handleSetNewName}
-                                className='bg-gray-700'
+                                className='input-normal'
                             />
                             <ImageUpload
                                 storeImage={newImage}
                                 storeImageFn={handleSetNewImage}
                             />
-                            <button onClick={handleEditItem}>Save</button>
-                            <button onClick={handleCancelEditing}>Cancel</button>
-                        </>
+                            <div className='flex flex-row justify-end space-x-3'>
+                                <button onClick={handleEditItem} className='btn btn-normal'>Save</button>
+                                <button onClick={handleCancelEditing} className='btn btn-normal'>Cancel</button>
+                            </div>
+                        </div>
                     ) :
                     (<>
-                        <div>
-                            <Image
-                                src={newImage}
-                                alt='image'
-                                layout="fixed"
-                                width={100}
-                                height={80}
-                            />
+                        <div className='flex flex-col space-y-3 w-full'>
+                            <div className='flex flex-row space-x-3'>
+                                <Image
+                                    src={newImage}
+                                    alt='image'
+                                    layout="fixed"
+                                    width={100}
+                                    height={80}
+                                />
+                                <div>{newName}</div>
+                            </div>
+                            <div className="flex flex-row justify-end space-x-3">
+                                <button
+                                    onClick={handleStartEditing}
+                                    className='btn btn-normal'
+                                >
+                                    Edit
+                                </button>
+                                <button onClick={handleRemoveItem} className='btn btn-normal'>
+                                    Remove
+                                </button>
+                            </div>
                         </div>
-                        <div>{newName}</div>
-                        <button
-                            onClick={handleStartEditing}
-                        >
-                            Edit
-                        </button>
                     </>)}
             </div>
-            <button onClick={handleRemoveItem}>
-                Remove
-            </button>
         </div>
     )
 }

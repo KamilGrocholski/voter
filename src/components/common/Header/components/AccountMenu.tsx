@@ -16,7 +16,7 @@ const AccountMenu = () => {
 
     if (!data?.user) return (
         <div>
-            <button onClick={ handleSignIn }>
+            <button onClick={handleSignIn}>
                 Sign in
             </button>
         </div>
@@ -27,7 +27,7 @@ const AccountMenu = () => {
             <div>
                 <Menu.Button>
                     <div className='rounded-full overflow-hidden w-[50px] h-[50px]'>
-                        <Image 
+                        <Image
                             src={data.user.image ?? ''}
                             alt='xd'
                             layout='fixed'
@@ -40,7 +40,7 @@ const AccountMenu = () => {
                 </Menu.Button>
             </div>
 
-            <Menu.Items className='absolute right-0 p-3 space-y-1 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md bg-dark-bgThird shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+            <Menu.Items className='absolute right-0 p-3 space-y-1 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 <div className='flex flex-col space-y-1'>
                     <Menu.Item>
                         <span className={styles.normalItem}>Your profile</span>

@@ -10,13 +10,13 @@ const ItemsRanking: React.FC<ItemsRankingProps> = ({
     items
 }) => {
     return (
-        <div className='flex flex-col bg-dark-shade-7 p-3 rounded-md'>
+        <div className='flex flex-col bg-dark-shade-7 py-3 mx-auto rounded-md'>
             {sortByTopVotesForPercentage(items).map((item, i) => (
-                <ItemCard 
+                <ItemCard
                     key={i}
                     id={item.id}
                     name={item.name}
-                    image={item.image} 
+                    image={item.image}
                     _count={item._count}
                     createdAt={item.createdAt}
                     updatedAt={item.updatedAt}

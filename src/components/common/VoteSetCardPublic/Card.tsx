@@ -10,14 +10,14 @@ import { VoteSet } from '@prisma/client'
 import UserInfoSmall from '../UserThings/UserInfoSmall'
 import { useRouter } from 'next/router'
 
-const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
+const VoteSetCard: React.FC<VotesSetsPagination['voteSets'][number]> = (props) => {
 
     return (
         <div>
             <Link
                 href={`/vote-sets/${props.id}/voting`}
             >
-                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-dark-accent-0 shadow-lg shadow-black'>
+                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
                     <Image
                         src={props.image}
                         alt={'xd'}
@@ -26,7 +26,7 @@ const VoteSetCard: React.FC<VotesSetsPagination[number]> = (props) => {
                         objectPosition='center'
                         className='absolute top-0 bottom-0 left-0 right-0'
                     />
-                    <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-black/50'>
+                    <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-dark-shade-800/70'>
                         <div className='h-[85%] flex flex-col'>
                             <div className='flex flex-row justify-between'>
                                 <Name
@@ -80,18 +80,18 @@ const GoToVoteSetPage: React.FC<{ voteSetId: VoteSet['id'] }> = ({ voteSetId }) 
     return (
         <button
             onClick={handleGoToVoteSetPage}
-            className='px-3 py-1 rounded-md bg-dark-shade-10/50'
+            className='bg-dark-shade-900/50 px-3 py-1 rounded-sm hover:bg-purple-800/50'
         >
             View
         </button>
     )
 }
 
-const Name: React.FC<{ name: VotesSetsPagination[number]['name'] }> = ({
+const Name: React.FC<{ name: VotesSetsPagination['voteSets'][number]['name'] }> = ({
     name
 }) => {
     return (
-        <div className='text-2xl font-semibold'>
+        <div className='text-2xl font-semibold mb-1'>
             {name}
         </div>
     )
@@ -111,14 +111,14 @@ const Items: React.FC<{
     }
 
 const Timestamps: React.FC<{
-    createdAt: VotesSetsPagination[number]['createdAt'],
-    updatedAt: VotesSetsPagination[number]['updatedAt']
+    createdAt: VotesSetsPagination['voteSets'][number]['createdAt'],
+    updatedAt: VotesSetsPagination['voteSets'][number]['updatedAt']
 }> = ({
     createdAt,
     updatedAt
 }) => {
         return (
-            <div className='flex flex-col space-y-1 text-xs text-dark-shade-0/80'>
+            <div className='flex flex-col space-y-1 text-xs'>
                 <div className='flex flex-row space-x-1'>
                     <div>created at </div>
                     <div>{parseDate(createdAt)}</div>
@@ -163,7 +163,7 @@ const LikesDislikes: React.FC<{
                     disabled={isLoading}
                     className='flex flex-row space-x-1'
                 >
-                    <div className='text-green-500'>{RepIcons.like}</div>
+                    <div className='text-indicative-success'>{RepIcons.like}</div>
                     <div>{likes}</div>
                 </button>
                 <button
@@ -171,7 +171,7 @@ const LikesDislikes: React.FC<{
                     disabled={isLoading}
                     className='flex flex-row space-x-1'
                 >
-                    <div className='text-red-500'>{RepIcons.dislike}</div>
+                    <div className='text-indicative-danger'>{RepIcons.dislike}</div>
                     <div>{dislikes}</div>
                 </button>
             </div>
@@ -179,7 +179,7 @@ const LikesDislikes: React.FC<{
     }
 
 const Votes: React.FC<{
-    votes: VotesSetsPagination[number]['voteItems']
+    votes: VotesSetsPagination['voteSets'][number]['voteItems']
 }> = ({
     votes
 }) => {
@@ -191,7 +191,7 @@ const Votes: React.FC<{
         )
     }
 
-const Owner: React.FC<VotesSetsPagination[number]['owner']> = ({
+const Owner: React.FC<VotesSetsPagination['voteSets'][number]['owner']> = ({
     id,
     image,
     name,

@@ -9,7 +9,8 @@ const CreateItem: React.FC = () => {
 
     return (
         <button
-            onClick={ handleOpenCreator }
+            onClick={handleOpenCreator}
+            className='btn-normal btn mx-auto'
         >
             Create a new item
         </button>

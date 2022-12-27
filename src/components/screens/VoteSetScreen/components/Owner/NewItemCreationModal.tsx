@@ -58,7 +58,7 @@ const ItemCreationModal: React.FC<{ voteSetId: VoteSet['id'], isCreatorOpen: boo
                         type='text'
                         value={newItem?.name}
                         onChange={handleSetName}
-                        className='bg-gray-900'
+                        className='input-normal'
                     />
                 </FormGroup>
                 <FormGroup
@@ -71,10 +71,10 @@ const ItemCreationModal: React.FC<{ voteSetId: VoteSet['id'], isCreatorOpen: boo
                     />
                 </FormGroup>
                 <ModalActions>
-                    <button type='submit'>
+                    <button type='submit' className='btn'>
                         Create
                     </button>
-                    <button onClick={handleCancelCreation}>
+                    <button onClick={handleCancelCreation} className='btn'>
                         Cancel
                     </button>
                 </ModalActions>

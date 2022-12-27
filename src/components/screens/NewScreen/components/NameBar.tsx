@@ -1,23 +1,23 @@
-import React from "react"
 import { useNewVoteSetStore } from "../store"
 
 const NameBar: React.FC = () => {
     const name = useNewVoteSetStore(state => state.name)
-    const { setName } = useNewVoteSetStore()
+    const setName = useNewVoteSetStore(state => state.setName)
 
     const handleSetName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
     }
 
     return (
-        <div className='rouded-md bg-gray-700 px-3 py-1'>
-            <input 
+        <>
+            <span className='text-indicative-danger'>{!name || name && (name.length <= 5 || name.length >= 45) ? 'Name must be between 5 and 45 characters' : null}</span>
+            <input
                 placeholder='Choose a name for your new vote set'
-                value={ name }
-                onChange={ handleSetName }
-                className='bg-inherit w-full'
+                value={name}
+                onChange={handleSetName}
+                className='input-normal'
             />
-        </div>
+        </>
     )
 }
 

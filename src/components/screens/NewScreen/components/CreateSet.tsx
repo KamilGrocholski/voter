@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server"
 import { useRouter } from "next/router"
 import { trpc } from "../../../../utils/trpc"
 import { useNewVoteSetStore } from "../store"
@@ -6,14 +7,14 @@ const Create: React.FC = () => {
     const { push } = useRouter()
     const { name, image, items, setIsLoading, setIsError, setError, setIsCreatorStateOpen, resetStore } = useNewVoteSetStore()
 
-    const { mutate: createSet, isLoading, error } = trpc.voteSet.create.useMutation({
+    const { mutate: createSet, isLoading } = trpc.voteSet.create.useMutation({
         onSuccess: () => {
             push('/dashboard')
             resetStore()
         },
-        onError: () => {
+        onError: (error) => {
             setIsError(true)
-            setError(error?.message)
+            setError(error.message)
             setIsCreatorStateOpen(true)
         },
         onSettled: () => {
@@ -30,7 +31,7 @@ const Create: React.FC = () => {
     return (
         <>
             <button
-                className='border rounded-md w-24 h-8 mx-auto items-center'
+                className='h-8 btn btn-normal'
                 onClick={handleCreateVoteSet}
                 disabled={isLoading}
             >

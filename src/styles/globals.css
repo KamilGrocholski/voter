@@ -12,22 +12,46 @@
     } 
 
     body {
-        @apply text-dark-shade-0 bg-dark-shade-9;
+        @apply bg-[#1b1b25] text-white
     }
 }
 
 
 @layer components {
+  .section-intro {
+    @apply bg-dark-shade-700
+  }
+
+  .brd-normal {
+    @apply border border-dark-shade-500
+  }
+
+  .brd-dashed {
+    @apply border border-dashed border-dark-shade-500
+  }
+
+  .brd-big {
+    @apply border-4 border-dark-shade-800
+  }
+
+  .input-normal {
+    @apply border border-dark-shade-500 bg-dark-shade-600 py-2 placeholder-dark-shade-400 px-1 text-dark-shade-300
+  }
+
+  .btn {
+    @apply rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-dark-shade-500 text-dark-shade-200 py-1 px-3 hover:bg-dark-shade-400
+  }
+
+  .btn-small {
+    @apply text-sm py-1 px-3
+  }
+
     .hidden-input {
       @apply hidden
     }
 
     .button-default {
       @apply text-white;
-    }
-
-    input {
-      @apply bg-dark-shade-8 outline-dark-shade-6 border border-dark-shade-6 px-2 py-1 rounded-md
     }
 
     h1 {

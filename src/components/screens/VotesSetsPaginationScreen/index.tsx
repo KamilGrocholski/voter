@@ -28,9 +28,9 @@ const VotesSetsPaginationScreen: React.FC = () => {
                             votesSets={infinityVotesSets.data?.pages[page]?.voteSets ?? []}
                         />
                         <div className='flex flex-row space-x-3 items-center justify-center mt-12'>
-                            <button className='px-2 py-1 w-24 border-1 border rounded-md' onClick={handleFetchPrevPage}>Prev</button>
+                            <button className='w-24 btn' onClick={handleFetchPrevPage}>Prev</button>
                             <div>{page + 1}</div>
-                            <button className='px-2 py-1 w-24 border-1 border rounded-md' onClick={handleFetchNextPage}>Next</button>
+                            <button className='w-24 btn' onClick={handleFetchNextPage}>Next</button>
                         </div>
                     </>
                 }

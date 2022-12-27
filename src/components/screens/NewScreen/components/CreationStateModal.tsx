@@ -33,7 +33,7 @@ const CreationStateModal = () => {
             </div>
             <ModalActions>
                 <button
-                    className='border border-1 border-black rounded-md px-3 py-1 text-center bg-dark-accent-0/50'
+                    className='brd rounded-sm p-3 text-center'
                     onClick={handleCloseCreatorState}
                 >
                     Close

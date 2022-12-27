@@ -40,27 +40,27 @@ const VotingScreen: React.FC = () => {
             ) : (votePair?.firstItem?.id && votePair?.secondItem?.id) ? (
                 <div className='flex flex-col space-y-24 my-auto justify-center items-center'>
                     <div className='flex flex-row space-x-24 items-center mx-auto justify-center'>
-                        <CastVoteBtn 
-                            handleCastVote={() => handleCastVote({ 
-                                votedForId: votePair?.firstItem?.id as VoteSet['id'], 
-                                votedAgainstId: votePair?.secondItem?.id as VoteSet['id'], 
-                                voteSetId 
+                        <CastVoteBtn
+                            handleCastVote={() => handleCastVote({
+                                votedForId: votePair?.firstItem?.id as VoteSet['id'],
+                                votedAgainstId: votePair?.secondItem?.id as VoteSet['id'],
+                                voteSetId
                             })}
                             isDisabled={isCasting}
                             item={votePair.firstItem}
                         />
                         <div>VS</div>
-                        <CastVoteBtn 
-                            handleCastVote={() => handleCastVote({ 
-                                votedForId: votePair?.secondItem?.id as VoteSet['id'], 
-                                votedAgainstId: votePair?.firstItem?.id as VoteSet['id'], 
-                                voteSetId 
+                        <CastVoteBtn
+                            handleCastVote={() => handleCastVote({
+                                votedForId: votePair?.secondItem?.id as VoteSet['id'],
+                                votedAgainstId: votePair?.firstItem?.id as VoteSet['id'],
+                                voteSetId
                             })}
                             isDisabled={isCasting}
                             item={votePair.secondItem}
                         />
                     </div>
-                    <SkipBtn 
+                    <SkipBtn
                         isDisabled={isPairLoading}
                         handleSkip={handleSkipVoting}
                     />

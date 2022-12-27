@@ -9,13 +9,15 @@ import NameBar from "./components/NameBar"
 import { useNewVoteSetStore } from "./store"
 
 const NewScreen: React.FC = () => {
-    const { setImage, image } = useNewVoteSetStore()
+    const image = useNewVoteSetStore(state => state.image)
+    const setImage = useNewVoteSetStore(state => state.setImage)
 
     return (
         <MainLayout useContainer={true}>
-            <div className='flex flex-col space-y-3'>
+            <div className='flex flex-col space-y-3 w-[20vw] mx-auto'>
                 <CreateSet />
                 <NameBar />
+                <span className='text-indicative-danger'>{image ? null : 'Choose an image'}</span>
                 <ImageUpload
                     storeImage={image}
                     storeImageFn={setImage}

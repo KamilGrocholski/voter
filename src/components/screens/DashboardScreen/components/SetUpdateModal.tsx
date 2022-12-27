@@ -63,20 +63,27 @@ const SetUpdateModal: React.FC<Props> = ({
                     label='Name'
                     name='vote-set-name'
                 >
-                    <input
-                        id='vote-set-name'
-                        value={updated.name}
-                        onChange={handleName}
-                    />
+                    <>
+                        <span className='text-indicative-danger'>{!updated.name || updated.name && (updated.name.length <= 5 || updated.name.length >= 45) ? 'Name must be between 5 and 45 characters' : null}</span>
+                        <input
+                            id='vote-set-name'
+                            value={updated.name}
+                            onChange={handleName}
+                            className='input-normal'
+                        />
+                    </>
                 </FormGroup>
                 <FormGroup
                     label='Image'
                     name='vote-set-image'
                 >
-                    <ImageUpload
-                        storeImage={updated.image}
-                        storeImageFn={handleImage}
-                    />
+                    <>
+                        <span className='text-indicative-danger'>{updated.image ? null : 'Choose an image'}</span>
+                        <ImageUpload
+                            storeImage={updated.image}
+                            storeImageFn={handleImage}
+                        />
+                    </>
                 </FormGroup>
                 <FormGroup
                     label='Published'
@@ -101,8 +108,8 @@ const SetUpdateModal: React.FC<Props> = ({
                 <ImageWidget />
 
                 <ModalActions>
-                    <button type='submit'>Confirm</button>
-                    <button onClick={handleClose}>Cancel</button>
+                    <button type='submit' className='btn'>Confirm</button>
+                    <button onClick={handleClose} className='btn'>Cancel</button>
                 </ModalActions>
             </form>
         </Modal>
