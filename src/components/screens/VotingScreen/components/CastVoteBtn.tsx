@@ -1,5 +1,6 @@
 import { VoteItem } from "../types"
 import Image from 'next/image'
+import { Transition } from "@headlessui/react"
 
 interface CastVoteBtnProps {
     isDisabled: boolean,
@@ -10,11 +11,18 @@ interface CastVoteBtnProps {
 const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
     isDisabled,
     handleCastVote,
-    item
+    item,
 }) => {
 
     return (
-        <div>
+        <Transition.Child
+            enter="transform transition duration-400"
+            enterFrom="opacity-0 rotate-[-120deg] scale-50"
+            enterTo="opacity-100 rotate-0 scale-100"
+            leave="transform duration-400 transition ease-in-out"
+            leaveFrom="opacity-100 rotate-0 scale-100 "
+            leaveTo="opacity-0 scale-50"
+        >
             <button
                 onClick={handleCastVote}
                 disabled={isDisabled}
@@ -31,7 +39,7 @@ const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
                     {item.name}
                 </div>
             </button>
-        </div>
+        </Transition.Child>
     )
 }
 

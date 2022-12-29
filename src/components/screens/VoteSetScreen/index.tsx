@@ -5,7 +5,7 @@ import { useState } from "react"
 import MainLayout from "../../../layouts/MainLayout"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../../common/EmptyStateWrapper"
-import VoteSetHero, { VoteSetHeroProps } from "./components/Hero"
+import VoteSetHero from "./components/Hero"
 import ItemsRanking from "./components/ItemsRanking"
 import NewItemCreationModal from "./components/Owner/NewItemCreationModal"
 
@@ -22,10 +22,11 @@ const VoteSetScreen: React.FC = () => {
                 <EmptyStateWrapper
                     data={voteSet.data}
                     isLoading={voteSet.isLoading}
-                    NonEmptyComponent={
+                    isError={voteSet.isError}
+                    NonEmptyComponent={(nonEmptyVoteSet) => (
                         <>
-                            <VoteSetHero {...voteSet.data as VoteSetHeroProps} />
-                            {voteSet.data?.owner.id === data?.user?.id ?
+                            <VoteSetHero {...nonEmptyVoteSet} />
+                            {nonEmptyVoteSet.owner.id === data?.user?.id ?
                                 <button
                                     onClick={() => setIsCreatorOpen(true)}
                                     className='btn mx-auto'
@@ -37,9 +38,9 @@ const VoteSetScreen: React.FC = () => {
                                 setIsCreatorOpen={setIsCreatorOpen}
                                 isCreatorOpen={isCreatorOpen}
                             />
-                            <ItemsRanking items={voteSet.data?.voteItems ?? []} />
+                            <ItemsRanking items={nonEmptyVoteSet.voteItems} />
                         </>
-                    }
+                    )}
                     EmptyComponent={<div>There are no vote sets.</div>}
                 />
             </div>

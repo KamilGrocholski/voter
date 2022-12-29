@@ -1,28 +1,44 @@
+import { Transition } from "@headlessui/react"
 import { VoteSet } from "@prisma/client"
 import { useRouter } from "next/router"
+import { useState } from "react"
 import MainLayout from "../../../layouts/MainLayout"
 import { trpc } from "../../../utils/trpc"
+import EmptyStateWrapper from "../../common/EmptyStateWrapper"
 import CastVoteBtn from "./components/CastVoteBtn"
+import { ErrorModal } from "./components/ErrorModal"
 import SkipBtn from "./components/SkipBtn"
+import { Vs } from "./components/Vs"
 import { HandleCastVote } from "./types"
 
 const VotingScreen: React.FC = () => {
     const router = useRouter()
     const { voteSetId } = router.query as unknown as { voteSetId: VoteSet['id'] }
+    const [canShowPair, setCanShowPair] = useState<boolean>(true)
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false)
 
     const utils = trpc.useContext()
 
-    const { data: votePair, isLoading: isPairLoading } = trpc.voteItem.getPair.useQuery(voteSetId ?? '', {
+    const votePairQuery = trpc.voteItem.getPair.useQuery(voteSetId ?? '', {
         refetchOnMount: false,
         refetchOnReconnect: false,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        onSuccess: () => {
+            setCanShowPair(true)
+        },
+        onError: () => {
+            setCanShowPair(false)
+            setIsErrorModalOpen(true)
+        }
     })
-    const { mutate: castVote, isLoading: isCasting } = trpc.vote.castProtected.useMutation({
-        onSuccess: () => utils.voteItem.getPair.refetch(voteSetId)
+    const castVoteMutation = trpc.vote.castProtected.useMutation({
+        onSuccess: () => utils.voteItem.getPair.refetch(voteSetId),
+        onError: () => setIsErrorModalOpen(true)
     })
 
-    const handleSkipVoting = () => {
-        utils.voteItem.getPair.refetch(voteSetId ?? '')
+    const handleSkipVoting = async () => {
+        setCanShowPair(false)
+        await new Promise(() => setTimeout(() => utils.voteItem.getPair.refetch(voteSetId ?? ''), 200))
     }
 
     const handleCastVote: HandleCastVote = ({
@@ -30,44 +46,61 @@ const VotingScreen: React.FC = () => {
         votedAgainstId,
         voteSetId
     }) => {
-        castVote({ votedForId, votedAgainstId, voteSetId })
+        setCanShowPair(false)
+        castVoteMutation.mutate({ votedForId, votedAgainstId, voteSetId })
     }
 
     return (
         <MainLayout useContainer={false}>
-            {isPairLoading ? (
-                <div>Loading...</div>
-            ) : (votePair?.firstItem?.id && votePair?.secondItem?.id) ? (
-                <div className='flex flex-col space-y-24 my-auto justify-center items-center'>
-                    <div className='flex flex-row space-x-24 items-center mx-auto justify-center'>
-                        <CastVoteBtn
-                            handleCastVote={() => handleCastVote({
-                                votedForId: votePair?.firstItem?.id as VoteSet['id'],
-                                votedAgainstId: votePair?.secondItem?.id as VoteSet['id'],
-                                voteSetId
-                            })}
-                            isDisabled={isCasting}
-                            item={votePair.firstItem}
+            <ErrorModal
+                onCancel={() => setIsErrorModalOpen(false)}
+                isOpen={isErrorModalOpen}
+                error={''}
+            />
+            <EmptyStateWrapper
+                isError={votePairQuery.isError}
+                isLoading={votePairQuery.isLoading}
+                data={votePairQuery.data}
+                NonEmptyComponent={(votePair) => (
+                    <Transition as='div' className='flex flex-col space-y-24 my-auto justify-center items-center' show={canShowPair}>
+                        {/* <div className='flex flex-col space-y-24 my-auto justify-center items-center'> */}
+                        <div className='flex flex-row space-x-24 items-center mx-auto justify-center'>
+                            <CastVoteBtn
+                                handleCastVote={() => handleCastVote({
+                                    votedForId: votePair?.firstItem?.id as VoteSet['id'],
+                                    votedAgainstId: votePair?.secondItem?.id as VoteSet['id'],
+                                    voteSetId
+                                })}
+                                isDisabled={castVoteMutation.isLoading}
+                                item={votePair.firstItem as {
+                                    image: string;
+                                    id: string;
+                                    name: string;
+                                }}
+                            />
+                            <Vs />
+                            <CastVoteBtn
+                                handleCastVote={() => handleCastVote({
+                                    votedForId: votePair?.secondItem?.id as VoteSet['id'],
+                                    votedAgainstId: votePair?.firstItem?.id as VoteSet['id'],
+                                    voteSetId
+                                })}
+                                isDisabled={castVoteMutation.isLoading}
+                                item={votePair.secondItem as {
+                                    image: string;
+                                    id: string;
+                                    name: string;
+                                }}
+                            />
+                        </div>
+                        <SkipBtn
+                            isDisabled={votePairQuery.isLoading}
+                            handleSkip={handleSkipVoting}
                         />
-                        <div>VS</div>
-                        <CastVoteBtn
-                            handleCastVote={() => handleCastVote({
-                                votedForId: votePair?.secondItem?.id as VoteSet['id'],
-                                votedAgainstId: votePair?.firstItem?.id as VoteSet['id'],
-                                voteSetId
-                            })}
-                            isDisabled={isCasting}
-                            item={votePair.secondItem}
-                        />
-                    </div>
-                    <SkipBtn
-                        isDisabled={isPairLoading}
-                        handleSkip={handleSkipVoting}
-                    />
-                </div>
-            ) : (
-                <div>Error</div>
-            )}
+                        {/* </div> */}
+                    </Transition>
+                )}
+            />
         </MainLayout>
     )
 }

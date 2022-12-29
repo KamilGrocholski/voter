@@ -22,10 +22,11 @@ const VotesSetsPaginationScreen: React.FC = () => {
             <EmptyStateWrapper
                 isLoading={infinityVotesSets.isLoading}
                 data={infinityVotesSets.data}
-                NonEmptyComponent={
+                isError={infinityVotesSets.isError}
+                NonEmptyComponent={(infinityVotesSets) => (
                     <>
                         <VotesSetsPagination
-                            votesSets={infinityVotesSets.data?.pages[page]?.voteSets ?? []}
+                            votesSets={infinityVotesSets.pages[page]?.voteSets ?? []}
                         />
                         <div className='flex flex-row space-x-3 items-center justify-center mt-12'>
                             <button className='w-24 btn' onClick={handleFetchPrevPage}>Prev</button>
@@ -33,7 +34,7 @@ const VotesSetsPaginationScreen: React.FC = () => {
                             <button className='w-24 btn' onClick={handleFetchNextPage}>Next</button>
                         </div>
                     </>
-                }
+                )}
                 EmptyComponent={<div>There are no vote sets.</div>}
             />
         </MainLayout>

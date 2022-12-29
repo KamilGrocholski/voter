@@ -2,7 +2,10 @@ import { Modal, ModalActions } from "../../../common/Modal"
 import { useNewVoteSetStore } from "../store"
 
 const CreationStateModal = () => {
-    const { setIsCreatorStateOpen, isError, isLoading, error } = useNewVoteSetStore()
+    const setIsCreatorStateOpen = useNewVoteSetStore(state => state.setIsCreatorStateOpen)
+    const isError = useNewVoteSetStore(state => state.isError)
+    const isLoading = useNewVoteSetStore(state => state.isLoading)
+    const error = useNewVoteSetStore(state => state.error)
     const isCreatorStateOpen = useNewVoteSetStore(state => state.isCreatorStateOpen)
 
     const handleCloseCreatorState = () => {

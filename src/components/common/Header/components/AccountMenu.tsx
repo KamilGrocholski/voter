@@ -1,8 +1,11 @@
 import { Menu } from '@headlessui/react'
 import { signOut, signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import useWindowSize from '../../../../hooks/use-window-size'
 
 const AccountMenu = () => {
+
+    const { width } = useWindowSize()
 
     const { data } = useSession()
 
@@ -40,7 +43,7 @@ const AccountMenu = () => {
                 </Menu.Button>
             </div>
 
-            <Menu.Items className='absolute right-0 p-3 space-y-1 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+            <Menu.Items className='bg-dark-shade-900 absolute right-0 p-3 space-y-1 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 <div className='flex flex-col space-y-1'>
                     <Menu.Item>
                         <span className={styles.normalItem}>Your profile</span>

@@ -8,20 +8,21 @@ import VotesSetsList from "../../common/VoteSetCardPublic/List"
 const UserProfileScreen: React.FC = () => {
     const router = useRouter()
     const { userId } = router.query as { userId: User['id'] }
-    const { data: user, isLoading: isLoadingUserInfo } = trpc.user.getSmallInfoByIdPublic.useQuery({ id: userId })
-    const { data: voteSets, isLoading: isLoadingVoteSets } = trpc.voteSet.getAllByUserIdPublic.useQuery(userId)
+    const userQuery = trpc.user.getSmallInfoByIdPublic.useQuery({ id: userId })
+    const { data: voteSets, isLoading: isLoadingVoteSets, isError: isErrorVoteSets } = trpc.voteSet.getAllByUserIdPublic.useQuery(userId)
 
     return (
         <div className='flex flex-col space-y-5'>
             <EmptyStateWrapper
-                data={user}
-                isLoading={isLoadingUserInfo}
-                NonEmptyComponent={
+                data={userQuery.data}
+                isLoading={userQuery.isLoading}
+                isError={userQuery.isError}
+                NonEmptyComponent={(user) =>
                     <>
                         <UserInfo
-                            image={user?.image as string}
-                            name={user?.name as string}
-                            role={user?.role as string}
+                            image={user.image as string}
+                            name={user.name as string}
+                            role={user.role as string}
                         />
                     </>
                 }
@@ -29,12 +30,13 @@ const UserProfileScreen: React.FC = () => {
             />
             <EmptyStateWrapper
                 data={voteSets}
+                isError={isErrorVoteSets}
                 isLoading={isLoadingVoteSets}
-                NonEmptyComponent={
+                NonEmptyComponent={(voteSets) => (
                     <>
                         <VotesSetsList votesSets={voteSets ?? []} />
                     </>
-                }
+                )}
                 EmptyComponent={<div>elo</div>}
             />
         </div>

@@ -17,7 +17,7 @@ const VoteSetCard: React.FC<VotesSetsPagination['voteSets'][number]> = (props) =
             <Link
                 href={`/vote-sets/${props.id}/voting`}
             >
-                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
+                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black max-w-screen'>
                     <Image
                         src={props.image}
                         alt={'xd'}
@@ -80,7 +80,7 @@ const GoToVoteSetPage: React.FC<{ voteSetId: VoteSet['id'] }> = ({ voteSetId }) 
     return (
         <button
             onClick={handleGoToVoteSetPage}
-            className='bg-dark-shade-900/50 px-3 py-1 rounded-sm hover:bg-purple-800/50'
+            className='bg-dark-shade-900/50 text-center w-16 h-10 rounded-sm hover:bg-purple-800/50'
         >
             View
         </button>
@@ -91,7 +91,7 @@ const Name: React.FC<{ name: VotesSetsPagination['voteSets'][number]['name'] }> 
     name
 }) => {
     return (
-        <div className='text-2xl font-semibold mb-1'>
+        <div className='text-2xl font-semibold mb-1 break-all'>
             {name}
         </div>
     )
