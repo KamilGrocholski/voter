@@ -18,6 +18,14 @@
 
 
 @layer components {
+  .text-muted {
+    @apply text-dark-shade-300 text-sm font-semibold
+  }
+
+  .dropdown-item {
+    @apply hover:bg-purple-500 px-3 rounded-md cursor-pointer w-full
+  }
+
   .section-intro {
     @apply bg-dark-shade-700
   }

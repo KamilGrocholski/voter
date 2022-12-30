@@ -1,8 +1,6 @@
 import { VoteSet } from "@prisma/client";
 import { z } from "zod";
-import { BY } from "../../../constants/filter-vote-sets";
 import { PrismaToZod, InferSchemesObject } from "../../types/helpers";
-import { createDateFromNow, TimeMult } from "../../utils/createDateFromNow";
 import { userSchemaBase } from "./userSchema";
 import { voteItemSchema } from "./voteItemSchema";
 
@@ -31,8 +29,10 @@ const voteSetSchema = {
             'month': z.number().optional(),   
             'week': z.number().optional(),   
             'day': z.number().optional()
-        }),
-        orderBy: z.enum(['VOTES', 'ITEMS', 'LIKES'])
+        }).optional(),
+        orderBy: z.enum(['VOTES', 'ITEMS', 'LIKES']),
+        take: z.number().min(1).max(100),
+        cursor: z.optional(base.id)
     }),
     create: z.object({
         name: base.name,

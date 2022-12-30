@@ -10,21 +10,24 @@ import { userSchemaBase } from "../schemes/userSchema"
 import { z } from "zod"
 
 export const voteSetRouter = router({
+
     getVoteSets: publicProcedure
         .input(voteSetSchema.filter)
-        .query(({ ctx, input }) => {
-            const { name, createdAt, orderBy } = input
+        .query(async ({ ctx, input }) => {
+            const { name, createdAt, orderBy, cursor, take } = input
 
-            return ctx.prisma.voteSet.findMany({
+            const voteSets = await ctx.prisma.voteSet.findMany({
+                take: take + 1,
                 where: {
                     isPublished: true,
                     name: {
                         startsWith: name
                     },
-                    createdAt: createdAt ? {
+                    createdAt: createdAt !== undefined ? {
                         gte: createDateFromNow('past', createdAt)
                     } : undefined
                 },
+                cursor: cursor ? { id: cursor } : undefined,
                 orderBy: {
                     likes: {
                         _count: 'desc'
@@ -32,6 +35,17 @@ export const voteSetRouter = router({
                 },
                 select: voteSetSelects.publicMainSelect
             })
+
+            let nextCursor: typeof cursor | undefined = undefined
+            if (voteSets.length > take) {
+                const nextItem = voteSets.pop()
+                nextCursor = nextItem?.id
+            }
+
+            return {
+                voteSets,
+                nextCursor
+            }
         }),
 
     getNamesPublic: publicProcedure
@@ -47,26 +61,6 @@ export const voteSetRouter = router({
                 select: {
                     name: true
                 }
-            })
-        }),
-
-    getRecentlyPopular: publicProcedure
-        .query(({ ctx }) => {
-            return ctx.prisma.voteSet.findMany({
-                where: {
-                    isPublished: true,
-                    createdAt: {
-                        gte: createDateFromNow('past', {
-                            week: 10
-                        })
-                    }
-                },
-                orderBy: {
-                    likes: {
-                        _count: 'desc'
-                    }
-                },
-                select: voteSetSelects.publicMainSelect
             })
         }),
 
@@ -224,35 +218,6 @@ export const voteSetRouter = router({
             }
 
             return deletedSet
-        }),
-
-    pagination: publicProcedure
-        .input(voteSetSchema.pagination)
-        .query(async ({ ctx, input }) => {
-            const { cursor, take } = input
-
-            const voteSets = await ctx.prisma.voteSet.findMany({
-                where: {
-                    isPublished: true
-                },
-                orderBy: {
-                    createdAt: 'desc'
-                },
-                take: take + 1,
-                cursor: cursor ? { id: cursor } : undefined,
-                select: voteSetSelects.publicMainSelect
-            })
-
-            let nextCursor: typeof cursor | undefined = undefined
-            if (voteSets.length > take) {
-                const nextItem = voteSets.pop()
-                nextCursor = nextItem?.id
-            }
-
-            return {
-                voteSets,
-                nextCursor
-            }
         }),
 
     likeDislike: protectedProcedure

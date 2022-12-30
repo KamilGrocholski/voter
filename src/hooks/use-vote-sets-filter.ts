@@ -14,7 +14,7 @@ export const useVoteSetsFilter = (defaultFields: Partial<VoteSetFilterFields>) =
     const [time, setTime] = useState<keyof typeof TIME>(defaultFields.time ?? 'TODAY')
     
     const parse = () => {
-        let createdAt: TimeMult
+        let createdAt: TimeMult | undefined
         switch(time) {
             case 'TODAY':
                 createdAt = {day: 1}
@@ -29,10 +29,10 @@ export const useVoteSetsFilter = (defaultFields: Partial<VoteSetFilterFields>) =
                 createdAt = {year: 1}
                 break
             case 'ALL_TIME': 
-                createdAt = {}
+                createdAt = undefined
                 break
             default:
-                createdAt = {}
+                createdAt = undefined
                 break
         }
 
