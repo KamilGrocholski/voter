@@ -1,6 +1,6 @@
-type TimeMult = Partial<Record<Time, number>>    
+export type TimeMult = Partial<Record<Time, number>>    
 
-enum Time {
+export enum Time {
     Y = 'year',
     M = 'month',
     W = 'week',

@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import HomeScreen from "../components/screens/HomeScreen";
-import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
 

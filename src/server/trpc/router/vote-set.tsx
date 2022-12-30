@@ -7,8 +7,49 @@ import { createDateFromNow } from "../../utils/createDateFromNow"
 import { voteSetSelects } from "../../utils/selects/voteSetSelect"
 import { deleteImage, uploadImage } from "../../lib/cloudinary"
 import { userSchemaBase } from "../schemes/userSchema"
+import { z } from "zod"
 
 export const voteSetRouter = router({
+    getVoteSets: publicProcedure
+        .input(voteSetSchema.filter)
+        .query(({ ctx, input }) => {
+            const { name, createdAt, orderBy } = input
+
+            return ctx.prisma.voteSet.findMany({
+                where: {
+                    isPublished: true,
+                    name: {
+                        startsWith: name
+                    },
+                    createdAt: createdAt ? {
+                        gte: createDateFromNow('past', createdAt)
+                    } : undefined
+                },
+                orderBy: {
+                    likes: {
+                        _count: 'desc'
+                    }
+                },
+                select: voteSetSelects.publicMainSelect
+            })
+        }),
+
+    getNamesPublic: publicProcedure
+        .input(z.string())
+        .query(({ ctx, input: startsWith }) => {
+            return ctx.prisma.voteSet.findMany({
+                where: {
+                    isPublished: true,
+                    name: {
+                        startsWith
+                    }
+                },
+                select: {
+                    name: true
+                }
+            })
+        }),
+
     getRecentlyPopular: publicProcedure
         .query(({ ctx }) => {
             return ctx.prisma.voteSet.findMany({
@@ -59,15 +100,6 @@ export const voteSetRouter = router({
                             }
                         }
                     }
-                }
-            })
-        }),
-
-    getAllPublic: publicProcedure
-        .query(({ ctx }) => {
-            return ctx.prisma.voteSet.findMany({
-                where: {
-                    isPublished: true
                 }
             })
         }),

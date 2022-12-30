@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { Loader } from "./Loader"
 
 interface StateWrapperProps<T> {
     isLoading: boolean
@@ -35,6 +36,6 @@ export default EmptyStateWrapper
 
 const defaultStateComponentStyle = 'mx-auto flex items-center justify-center'
 
-const DefaultLoading = <div className={defaultStateComponentStyle}>Loading...</div>
+const DefaultLoading = <div className={defaultStateComponentStyle}><Loader /></div>
 const DefaultError = <div className={defaultStateComponentStyle}>Error</div>
-const DefaultEmpty = <div className={defaultStateComponentStyle}>Empty</div> 
+const DefaultEmpty = <div className={defaultStateComponentStyle}>There is nothing to display.</div> 

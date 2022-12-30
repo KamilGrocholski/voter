@@ -2,6 +2,7 @@ import { useState } from "react"
 import MainLayout from "../../../layouts/MainLayout"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../../common/EmptyStateWrapper"
+import { LiveSearch } from "../../common/LiveSearch"
 import VotesSetsPagination from "../../common/VoteSetCardPublic/Pagination"
 
 const VotesSetsPaginationScreen: React.FC = () => {
@@ -19,6 +20,10 @@ const VotesSetsPaginationScreen: React.FC = () => {
 
     return (
         <MainLayout useContainer={true}>
+            <LiveSearch<{ name: string }>
+                renderSuggestion={(suggestion) => <div>{suggestion.name}</div>}
+                onSelect={(suggestion) => suggestion.name}
+            />
             <EmptyStateWrapper
                 isLoading={infinityVotesSets.isLoading}
                 data={infinityVotesSets.data}

@@ -1,6 +1,8 @@
 import { VoteSet } from "@prisma/client";
 import { z } from "zod";
+import { BY } from "../../../constants/filter-vote-sets";
 import { PrismaToZod, InferSchemesObject } from "../../types/helpers";
+import { createDateFromNow, TimeMult } from "../../utils/createDateFromNow";
 import { userSchemaBase } from "./userSchema";
 import { voteItemSchema } from "./voteItemSchema";
 
@@ -14,12 +16,24 @@ const base = {
     }).min(5).max(45),
     image: z.string().url(),
     isPublished: z.boolean(),
-    // createdAt: z.date(),
-    // updatedAt: z.date(),
-    // ownerId: userSchemaBase.id
+    createdAt: z.date(),
+    updatedAt: z.date(),
+    ownerId: userSchemaBase.id
 }
 
 const voteSetSchema = {
+    filter: z.object({
+        name: z.string().optional(),
+        createdAt: z.object({
+            'hour': z.number().optional(),   
+            'minute': z.number().optional(),   
+            'second': z.number().optional(),   
+            'month': z.number().optional(),   
+            'week': z.number().optional(),   
+            'day': z.number().optional()
+        }),
+        orderBy: z.enum(['VOTES', 'ITEMS', 'LIKES'])
+    }),
     create: z.object({
         name: base.name,
         image: base.image,
