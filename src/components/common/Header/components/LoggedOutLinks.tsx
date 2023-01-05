@@ -6,14 +6,7 @@ interface Link {
 }
 
 const LOGGED_OUT_LINKS: Link[] = [
-    {
-        label: 'Home',
-        href: '/'
-    },
-    {
-        label: 'My votes sets',
-        href: '/my-votes-sets'
-    }
+
 ]
 
 const LoggedOutLinks: React.FC = () => {

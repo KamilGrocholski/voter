@@ -11,7 +11,7 @@ export interface VoteSetFilterFields {
 export const useVoteSetsFilter = (defaultFields: Partial<VoteSetFilterFields>) => {
     const [name, setName] = useState<string>(defaultFields.name ?? '')
     const [by, setBy] = useState<keyof typeof BY>(defaultFields.by ?? 'LIKES')
-    const [time, setTime] = useState<keyof typeof TIME>(defaultFields.time ?? 'TODAY')
+    const [time, setTime] = useState<keyof typeof TIME>(defaultFields.time ?? 'ALL_TIME')
     
     const parse = () => {
         let createdAt: TimeMult | undefined
@@ -24,9 +24,6 @@ export const useVoteSetsFilter = (defaultFields: Partial<VoteSetFilterFields>) =
                 break
             case 'LAST_MONTH': 
                 createdAt = {month: 1}
-                break
-            case 'LAST_YEAR':
-                createdAt = {year: 1}
                 break
             case 'ALL_TIME': 
                 createdAt = undefined

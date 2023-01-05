@@ -30,7 +30,7 @@ const voteSetSchema = {
             'week': z.number().optional(),   
             'day': z.number().optional()
         }).optional(),
-        orderBy: z.enum(['VOTES', 'ITEMS', 'LIKES']),
+        orderBy: z.enum(['ITEMS', 'LIKES']),
         take: z.number().min(1).max(100),
         cursor: z.optional(base.id)
     }),

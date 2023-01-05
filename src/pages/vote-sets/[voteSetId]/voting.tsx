@@ -5,11 +5,11 @@ import VotingScreen from "../../../components/screens/VotingScreen"
 const Voting: NextPage = () => {
   return (
     <>
-        <Head>
-            <title></title>
-        </Head>
+      <Head>
+        <title>Voting</title>
+      </Head>
 
-        <VotingScreen />
+      <VotingScreen />
     </>
   )
 }

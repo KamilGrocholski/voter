@@ -6,7 +6,7 @@ const New: NextPage = () => {
     return (
         <>
             <Head>
-                <title>new</title>
+                <title>New</title>
             </Head>
 
             <NewScreen />

@@ -52,10 +52,6 @@ const LOGGED_OUT_LINKS = [
         label: 'Home',
         href: '/'
     },
-    {
-        label: 'Vote sets',
-        href: '/my-votes'
-    }
 ]
 
 const LOGGED_IN_LINKS = [
@@ -63,8 +59,4 @@ const LOGGED_IN_LINKS = [
         label: 'Home',
         href: '/'
     },
-    {
-        label: 'Vote sets',
-        href: '/my-votes'
-    }
 ]

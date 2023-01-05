@@ -22,7 +22,8 @@ const UserProfileScreen: React.FC = () => {
                         <UserInfo
                             image={user.image as string}
                             name={user.name as string}
-                            role={user.role as string}
+                            voteSets={user._count.voteSets}
+                            votes={user._count.votes}
                         />
                     </>
                 }

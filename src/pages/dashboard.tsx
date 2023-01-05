@@ -5,11 +5,11 @@ import DashboardScreen from "../components/screens/DashboardScreen"
 const Dashboard: NextPage = () => {
   return (
     <>
-        <Head>
-            <title>dashboard</title>
-        </Head>
+      <Head>
+        <title>Dashboard</title>
+      </Head>
 
-        <DashboardScreen />
+      <DashboardScreen />
     </>
   )
 }

@@ -1,12 +1,8 @@
 import { Menu } from '@headlessui/react'
 import { signOut, signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import useWindowSize from '../../../../hooks/use-window-size'
 
 const AccountMenu = () => {
-
-    const { width } = useWindowSize()
-
     const { data } = useSession()
 
     const handleSignIn = () => {
@@ -14,7 +10,9 @@ const AccountMenu = () => {
     }
 
     const handleSignOut = () => {
-        signOut()
+        signOut({
+            callbackUrl: `${window.location.origin}`
+        })
     }
 
     if (!data?.user) return (
@@ -44,14 +42,14 @@ const AccountMenu = () => {
             </div>
 
             <Menu.Items className='bg-dark-shade-900 absolute right-0 p-3 space-y-1 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                <div className='flex flex-col space-y-1'>
+                {/* <div className='flex flex-col space-y-1'>
                     <Menu.Item>
                         <span className={styles.normalItem}>Your profile</span>
                     </Menu.Item>
                     <Menu.Item>
                         <span className={styles.normalItem}>Settings</span>
                     </Menu.Item>
-                </div>
+                </div> */}
                 <div className='flex flex-col pt-1'>
                     <Menu.Item>
                         <span onClick={handleSignOut} className={styles.logoutItem}>Logout</span>

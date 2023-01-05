@@ -29,9 +29,12 @@ export const voteSetRouter = router({
                 },
                 cursor: cursor ? { id: cursor } : undefined,
                 orderBy: {
-                    likes: {
+                    likes: orderBy === 'LIKES' ? {
                         _count: 'desc'
-                    }
+                    } : undefined,
+                    voteItems: orderBy === 'ITEMS' ? {
+                        _count: 'desc'
+                    } : undefined,
                 },
                 select: voteSetSelects.publicMainSelect
             })
