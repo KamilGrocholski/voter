@@ -16,7 +16,7 @@ export const userRouter = router({
                     name: true,
                     image: true,
                     role: true,
-                    //TODO createdAt: true,
+                    createdAt: true,
                     _count: {
                         select: {
                             voteSets: true,

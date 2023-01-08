@@ -56,7 +56,7 @@ const LOGGED_OUT_LINKS = [
 
 const LOGGED_IN_LINKS = [
     {
-        label: 'Home',
-        href: '/'
+        label: 'Dashboard',
+        href: '/dashboard'
     },
 ]

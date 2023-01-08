@@ -8,7 +8,8 @@ import { PickVoteItem } from "../types"
 const ItemCreationModal: React.FC = () => {
     const [newItem, setNewItem] = useState<Partial<PickVoteItem>>({})
     const isOpen = useNewVoteSetStore(state => state.isCreatorOpen)
-    const { setIsCreatorOpen, addItem } = useNewVoteSetStore()
+    const addItem = useNewVoteSetStore(state => state.addItem)
+    const setIsCreatorOpen = useNewVoteSetStore(state => state.setIsCreatorOpen)
 
     const handleSetName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewItem(prev => ({ ...prev, name: e.target.value }))

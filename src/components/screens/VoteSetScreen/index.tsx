@@ -23,6 +23,17 @@ const VoteSetScreen: React.FC = () => {
                     data={voteSet.data}
                     isLoading={voteSet.isLoading}
                     isError={voteSet.isError}
+                    ErrorComponent={
+                        <span className='text-indicative-danger'>
+                            An error has occured!
+                            <button
+                                onClick={() => voteSet.refetch()}
+                                className='btn ml-3 text-indicative-success hover:border-indicative-error'
+                            >
+                                Try again
+                            </button>
+                        </span>
+                    }
                     NonEmptyComponent={(nonEmptyVoteSet) => (
                         <>
                             <VoteSetHero {...nonEmptyVoteSet} />

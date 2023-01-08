@@ -50,13 +50,25 @@ const HomeScreen = () => {
             <VoteSetsFilter {...filter} />
             <div className='container mx-auto flex flex-col space-y-8'>
                 <EmptyStateWrapper
-                    isError={getVoteSetsInfiniteQuery.isError}
-                    isLoading={getVoteSetsInfiniteQuery.isLoading}
-                    data={getVoteSetsInfiniteQuery.data}
-                    NonEmptyComponent={(voteSetsPages) =>
+                    isError={getVoteSetsInfiniteQuery.isError || getVoteSetsInfiniteQuery.isLoadingError || getVoteSetsInfiniteQuery.isRefetchError}
+                    isLoading={getVoteSetsInfiniteQuery.isLoading || getVoteSetsInfiniteQuery.isFetching || getVoteSetsInfiniteQuery.isRefetching}
+                    data={getVoteSetsInfiniteQuery?.data?.pages[page]?.voteSets}
+                    EmptyComponent={<div>There are no vote sets.</div>}
+                    ErrorComponent={
+                        <span className='text-indicative-danger'>
+                            An error has occured!
+                            <button
+                                onClick={() => getVoteSetsInfiniteQuery.refetch()}
+                                className='btn ml-3 text-indicative-success hover:border-indicative-error'
+                            >
+                                Try again
+                            </button>
+                        </span>
+                    }
+                    NonEmptyComponent={(voteSetsPage) =>
                         <>
                             <VotesSetsPagination
-                                votesSets={voteSetsPages.pages[page]?.voteSets ?? []}
+                                votesSets={voteSetsPage}
                             />
                             <div className='flex flex-row space-x-3 items-center justify-center mt-12'>
                                 <button
@@ -75,7 +87,6 @@ const HomeScreen = () => {
                             </div>
                         </>
                     }
-                    EmptyComponent={<div>There are no vote sets.</div>}
                 />
             </div>
         </MainLayout>

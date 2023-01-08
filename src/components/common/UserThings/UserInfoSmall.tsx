@@ -1,8 +1,10 @@
+import { Transition } from '@headlessui/react'
 import { User } from '@prisma/client'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { UserSmallInfoByIdPublic } from '../../../types/trpcOutputTypes'
+import { parseDate } from '../../../utils/parseDate'
 import { trpc } from '../../../utils/trpc'
 import { valuePairsToString } from '../../../utils/valuePairsToString'
 
@@ -29,14 +31,15 @@ const UserInfoSmall: React.FC<Props> = ({
     name,
     role,
     image,
-    id
+    id,
 }) => {
     const [isHovered, toggleIsHovered] = useState<boolean>(false)
 
     const router = useRouter()
     const { data: moreInfo, isLoading } = trpc.user.getSmallInfoByIdPublic.useQuery({ id })
 
-    const handleGoToUserProfile = () => {
+    const handleGoToUserProfile = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
         router.push(`/users/${id}`)
     }
 
@@ -99,8 +102,7 @@ const MoreUserInfoPopup: React.FC<UserSmallInfoByIdPublic> = (props) => {
             </div>
             <div className='flex flex-col space-y-1'>
                 <span className={`font-semibold text-lg ${valuePairsToString(ROLE_COLOR[props.role] ?? {})}`}>{props?.name}</span>
-                {/* // TODO createdAt, name: string -- prisma */}
-                <span className='text-xs text-white/50'>JOINED: <span>2022.22.10</span></span>
+                <span className='text-xs text-white/50'>JOINED: <span>{parseDate(props.createdAt)}</span></span>
                 <span className='text-xs text-white/50'>VOTE SETS: <span>{props?._count.voteSets}</span></span>
                 <span className='text-xs text-white/50'>CASTED VOTES: <span>{props?._count.votes}</span></span>
             </div>

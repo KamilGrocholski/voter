@@ -5,6 +5,7 @@ import { useState } from "react"
 import MainLayout from "../../../layouts/MainLayout"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../../common/EmptyStateWrapper"
+import { VotesTracker } from "../../common/VotesTracker"
 import CastVoteBtn from "./components/CastVoteBtn"
 import { ErrorModal } from "./components/ErrorModal"
 import SkipBtn from "./components/SkipBtn"
@@ -32,7 +33,10 @@ const VotingScreen: React.FC = () => {
         }
     })
     const castVoteMutation = trpc.vote.castProtected.useMutation({
-        onSuccess: () => utils.voteItem.getPair.refetch(voteSetId),
+        onSuccess: () => {
+            utils.voteItem.getPair.refetch(voteSetId)
+            utils.vote.getMyRecentVotes.invalidate({ voteSetId })
+        },
         onError: () => setIsErrorModalOpen(true)
     })
 
@@ -57,14 +61,26 @@ const VotingScreen: React.FC = () => {
                 isOpen={isErrorModalOpen}
                 error={''}
             />
+            <VotesTracker voteSetId={voteSetId} />
             <EmptyStateWrapper
                 isError={votePairQuery.isError}
                 isLoading={votePairQuery.isLoading}
                 data={votePairQuery.data}
+                ErrorComponent={
+                    <span className='text-indicative-danger mx-auto items-center'>
+                        An error has occured!
+                        <button
+                            onClick={() => votePairQuery.refetch()}
+                            className='btn ml-3 text-indicative-success hover:border-indicative-error'
+                        >
+                            Try again
+                        </button>
+                    </span>
+                }
                 NonEmptyComponent={(votePair) => (
                     <Transition as='div' className='flex flex-col space-y-24 my-auto justify-center items-center' show={canShowPair}>
                         {/* <div className='flex flex-col space-y-24 my-auto justify-center items-center'> */}
-                        <div className='flex flex-row space-x-24 items-center mx-auto justify-center'>
+                        <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-24 items-center mx-auto justify-center w-full'>
                             <CastVoteBtn
                                 handleCastVote={() => handleCastVote({
                                     votedForId: votePair?.firstItem?.id as VoteSet['id'],

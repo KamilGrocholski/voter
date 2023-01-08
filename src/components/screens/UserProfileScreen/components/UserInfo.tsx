@@ -1,10 +1,12 @@
 import Image from "next/image"
+import { parseDate } from "../../../../utils/parseDate"
 
 type UserInfoProps = {
     image: string
     name: string
     voteSets: number
     votes: number
+    createdAt: Date
 }
 
 const UserInfo: React.FC<UserInfoProps> = (props) => {
@@ -23,6 +25,7 @@ const UserInfo: React.FC<UserInfoProps> = (props) => {
                     <span className='text-purple-800 text-xl font-semibold'>{props.name}</span>
                 </div>
                 <div className='flex flex-col text-gray-500'>
+                    <span>Joined: <span>{parseDate(props.createdAt)}</span></span>
                     <span>Created vote sets: <span>{props.voteSets}</span></span>
                     <span>Casted votes: <span>{props.votes}</span></span>
                 </div>

@@ -28,7 +28,7 @@ const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
                 disabled={isDisabled}
                 className='bg-dark-shade-900 flex flex-col rounded-md justify-center items-center hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black overflow-hidden'
             >
-                <div className='relative w-[25vw] h-[20vh]'>
+                <div className='relative w-[100vw] md:w-[80vw] lg:w-[25vw] h-[18vh] lg:h-[20vh]'>
                     <Image
                         src={item.image}
                         alt={'xd'}

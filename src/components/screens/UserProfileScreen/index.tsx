@@ -24,6 +24,7 @@ const UserProfileScreen: React.FC = () => {
                             name={user.name as string}
                             voteSets={user._count.voteSets}
                             votes={user._count.votes}
+                            createdAt={user.createdAt}
                         />
                     </>
                 }

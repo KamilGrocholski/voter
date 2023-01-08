@@ -8,7 +8,8 @@ const Item: React.FC<NewVoteItem> = ({ name, image, index }) => {
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const [newName, setNewName] = useState<string>(name)
     const [newImage, setNewImage] = useState<string>(image)
-    const { removeItem, editItem } = useNewVoteSetStore()
+    const removeItem = useNewVoteSetStore(state => state.removeItem)
+    const editItem = useNewVoteSetStore(state => state.editItem)
 
     const handleRemoveItem = () => {
         removeItem(index)

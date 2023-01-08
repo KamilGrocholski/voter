@@ -10,7 +10,6 @@ import { userSchemaBase } from "../schemes/userSchema"
 import { z } from "zod"
 
 export const voteSetRouter = router({
-
     getVoteSets: publicProcedure
         .input(voteSetSchema.filter)
         .query(async ({ ctx, input }) => {

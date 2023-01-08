@@ -1,7 +1,7 @@
 import { useNewVoteSetStore } from "../store"
 
 const CreateItem: React.FC = () => {
-    const { setIsCreatorOpen } = useNewVoteSetStore()
+    const setIsCreatorOpen = useNewVoteSetStore(state => state.setIsCreatorOpen)
 
     const handleOpenCreator = () => {
         setIsCreatorOpen(true)

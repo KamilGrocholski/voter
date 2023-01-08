@@ -2,13 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
 
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
 @layer base {
     *,
     ::after,
     ::before {
-      @apply box-border;
+      @apply box-border scroll-smooth;
     } 
 
     body {

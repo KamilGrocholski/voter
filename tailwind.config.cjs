@@ -4,6 +4,12 @@ module.exports = {
   theme: {
 
     extend: {
+      keyframes: {
+      },
+
+      animation: {
+      },
+
       colors: {
         dark: {
           shade: {

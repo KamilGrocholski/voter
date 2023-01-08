@@ -21,9 +21,18 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
                 <Image
                     src={props.image ?? 'd'}
                     alt='xd'
-                    layout='fill'
+                    layout="fill"
+                    sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
                     className='absolute top-0 left-0 right-0 blur-sm'
                 />
+                {/* <Image
+                    src={props.image ?? 'd'}
+                    alt='xd'
+                    layout='fill'
+                    className='absolute top-0 left-0 right-0 blur-sm'
+                /> */}
                 <div className='absolute top-0 bottom-0 left-0 right-0 p-3 flex flex-col space-y-3 bg-black/50'>
                     <Info {...props} />
                     <button

@@ -13,18 +13,18 @@ import { useRouter } from 'next/router'
 const VoteSetCard: React.FC<VotesSetsPagination['voteSets'][number]> = (props) => {
 
     return (
-        <div>
+        <div className='group'>
             <Link
                 href={`/vote-sets/${props.id}/voting`}
             >
-                <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black max-w-screen'>
+                <div className='relative min-h-[280px] rounded-md overflow-hidden transition-all ease-in-out duration-200 group-hover:cursor-pointer group-hover:outline outline-purple-800 shadow-lg shadow-black max-w-screen'>
                     <Image
                         src={props.image}
                         alt={'xd'}
                         layout='fill'
                         objectFit='cover'
                         objectPosition='center'
-                        className='absolute top-0 bottom-0 left-0 right-0'
+                        className='absolute top-0 bottom-0 left-0 right-0 transition-all ease-in-out duration-200 group-hover:scale-110'
                     />
                     <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-dark-shade-800/70'>
                         <div className='h-[85%] flex flex-col'>
@@ -80,7 +80,7 @@ const GoToVoteSetPage: React.FC<{ voteSetId: VoteSet['id'] }> = ({ voteSetId }) 
     return (
         <button
             onClick={handleGoToVoteSetPage}
-            className='bg-dark-shade-900/50 text-center w-16 h-10 rounded-sm hover:bg-purple-800/50'
+            className='bg-dark-shade-900/50 text-center w-16 h-10 rounded-sm transition-all duration-200 ease-in-out hover:bg-purple-800/50'
         >
             View
         </button>
@@ -143,7 +143,7 @@ const LikesDislikes: React.FC<{
         const utils = trpc.useContext()
 
         const { mutate: likeDislike, isLoading } = trpc.voteSet.likeDislike.useMutation({
-            onSuccess: () => utils.voteSet.pagination.invalidate()
+            onSuccess: () => utils.voteSet.getVoteSets.invalidate()
         })
 
         const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {

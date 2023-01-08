@@ -14,10 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id String @id @default(cuid())
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -108,6 +104,7 @@ model VoteSet {
     voteItems VoteItem[]
     likes     VoteSetLike[]
     dislikes  VoteSetDislike[]
+    votes     Vote[]
 
     ownerId String
     owner   User   @relation(fields: [ownerId], references: [id])
@@ -140,6 +137,8 @@ model VoteItem {
 model Vote {
     id String @id @default(cuid())
 
+    voteSetId      String
+    voteSet        VoteSet  @relation(fields: [voteSetId], references: [id])
     votedForId     String
     votedFor       VoteItem @relation(name: "votesFor", fields: [votedForId], references: [id], onDelete: Cascade)
     votedAgainstId String
