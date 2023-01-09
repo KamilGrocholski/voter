@@ -42,7 +42,13 @@ const VoteSetScreen: React.FC = () => {
                                     onClick={() => setIsCreatorOpen(true)}
                                     className='btn mx-auto'
                                 >
-                                    Create a new item
+                                    <span className="flex flex-row space-x-3">
+                                        <span>Create a new item</span>
+                                        <span>
+                                            {nonEmptyVoteSet._count.voteItems}
+                                            <span>/255</span>
+                                        </span>
+                                    </span>
                                 </button> : null}
                             <NewItemCreationModal
                                 voteSetId={voteSetId}

@@ -1,9 +1,12 @@
 import { Menu } from '@headlessui/react'
 import { signOut, signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const AccountMenu = () => {
     const { data } = useSession()
+
+    const router = useRouter()
 
     const handleSignIn = () => {
         signIn('discord')
@@ -42,14 +45,11 @@ const AccountMenu = () => {
             </div>
 
             <Menu.Items className='bg-dark-shade-900 absolute right-0 p-3 space-y-1 mt-2 w-56 origin-top-right divide-y divide-gray-500/50 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                {/* <div className='flex flex-col space-y-1'>
+                <div className='flex flex-col space-y-1'>
                     <Menu.Item>
-                        <span className={styles.normalItem}>Your profile</span>
+                        <button onClick={() => router.push(`/users/${data.user?.id}`)} className={styles.normalItem}>Your profile</button>
                     </Menu.Item>
-                    <Menu.Item>
-                        <span className={styles.normalItem}>Settings</span>
-                    </Menu.Item>
-                </div> */}
+                </div>
                 <div className='flex flex-col pt-1'>
                     <Menu.Item>
                         <span onClick={handleSignOut} className={styles.logoutItem}>Logout</span>
@@ -63,6 +63,6 @@ const AccountMenu = () => {
 export default AccountMenu
 
 const styles = {
-    normalItem: 'hover:bg-purple-500 px-3 rounded-md cursor-pointer w-full',
+    normalItem: 'hover:bg-purple-500 px-3 rounded-md cursor-pointer w-full text-start',
     logoutItem: 'hover:bg-red-500 text-white rounded-md px-3 cursor-pointer w-full'
 }

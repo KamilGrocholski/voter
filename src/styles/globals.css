@@ -31,7 +31,7 @@
   }
 
   .dropdown-item {
-    @apply hover:bg-purple-500 px-3 rounded-md cursor-pointer w-full
+    @apply cursor-pointer w-full
   }
 
   .section-intro {
@@ -39,7 +39,7 @@
   }
 
   .brd-normal {
-    @apply border border-dark-shade-500
+    @apply border border-dark-shade-500 disabled:opacity-25
   }
 
   .brd-dashed {

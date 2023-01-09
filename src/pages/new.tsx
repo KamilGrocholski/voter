@@ -7,6 +7,7 @@ const New: NextPage = () => {
         <>
             <Head>
                 <title>New</title>
+                <meta name='new' content='Create a new vote set' />
             </Head>
 
             <NewScreen />

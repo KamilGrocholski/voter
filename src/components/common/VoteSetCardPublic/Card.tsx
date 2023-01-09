@@ -103,7 +103,7 @@ const Items: React.FC<{
     quantity
 }) => {
         return (
-            <div className='flex flex-row space-x-2'>
+            <div className='flex flex-row space-x-3'>
                 <div>{RepIcons.voteItem}</div>
                 <div>{quantity}</div>
             </div>

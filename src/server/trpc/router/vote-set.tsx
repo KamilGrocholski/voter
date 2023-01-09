@@ -8,6 +8,7 @@ import { voteSetSelects } from "../../utils/selects/voteSetSelect"
 import { deleteImage, uploadImage } from "../../lib/cloudinary"
 import { userSchemaBase } from "../schemes/userSchema"
 import { z } from "zod"
+import { isMaxVoteSets } from "../../utils/isMaxVoteSets"
 
 export const voteSetRouter = router({
     getVoteSets: publicProcedure
@@ -133,6 +134,8 @@ export const voteSetRouter = router({
     create: protectedProcedure
         .input(voteSetSchema.create)
         .mutation(async ({ ctx, input }) => {
+            await isMaxVoteSets(ctx)
+
             const { name, image, items } = input
 
             const uploadResultUrl = await uploadImage(image)

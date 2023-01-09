@@ -7,6 +7,7 @@ const Dashboard: NextPage = () => {
     <>
       <Head>
         <title>Dashboard</title>
+        <meta property="og:dashboard" name='dashboard' content='Check your vote sets' key='dashboard' />
       </Head>
 
       <DashboardScreen />

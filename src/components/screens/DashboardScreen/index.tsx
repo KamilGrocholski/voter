@@ -14,12 +14,16 @@ const DashboardScreen: React.FC = () => {
 
     return (
         <MainLayout useContainer={true}>
-            <DashboardHeader />
             <EmptyStateWrapper
                 isLoading={isLoading}
                 isError={isError}
                 data={voteSets}
-                NonEmptyComponent={(data) => <DashboardGrid voteSets={data} />}
+                NonEmptyComponent={(data) =>
+                    <>
+                        <DashboardHeader voteSetsCount={data.length} />
+                        <DashboardGrid voteSets={data} />
+                    </>
+                }
                 ErrorComponent={<span className='text-indicative-danger'>
                     An error has occured!
                     <button

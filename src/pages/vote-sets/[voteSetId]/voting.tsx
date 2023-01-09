@@ -7,6 +7,7 @@ const Voting: NextPage = () => {
     <>
       <Head>
         <title>Voting</title>
+        <meta name='voting' content='Vote choosing an item' />
       </Head>
 
       <VotingScreen />

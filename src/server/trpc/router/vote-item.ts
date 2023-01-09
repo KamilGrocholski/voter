@@ -4,6 +4,7 @@ import { voteItemSchema } from "../schemes/voteItemSchema"
 import { voteSetSchemaBase } from '../schemes/voteSetSchema'
 import { isVoteItemOwner } from "../../utils/isVoteItemOwner"
 import { isVoteSetOwner } from "../../utils/isVoteSetOwner"
+import { isMaxVoteItems } from "../../utils/isMaxVoteItems"
 
 export const voteItemRouter = router({
     getPair: publicProcedure
@@ -33,10 +34,12 @@ export const voteItemRouter = router({
 
     create: protectedProcedure
         .input(voteItemSchema.createAlone)
-        .mutation(({ ctx, input }) => {
+        .mutation(async ({ ctx, input }) => {
             const { name, image, voteSetId } = input
 
-            isVoteSetOwner(ctx, voteSetId)
+            await isVoteSetOwner(ctx, voteSetId)
+
+            await isMaxVoteItems(ctx, voteSetId)
 
             return ctx.prisma.voteItem.create({
                 data: {

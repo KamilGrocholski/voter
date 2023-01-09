@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server"
 import { useRouter } from "next/router"
 import { trpc } from "../../../../utils/trpc"
 import { useNewVoteSetStore } from "../store"
@@ -13,14 +14,19 @@ const Create: React.FC = () => {
     const setIsCreatorStateOpen = useNewVoteSetStore(state => state.setIsCreatorStateOpen)
     const resetStore = useNewVoteSetStore(state => state.resetStore)
 
+    const utils = trpc.useContext()
+
     const { mutate: createSet, isLoading } = trpc.voteSet.create.useMutation({
         onSuccess: () => {
             push('/dashboard')
             resetStore()
+            utils.voteSet.getVoteSets.invalidate()
         },
         onError: (error) => {
             setIsError(true)
-            setError(error.message)
+            if (error instanceof TRPCError) {
+                setError(error.message)
+            }
             setIsCreatorStateOpen(true)
         },
         onSettled: () => {

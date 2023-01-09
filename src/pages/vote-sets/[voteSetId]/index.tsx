@@ -7,6 +7,7 @@ const VoteSet: NextPage = () => {
         <>
             <Head>
                 <title>Vote set</title>
+                <meta name='vote set' content='Vote set' />
             </Head>
 
             <VoteSetScreen />

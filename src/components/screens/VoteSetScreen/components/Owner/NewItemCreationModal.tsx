@@ -47,7 +47,7 @@ const ItemCreationModal: React.FC<{ voteSetId: VoteSet['id'], isCreatorOpen: boo
             isOpen={isCreatorOpen}
             handleCancel={handleCancelCreation}
             title='Create a new item'
-            description='Enter the name and the image'
+            description='Enter a name and an image'
         >
             <ModalForm onSubmit={onSubmit}>
                 <FormGroup
