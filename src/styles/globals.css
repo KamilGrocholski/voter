@@ -26,6 +26,10 @@
 
 
 @layer components {
+  .link {
+    @apply text-dark-shade-300 text-sm font-semibold hover:text-dark-shade-100 cursor-pointer
+  }
+
   .text-muted {
     @apply text-dark-shade-300 text-sm font-semibold
   }
@@ -55,7 +59,23 @@
   }
 
   .btn {
-    @apply rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-dark-shade-500 text-dark-shade-200 py-1 px-3 hover:bg-dark-shade-400
+    @apply disabled:bg-dark-shade-500/20 disabled:text-dark-shade-200/50 disabled:pointer-events-none rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-dark-shade-500 text-dark-shade-200 py-1 px-3 hover:bg-dark-shade-400
+  }
+
+  .btn-success {
+    @apply disabled:bg-indicative-danger/20 disabled:text-dark-shade-200/50 disabled:pointer-events-none rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-indicative-success text-white py-1 px-3 hover:bg-indicative-success/50
+  }
+  
+  .btn-danger {
+    @apply disabled:bg-indicative-danger/20 disabled:text-dark-shade-200/50 disabled:pointer-events-none rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-indicative-danger text-white py-1 px-3 hover:bg-indicative-danger/50
+  }
+
+  .btn-warning {
+    @apply disabled:bg-indicative-warning/20 disabled:text-dark-shade-200/50 disabled:pointer-events-none rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-indicative-warning text-white py-1 px-3 hover:bg-indicative-warning/50
+  }
+
+  .btn-info {
+    @apply disabled:bg-indicative-info/20 disabled:text-dark-shade-200/50 disabled:pointer-events-none rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-indicative-info text-white py-1 px-3 hover:bg-indicative-info/50
   }
 
   .btn-small {

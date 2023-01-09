@@ -12,10 +12,6 @@ export const isMaxVoteItems = async (
     }
   })
 
-  if (!voteItemsCount) {
-    throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
-  }
-
   if (voteItemsCount > 255) {
     throw new TRPCError({ code: 'FORBIDDEN', message: `You can not have more than ${255} vote items in a vote set`  })
   } 

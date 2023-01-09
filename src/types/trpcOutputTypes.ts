@@ -7,6 +7,8 @@ export type AllVoteSetsByUserIdProtected = GetInferenceHelpers<typeof voteSetRou
 
 export type VoteSetByIdPublic = NonNullable<GetInferenceHelpers<typeof voteSetRouter>['getOneById']['output']>
 
+export type MyVoteSetByIdProtected = NonNullable<GetInferenceHelpers<typeof voteSetRouter>['getMyVoteSetById']['output']>
+
 export type VoteItemPair = GetInferenceHelpers<typeof voteItemRouter>['getPair']['output']
 
 export type VotesSetsPagination = GetInferenceHelpers<typeof voteSetRouter>['getVoteSets']['output']
@@ -16,3 +18,4 @@ export type UserSmallInfoByIdPublic = NonNullable<GetInferenceHelpers<typeof use
 export type VotesSetsList = GetInferenceHelpers<typeof voteSetRouter>['getAllByUserIdPublic']['output']
 
 export type UserInfoPublic = NonNullable<GetInferenceHelpers<typeof userRouter>['getSmallInfoByIdPublic']['output']>
+

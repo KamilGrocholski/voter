@@ -33,12 +33,12 @@ const DashboardCard: React.FC<AllVoteSetsByUserIdProtected[number]> = (props) =>
     return (
         <div>
             <Link
-                href={ `/vote-sets/${props.id}` }
+                href={`/my-vote-set/${props.id}`}
             >
                 <div className='relative min-h-[280px] rounded-md overflow-hidden hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black'>
-                    <Image 
-                        src={ props.image }
-                        alt={ 'xd' }
+                    <Image
+                        src={props.image}
+                        alt={'xd'}
                         layout='fill'
                         objectFit='cover'
                         objectPosition='center'
@@ -46,26 +46,26 @@ const DashboardCard: React.FC<AllVoteSetsByUserIdProtected[number]> = (props) =>
                     />
                     <div className='absolute top-0 bottom-0 left-0 right-0 p-3 bg-black/50'>
                         <div className='flex flex-row space-x-3 justify-end'>
-                            <button className='text-yellow-500' onClick={ handleOpenUpdate }>{RepIcons.edit}</button>
-                            <button className='text-red-500' onClick={ handleOpenDeletion }>{RepIcons.delete}</button>
+                            <button className='text-white' onClick={handleOpenUpdate}>{RepIcons.edit}</button>
+                            <button className='text-indicative-danger' onClick={handleOpenDeletion}>{RepIcons.delete}</button>
                         </div>
-                        <p>{ props.name }</p>
+                        <p>{props.name}</p>
                         <div>
-                            <div>Likes: { props._count.likes }</div>
-                            <div>Dislikes: { props._count.dislikes }</div>
-                            <div>Items: { props._count.voteItems }</div>
-                            <div>Votes: { sumSetVotes(props.voteItems) }</div>
-                            <div>Created at: { parseDate(props.createdAt) }</div>
-                            <div>Updated at: { parseDate(props.updatedAt) }</div>
+                            <div>Likes: {props._count.likes}</div>
+                            <div>Dislikes: {props._count.dislikes}</div>
+                            <div>Items: {props._count.voteItems}</div>
+                            <div>Votes: {sumSetVotes(props.voteItems)}</div>
+                            <div>Created at: {parseDate(props.createdAt)}</div>
+                            <div>Updated at: {parseDate(props.updatedAt)}</div>
                         </div>
-                        <div className={ `${ props.isPublished ? 'bg-green-900/20 border-green-900' : 'bg-red-900/20 border-red-900' } border px-2` }>
-                            { props.isPublished ? 'Published' : 'Not published' }
+                        <div className={`${props.isPublished ? 'bg-green-900/20 border-green-900' : 'bg-red-900/20 border-red-900'} border px-2`}>
+                            {props.isPublished ? 'Published' : 'Not published'}
                         </div>
                     </div>
                 </div>
             </Link>
-            <SetDeletionModal isOpen={ isOpenDeletion } voteSetId={ props.id } close={ handleCloseDeletion } />
-            <SetUpdateModal isOpen={ isOpenUpdate } voteSet={ props } close={ handleCloseUpdate } />
+            <SetDeletionModal isOpen={isOpenDeletion} voteSetId={props.id} close={handleCloseDeletion} />
+            <SetUpdateModal isOpen={isOpenUpdate} voteSet={props} close={handleCloseUpdate} />
         </div>
     )
 }

@@ -1,8 +1,6 @@
 import Image from "next/image"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { RepIcons } from "../../../assets/repIcons"
-import useHover from "../../../hooks/use-hover"
-import { parseDate } from "../../../utils/parseDate"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../EmptyStateWrapper"
 
@@ -26,6 +24,7 @@ export const VotesTracker: React.FC<VotesTrackerProps> = ({
                 isError={myVotes.isError}
                 data={myVotes.data}
                 ErrorComponent={<></>}
+                EmptyComponent={<></>}
                 LoadingComponent={<></>}
                 NonEmptyComponent={(votes) =>
                     <div className={`z-[49] bg-dark-shade-700 transition-all duration-400 ease-in-out fixed left-0 flex flex-row space-x-1 ${show ? "translate-x-0 " : "-translate-x-full"}`}>

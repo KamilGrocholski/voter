@@ -10,10 +10,6 @@ export const isMaxVoteSets = async (
     }
   })
 
-  if (!voteSetsCount) {
-    throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' })
-  }
-
   if (voteSetsCount > 25) {
     throw new TRPCError({ code: 'FORBIDDEN', message: `You can not have more than ${25} vote sets`  })
   } 

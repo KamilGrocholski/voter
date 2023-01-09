@@ -17,6 +17,6 @@ export const uploadImage = async (url: string) => {
 
 export const deleteImage = async (url: string) => {
     return await cloudinary.uploader.destroy(url, (result) => {
-        return result.toString()
+        return JSON.stringify(result)
     })
 }

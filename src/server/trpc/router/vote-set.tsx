@@ -11,6 +11,19 @@ import { z } from "zod"
 import { isMaxVoteSets } from "../../utils/isMaxVoteSets"
 
 export const voteSetRouter = router({
+    getMyVoteSetById: protectedProcedure
+        .input(voteSetSchemaBase.id)
+        .query(async ({ ctx, input: voteSetId }) => {
+            await isVoteSetOwner(ctx, voteSetId)
+
+            return ctx.prisma.voteSet.findUnique({
+                where: {
+                    id: voteSetId
+                },
+                select: voteSetSelects.myVoteSetProtectedSelect
+            })
+        }),
+
     getVoteSets: publicProcedure
         .input(voteSetSchema.filter)
         .query(async ({ ctx, input }) => {
@@ -134,6 +147,7 @@ export const voteSetRouter = router({
     create: protectedProcedure
         .input(voteSetSchema.create)
         .mutation(async ({ ctx, input }) => {
+            if (input.items.length > 255) throw new TRPCError({ code: 'FORBIDDEN', message: `You can not have more than ${255} vote items in a vote set` })
             await isMaxVoteSets(ctx)
 
             const { name, image, items } = input
