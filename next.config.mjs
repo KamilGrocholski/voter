@@ -24,7 +24,7 @@ export default defineNextConfig({
   images: {
     domains: [
       'res.cloudinary.com',
-      'cdn.discordapp.com'
+      'avatars.githubusercontent.com'
     ]
   }
 });

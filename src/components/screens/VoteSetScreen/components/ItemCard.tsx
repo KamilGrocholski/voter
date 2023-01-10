@@ -13,7 +13,7 @@ const ItemCard: React.FC<ItemCardProps> = (props) => {
                 <div className='relative w-[80px] h-[40px]'>
                     <Image
                         src={props.image}
-                        alt={'xd'}
+                        alt={'img'}
                         layout='fill'
                         objectFit='cover'
                         objectPosition='center'
