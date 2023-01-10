@@ -10,13 +10,13 @@ const LikeDislikeButtons: React.FC<Pick<VoteSetByIdPublic, '_count'> & { handleL
         <div className='grid grid-col-2 gap-3'>
             <Button
                 type='Like'
-                counter={ _count.likes }
-                handler={ handleLike }
+                counter={_count.likes}
+                handler={handleLike}
             />
-            <Button 
+            <Button
                 type='Dislike'
-                counter={ _count.dislikes }
-                handler={ handleDislike }
+                counter={_count.dislikes}
+                handler={handleDislike}
             />
         </div>
     )
@@ -28,21 +28,21 @@ export default LikeDislikeButtons
 const Button: React.FC<{
     counter: number
     type: 'Like' | 'Dislike'
-    handler: () => void   
+    handler: () => void
 }> = ({
-    counter,
+    // counter,
     type,
     handler
 }) => {
-    return (
-        <div>
-            <button
-                onClick={ handler }
-            >
-                {type === 'Like' 
-                    ? RepIcons.like 
-                    : RepIcons.dislike}
-            </button>
-        </div>
-    )
-}
+        return (
+            <div>
+                <button
+                    onClick={handler}
+                >
+                    {type === 'Like'
+                        ? RepIcons.like
+                        : RepIcons.dislike}
+                </button>
+            </div>
+        )
+    }

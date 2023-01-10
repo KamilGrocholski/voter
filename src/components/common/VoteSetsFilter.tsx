@@ -1,5 +1,4 @@
 import { Menu } from "@headlessui/react"
-import { Fragment } from "react"
 import { BY, TIME } from "../../constants/filter-vote-sets"
 import { useVoteSetsFilter } from "../../hooks/use-vote-sets-filter"
 
