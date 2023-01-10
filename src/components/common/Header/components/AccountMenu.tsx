@@ -9,7 +9,7 @@ const AccountMenu = () => {
     const router = useRouter()
 
     const handleSignIn = () => {
-        signIn('discord', {
+        signIn('github', {
             callbackUrl: `${window.location.origin}`
         })
     }
