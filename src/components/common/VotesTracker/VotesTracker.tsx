@@ -82,9 +82,9 @@ const VotePair: React.FC<{
     }
 
 const VoteItem: React.FC<VoteItemProps> = ({
-    name,
+    // name,
     image,
-    id,
+    // id,
     isChosen
 }) => {
     return (
