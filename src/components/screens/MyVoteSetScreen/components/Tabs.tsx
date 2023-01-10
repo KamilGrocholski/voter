@@ -15,7 +15,7 @@ export const Tabs: React.FC<MyVoteSetByIdProtected> = (voteSet) => {
     return (
         <Tab.Group>
             <Tab.List className='w-full bg-dark-shade-800 h-min flex items-end pt-10 pb-1'>
-                <div className='flex flex-col space-y-12 container mx-auto'>
+                <div className='flex flex-col space-y-12 container mx-auto px-3 lg:px-0'>
                     <div className='flex flex-col space-y-1'>
                         <div className='flex flex-row space-x-2 items-center'>
                             <div className='text-2xl font-bold'>{voteSet.name}</div>
@@ -43,7 +43,15 @@ export const Tabs: React.FC<MyVoteSetByIdProtected> = (voteSet) => {
             <Tab.Panels>
                 <Tab.Panel><Overview {...voteSet} /></Tab.Panel>
                 <Tab.Panel><Items items={voteSet.voteItems} voteSetId={voteSet.id} /></Tab.Panel>
-                <Tab.Panel><Settings voteSetId={voteSet.id} name={voteSet.name} image={voteSet.image} isPublished={voteSet.isPublished} /></Tab.Panel>
+                <Tab.Panel>
+                    <Settings
+                        voteSetId={voteSet.id}
+                        name={voteSet.name}
+                        image={voteSet.image}
+                        isPublished={voteSet.isPublished}
+                        voteItems={voteSet._count.voteItems}
+                    />
+                </Tab.Panel>
             </Tab.Panels>
         </Tab.Group>
     )

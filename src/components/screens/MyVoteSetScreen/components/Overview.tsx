@@ -5,7 +5,7 @@ import { sumSetVotes } from "../../../../utils/sumVotes"
 
 export const Overview: React.FC<MyVoteSetByIdProtected> = (voteSet) => {
     return (
-        <div className='container mx-auto mt-12'>
+        <div className='container mx-auto mt-12 px-3 lg:px-0 mb-12'>
             <Section title='Summary'>
                 <div className='grid grid-cols-2 lg:grid-cols-3 gap-3'>
                     <InfoBox

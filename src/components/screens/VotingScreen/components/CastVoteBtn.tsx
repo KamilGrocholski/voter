@@ -26,7 +26,7 @@ const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
             <button
                 onClick={handleCastVote}
                 disabled={isDisabled}
-                className='bg-dark-shade-900 flex flex-col rounded-md justify-center items-center hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black overflow-hidden'
+                className='bg-dark-shade-900 flex flex-col transition-all duration-200 ease-in-out rounded-md justify-center items-center hover:scale-105 hover:cursor-pointer hover:outline outline-purple-800 shadow-lg shadow-black overflow-hidden'
             >
                 <div className='relative w-[100vw] md:w-[80vw] lg:w-[25vw] h-[18vh] lg:h-[20vh]'>
                     <Image

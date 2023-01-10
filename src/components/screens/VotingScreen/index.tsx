@@ -42,7 +42,8 @@ const VotingScreen: React.FC = () => {
 
     const handleSkipVoting = async () => {
         setCanShowPair(false)
-        await new Promise(() => setTimeout(() => utils.voteItem.getPair.refetch(voteSetId ?? ''), 200))
+        // await new Promise(() => setTimeout(() => utils.voteItem.getPair.refetch(voteSetId ?? ''), 200))
+        utils.voteItem.getPair.refetch(voteSetId ?? '')
     }
 
     const handleCastVote: HandleCastVote = ({

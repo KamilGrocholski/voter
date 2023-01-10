@@ -36,7 +36,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='flex flex-col space-y-1 w-min'>
             <input
                 className='hidden-input'
                 ref={inputFileRef}
@@ -54,7 +54,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 />) : null}
             <button
                 onClick={handleChooseFile}
-                className='px-2 py-1 border border-1 border-black'
+                className='px-2 py-1 w-max border border-1 border-black'
             >
                 Choose a file
             </button>

@@ -1,12 +1,11 @@
-import { Switch } from "@headlessui/react"
 import { VoteSet } from "@prisma/client"
 import Image from "next/image"
 import { useState } from "react"
 import { RepIcons } from "../../../../assets/repIcons"
 import useCopyToClipboard from "../../../../hooks/use-clipboard"
 import { trpc } from "../../../../utils/trpc"
-import { FormGroup } from "../../../common/Form"
 import ImageUpload from "../../../common/ImageUpload/ImageUpload"
+import { SaveModal } from "./SaveModal"
 import VoteSetDeletionModal from "./VoteSetDeletionModal"
 
 interface SettingsProps {
@@ -14,33 +13,51 @@ interface SettingsProps {
     name: string
     image: string
     isPublished: boolean
+    voteItems: number
 }
 
 export const Settings: React.FC<SettingsProps> = ({
     voteSetId,
     name,
     image,
-    isPublished
+    isPublished,
+    voteItems
 }) => {
-    const [, copy] = useCopyToClipboard()
+    const [copied, copy] = useCopyToClipboard()
     const [isOpenDeletion, setIsOpenDeletion] = useState<boolean>(false)
     const [isEditingName, setIsEditingName] = useState(false)
     const [newName, setNewName] = useState<string>(name)
     const [isEditingImage, setIsEditingImage] = useState(false)
     const [newImage, setNewImage] = useState<string>(image)
-    const [isEditingPublished, setIsEditingPublished] = useState(false)
-    const [newIsPublished, setNewIsPublished] = useState(isPublished)
+
+    const [showSaveModal, setShowSaveModal] = useState(false)
+    const [canCloseSaveModal, setCanCloseSaveModal] = useState(true)
 
     const utils = trpc.useContext()
 
     const updateVoteSet = trpc.voteSet.update.useMutation({
         onSuccess: () => {
             setIsEditingName(false)
+            setIsEditingImage(false)
             utils.voteSet.getMyVoteSetById.invalidate()
+        },
+        onSettled: () => {
+            setCanCloseSaveModal(true)
         }
     })
 
+    const handleToggleVoteSetState = () => {
+        setCanCloseSaveModal(false)
+        setShowSaveModal(true)
+        updateVoteSet.mutate({
+            voteSetId,
+            isPublished: !isPublished
+        })
+    }
+
     const handleChangeImage = () => {
+        setCanCloseSaveModal(false)
+        setShowSaveModal(true)
         updateVoteSet.mutate({
             image: newImage,
             voteSetId
@@ -57,6 +74,8 @@ export const Settings: React.FC<SettingsProps> = ({
             setIsEditingName(false)
             return
         }
+        setCanCloseSaveModal(false)
+        setShowSaveModal(true)
         updateVoteSet.mutate({
             name: newName,
             voteSetId
@@ -82,33 +101,60 @@ export const Settings: React.FC<SettingsProps> = ({
     }
 
     return (
-        <div className='container mx-auto flex flex-col space-y-12'>
+        <div className='container mx-auto flex flex-col space-y-12 px-3 lg:px-0 mb-12'>
+            <SaveModal
+                isOpen={showSaveModal}
+                onClose={() => setShowSaveModal(false)}
+                canClose={canCloseSaveModal}
+                title={updateVoteSet.isLoading ? 'Updating your vote set...' : updateVoteSet.isError ? 'Error' : 'Success'}
+                description={updateVoteSet.isLoading ? 'Wait' : updateVoteSet.isError ? 'Error' : 'You can now close the window'}
+            />
             <VoteSetDeletionModal isOpen={isOpenDeletion} voteSetId={voteSetId} close={handleCloseDeletion} />
-            <div className='flex flex-col space-y-5'>
-                <div>
+            <div className='flex flex-col space-y-5 p-3 border-dark-shade-500 bg-dark-shade-800'>
+                <div className='bg-dark-shade-600 p-3 flex flex-col space-y-1'>
+                    <span className='text-xl font-semibold'>Vote set state</span>
+                    <span className='text-indicative-danger'>{voteItems < 2 ? 'Must have at least 2 items to make it public' : null}</span>
+                    <button
+                        className={`w-min ${isPublished ? 'btn-danger' : 'btn-success'}`}
+                        onClick={handleToggleVoteSetState}
+                        disabled={voteItems < 2}
+                    >
+                        {isPublished ? 'Make it private' : 'Make it public'}
+                    </button>
+                </div>
+                <div className='bg-dark-shade-600 p-3'>
+                    <span className='text-xl font-semibold'>Vote set name</span>
                     {isEditingName ?
-                        <div className='flex flex-row items-center space-x-3'>
-                            <input
-                                value={newName}
-                                onChange={e => setNewName(e.target.value)}
-                                className='input-normal'
-                            />
-                            <button className='btn-success' onClick={handleChangeName}>Save</button>
-                            <button className='btn-danger' onClick={handleCancelChangeName}>Cancel</button>
+                        <div className='flex flex-col space-y-3'>
+                            <div className='flex flex-col space-y-1'>
+                                <span className='text-indicative-danger'>{!newName || newName && (newName.length <= 5 || newName.length >= 45) ? 'Name must be between 5 and 45 characters' : null}</span>
+                                <input
+                                    value={newName}
+                                    onChange={e => setNewName(e.target.value)}
+                                    className='input-normal w-min'
+                                />
+                            </div>
+                            <div className='flex flex-row items-center space-x-3'>
+                                <button className='btn-success' onClick={handleChangeName}>Save</button>
+                                <button className='btn-danger' onClick={handleCancelChangeName}>Cancel</button>
+                            </div>
                         </div> :
                         <div className='flex flex-row items-center space-x-3'>
                             <span className='text-lg'>{name}</span>
                             <button className='btn' onClick={() => setIsEditingName(true)}>{RepIcons.edit}</button>
                         </div>}
                 </div>
-                <div>
+                <div className='bg-dark-shade-600 p-3'>
+                    <span className='text-xl font-semibold'>Vote set image</span>
                     {isEditingImage ?
-                        <div>
+                        <div className='flex flex-col space-y-1'>
                             <ImageUpload storeImage={newImage} storeImageFn={setNewImage} />
-                            <button className='btn-success' onClick={handleChangeImage}>Save</button>
-                            <button className='btn-danger' onClick={handleCancelChangeImage}>Cancel</button>
+                            <div className='flex flex-row items-center space-x-3'>
+                                <button className='btn-success' onClick={handleChangeImage}>Save</button>
+                                <button className='btn-danger' onClick={handleCancelChangeImage}>Cancel</button>
+                            </div>
                         </div> :
-                        <div className='flex flex-row space-x-3'>
+                        <div className='flex flex-col space-y-3'>
                             <div className='relative w-[300px] h-[200px]'>
                                 <Image
                                     src={image}
@@ -119,7 +165,7 @@ export const Settings: React.FC<SettingsProps> = ({
                                     className='absolute top-0 bottom-0 left-0 right-0'
                                 />
                             </div>
-                            <button className='btn h-min' onClick={() => setIsEditingImage(true)}>{RepIcons.edit}</button>
+                            <button className='btn w-min' onClick={() => setIsEditingImage(true)}>{RepIcons.edit}</button>
                         </div>}
                 </div>
             </div>
@@ -133,7 +179,12 @@ export const Settings: React.FC<SettingsProps> = ({
                     </div>
                     <div className='bg-dark-shade-600 flex flex-row space-x-3 items-center p-2 rounded-md border-dark-shade-300'>
                         <span>{voteSetId}</span>
-                        <button className='btn' onClick={handleCopyVoteSetId}>Copy ID</button>
+                        <button
+                            className='btn'
+                            onClick={handleCopyVoteSetId}
+                        >
+                            {copied === voteSetId ? 'Copied!' : 'Copy ID'}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -141,7 +192,12 @@ export const Settings: React.FC<SettingsProps> = ({
             <div className='p-3 bg-dark-shade-800 flex flex-col space-y-1'>
                 <span className='text-xl font-bold'>Delete the project</span>
                 <span className='text-muted text-indicative-danger'>Deleting is permanent and can not be undone!</span>
-                <button className='btn-danger w-full lg:max-w-[120px]' onClick={handleOpenDeletion}>DELETE</button>
+                <button
+                    className='btn-danger w-full lg:max-w-[120px]'
+                    onClick={handleOpenDeletion}
+                >
+                    DELETE
+                </button>
             </div>
         </div>
     )

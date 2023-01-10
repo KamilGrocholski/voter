@@ -29,7 +29,7 @@ export const VotesTracker: React.FC<VotesTrackerProps> = ({
                 NonEmptyComponent={(votes) =>
                     <div className={`z-[49] bg-dark-shade-700 transition-all duration-400 ease-in-out fixed left-0 flex flex-row space-x-1 ${show ? "translate-x-0 " : "-translate-x-full"}`}>
                         <div
-                            className={`h-[85vh] scroll-hidden scrollbar-hide overscroll-none overflow-y-scroll flex flex-col space-y-3`}
+                            className={`h-[60vh] scroll-hidden scrollbar-hide overscroll-none overflow-y-scroll flex flex-col space-y-3`}
                         >
                             {votes.map((vote, i) => (
                                 <VotePair
@@ -95,6 +95,7 @@ const VoteItem: React.FC<VoteItemProps> = ({
                 layout="fixed"
                 width={60}
                 height={30}
+                quality={10}
             />
         </div>
     )

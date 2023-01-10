@@ -33,7 +33,12 @@ const DashboardScreen: React.FC = () => {
                         Try again
                     </button>
                 </span>}
-                EmptyComponent={<div>You have no vote sets.</div>}
+                EmptyComponent={
+                    <>
+                        <DashboardHeader voteSetsCount={0} />
+                        <div>You have no vote sets.</div>
+                    </>
+                }
             />
         </MainLayout>
     )

@@ -1,5 +1,6 @@
 import { router, protectedProcedure, publicProcedure } from "../trpc"
 import { voteSchema } from "../schemes/voteSchema"
+import { createDateFromNow } from "../../utils/createDateFromNow"
 
 export const voteRouter = router({
     castProtected: protectedProcedure
@@ -65,7 +66,7 @@ export const voteRouter = router({
         .query(({ ctx, input }) => {
             const { voteSetId } = input
             return ctx.prisma.vote.findMany({
-                take: 30,
+                take: 20,
                 orderBy: {
                     createdAt: 'desc'
                 },
@@ -92,4 +93,26 @@ export const voteRouter = router({
                 }
             })
         }),
+
+    countUserVotesPublic: publicProcedure
+        .input(voteSchema.countUserVotesPublic)
+        .query(({ ctx, input }) => {
+            const { userId } = input
+            return ctx.prisma.vote.groupBy({
+                by: [
+                    'createdAt'
+                ],
+                _count: {
+                    createdAt: true
+                },
+                where: {
+                    voterId: userId,
+                    createdAt: {
+                        gte: createDateFromNow('past', {
+                            day: 7
+                        })
+                    }
+                }
+            })
+        })
 })

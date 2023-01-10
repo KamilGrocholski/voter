@@ -63,7 +63,7 @@
   }
 
   .btn-success {
-    @apply disabled:bg-indicative-danger/20 disabled:text-dark-shade-200/50 disabled:pointer-events-none rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-indicative-success text-white py-1 px-3 hover:bg-indicative-success/50
+    @apply disabled:bg-indicative-success/20 disabled:text-dark-shade-200/50 disabled:pointer-events-none rounded-sm cursor-pointer transition-all duration-200 whitespace-nowrap bg-indicative-success text-white py-1 px-3 hover:bg-indicative-success/50
   }
   
   .btn-danger {
