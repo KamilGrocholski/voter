@@ -17,9 +17,6 @@ export const authOptions: NextAuthOptions = {
         session.user.role = session.user.role
       }
       return session;
-    },
-    redirect({ baseUrl }) {
-      return baseUrl
     }
   },
   // Configure one or more authentication providers
@@ -28,7 +25,7 @@ export const authOptions: NextAuthOptions = {
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
-      authorization: {params: {scope: scopes}},
+      authorization: {params: {scope: scopes}}
     }),
     // ...add more providers here
   ],
