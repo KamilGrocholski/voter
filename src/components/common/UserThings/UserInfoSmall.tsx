@@ -1,4 +1,3 @@
-import { Transition } from '@headlessui/react'
 import { User } from '@prisma/client'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -36,7 +35,7 @@ const UserInfoSmall: React.FC<Props> = ({
     const [isHovered, toggleIsHovered] = useState<boolean>(false)
 
     const router = useRouter()
-    const { data: moreInfo, isLoading } = trpc.user.getSmallInfoByIdPublic.useQuery({ id })
+    const { data: moreInfo } = trpc.user.getSmallInfoByIdPublic.useQuery({ id })
 
     const handleGoToUserProfile = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()

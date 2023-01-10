@@ -7,9 +7,7 @@ import LoggedOutLinks from './components/LoggedOutLinks'
 import Logo from './components/Logo'
 
 const Header = () => {
-    const { data, status } = useSession()
-    const isLoggedIn = !!data?.user // !! dwie negacje konwertują `truthy` i `falsy` na boolean
-    const userData = data?.user
+    const { data } = useSession()
 
     const { width } = useWindowSize()
 

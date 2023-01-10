@@ -1,6 +1,5 @@
 import { GetInferenceHelpers } from "@trpc/server";
 import { userRouter } from "../server/trpc/router/user";
-import { voteRouter } from "../server/trpc/router/vote";
 import { voteItemRouter } from "../server/trpc/router/vote-item";
 import { voteSetRouter } from "../server/trpc/router/vote-set";
 

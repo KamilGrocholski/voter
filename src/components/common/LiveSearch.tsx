@@ -25,6 +25,7 @@ export const LiveSearch = <T,>({
             nameSuggestionsQuery.refetch()
             setShowSuggestions(true)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [query])
 
     const handleSetQuery = (e: React.ChangeEvent<HTMLInputElement>) => {

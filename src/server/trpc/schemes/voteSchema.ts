@@ -1,9 +1,8 @@
 import { z } from "zod"
 import { voteItemSchemaBase } from './voteItemSchema'
-import { voteSetSchema, voteSetSchemaBase } from './voteSetSchema'
+import { voteSetSchemaBase } from './voteSetSchema'
 import { userSchemaBase } from './userSchema'
-import { InferSchemesObject, PrismaToZod } from "../../types/helpers"
-import { Vote } from "@prisma/client"
+import { InferSchemesObject } from "../../types/helpers"
 
 export type VoteSchemes = InferSchemesObject<typeof voteSchema>
 

@@ -1,6 +1,5 @@
-import { VoteSet } from "@prisma/client";
 import { z } from "zod";
-import { PrismaToZod, InferSchemesObject } from "../../types/helpers";
+import { InferSchemesObject } from "../../types/helpers";
 import { userSchemaBase } from "./userSchema";
 import { voteItemSchema } from "./voteItemSchema";
 

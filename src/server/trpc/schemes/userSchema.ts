@@ -1,6 +1,5 @@
-import { User } from '@prisma/client'
 import { z } from 'zod'
-import { InferSchemesObject, PrismaToZod } from '../../types/helpers'
+import { InferSchemesObject } from '../../types/helpers'
 
 export type UserSchemes = InferSchemesObject<typeof userSchema>
 
