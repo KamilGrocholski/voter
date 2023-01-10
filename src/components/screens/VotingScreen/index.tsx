@@ -1,16 +1,22 @@
 import { Transition } from "@headlessui/react"
 import { VoteSet } from "@prisma/client"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import MainLayout from "../../../layouts/MainLayout"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../../common/EmptyStateWrapper"
-import { VotesTracker } from "../../common/VotesTracker"
+import { Loader } from "../../common/Loader"
+import { VotesTrackerProps } from "../../common/VotesTracker/VotesTracker"
 import CastVoteBtn from "./components/CastVoteBtn"
 import { ErrorModal } from "./components/ErrorModal"
 import SkipBtn from "./components/SkipBtn"
 import { Vs } from "./components/Vs"
 import { HandleCastVote } from "./types"
+// import { VotesTracker } from "../../common/VotesTracker"
+const VotesTracker = dynamic<VotesTrackerProps>(() => import('../../common/VotesTracker').then(m => m.VotesTracker), {
+    ssr: false,
+})
 
 const VotingScreen: React.FC = () => {
     const router = useRouter()
@@ -40,7 +46,7 @@ const VotingScreen: React.FC = () => {
         onError: () => setIsErrorModalOpen(true)
     })
 
-    const handleSkipVoting = async () => {
+    const handleSkipVoting = () => {
         setCanShowPair(false)
         // await new Promise(() => setTimeout(() => utils.voteItem.getPair.refetch(voteSetId ?? ''), 200))
         utils.voteItem.getPair.refetch(voteSetId ?? '')
@@ -64,9 +70,16 @@ const VotingScreen: React.FC = () => {
             />
             <VotesTracker voteSetId={voteSetId} />
             <EmptyStateWrapper
-                isError={votePairQuery.isError}
-                isLoading={votePairQuery.isLoading}
+                isError={votePairQuery.isError || castVoteMutation.isError}
+                isLoading={votePairQuery.isLoading || castVoteMutation.isLoading}
                 data={votePairQuery.data}
+                LoadingComponent={
+                    <div className='w-full h-full my-auto mx-auto flex items-center justify-center'>
+                        <div>
+                            <Loader />
+                        </div>
+                    </div>
+                }
                 ErrorComponent={
                     <span className='text-indicative-danger mx-auto items-center'>
                         An error has occured!

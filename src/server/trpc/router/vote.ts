@@ -92,27 +92,5 @@ export const voteRouter = router({
                     }
                 }
             })
-        }),
-
-    countUserVotesPublic: publicProcedure
-        .input(voteSchema.countUserVotesPublic)
-        .query(({ ctx, input }) => {
-            const { userId } = input
-            return ctx.prisma.vote.groupBy({
-                by: [
-                    'createdAt'
-                ],
-                _count: {
-                    createdAt: true
-                },
-                where: {
-                    voterId: userId,
-                    createdAt: {
-                        gte: createDateFromNow('past', {
-                            day: 7
-                        })
-                    }
-                }
-            })
         })
 })

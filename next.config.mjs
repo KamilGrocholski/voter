@@ -21,6 +21,9 @@ export default defineNextConfig({
     locales: ["en"],
     defaultLocale: "en",
   },
+  api: {
+    responseLimit: '12mb',
+  },
   images: {
     domains: [
       'res.cloudinary.com',

@@ -29,9 +29,6 @@ export const voteSchema = {
     getMyVotes: z.object({
         voteSetId: voteSetSchemaBase.id.optional()
     }),
-    countUserVotesPublic: z.object({
-        userId: userSchemaBase.id
-    })
 }
 
 export {

@@ -4,7 +4,7 @@ import { RepIcons } from "../../../assets/repIcons"
 import { trpc } from "../../../utils/trpc"
 import EmptyStateWrapper from "../EmptyStateWrapper"
 
-interface VotesTrackerProps {
+export interface VotesTrackerProps {
     voteSetId?: string
 }
 
@@ -13,8 +13,8 @@ export const VotesTracker: React.FC<VotesTrackerProps> = ({
 }) => {
     const [show, setShow] = useState<boolean>(false)
 
-    const myVotes = trpc.vote.getMyRecentVotes.useQuery({
-        voteSetId
+    const myVotes = trpc.vote.getMyRecentVotes.useQuery({ voteSetId }, {
+        refetchOnWindowFocus: false
     })
 
     return (

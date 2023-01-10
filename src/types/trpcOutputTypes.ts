@@ -20,5 +20,3 @@ export type VotesSetsList = GetInferenceHelpers<typeof voteSetRouter>['getAllByU
 
 export type UserInfoPublic = NonNullable<GetInferenceHelpers<typeof userRouter>['getSmallInfoByIdPublic']['output']>
 
-export type CountUserVotesPublic = NonNullable<GetInferenceHelpers<typeof voteRouter>['countUserVotesPublic']['output']>
-

@@ -31,7 +31,7 @@ const CastVoteBtn: React.FC<CastVoteBtnProps> = ({
                 <div className='relative w-[100vw] md:w-[80vw] lg:w-[25vw] h-[18vh] lg:h-[20vh]'>
                     <Image
                         src={item.image}
-                        alt={'xd'}
+                        alt={'img'}
                         layout='fill'
                     />
                 </div>

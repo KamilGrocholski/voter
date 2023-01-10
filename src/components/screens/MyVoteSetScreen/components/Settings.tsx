@@ -102,6 +102,7 @@ export const Settings: React.FC<SettingsProps> = ({
 
     return (
         <div className='container mx-auto flex flex-col space-y-12 px-3 lg:px-0 mb-12'>
+            {/* Modal open on save  */}
             <SaveModal
                 isOpen={showSaveModal}
                 onClose={() => setShowSaveModal(false)}
@@ -111,8 +112,9 @@ export const Settings: React.FC<SettingsProps> = ({
             />
             <VoteSetDeletionModal isOpen={isOpenDeletion} voteSetId={voteSetId} close={handleCloseDeletion} />
             <div className='flex flex-col space-y-5 p-3 border-dark-shade-500 bg-dark-shade-800'>
-                <div className='bg-dark-shade-600 p-3 flex flex-col space-y-1'>
-                    <span className='text-xl font-semibold'>Vote set state</span>
+                {/* Vote state editing */}
+                <div className='bg-dark-shade-600 p-3 flex flex-col'>
+                    <span className='text-xl font-semibold mb-1'>Vote set state</span>
                     <span className='text-indicative-danger'>{voteItems < 2 ? 'Must have at least 2 items to make it public' : null}</span>
                     <button
                         className={`w-min ${isPublished ? 'btn-danger' : 'btn-success'}`}
@@ -122,11 +124,13 @@ export const Settings: React.FC<SettingsProps> = ({
                         {isPublished ? 'Make it private' : 'Make it public'}
                     </button>
                 </div>
+
+                {/* Vote name editing  */}
                 <div className='bg-dark-shade-600 p-3'>
-                    <span className='text-xl font-semibold'>Vote set name</span>
+                    <span className='text-xl font-semibold mb-1'>Vote set name</span>
                     {isEditingName ?
                         <div className='flex flex-col space-y-3'>
-                            <div className='flex flex-col space-y-1'>
+                            <div className='flex flex-col space-y-2'>
                                 <span className='text-indicative-danger'>{!newName || newName && (newName.length <= 5 || newName.length >= 45) ? 'Name must be between 5 and 45 characters' : null}</span>
                                 <input
                                     value={newName}
@@ -144,10 +148,12 @@ export const Settings: React.FC<SettingsProps> = ({
                             <button className='btn' onClick={() => setIsEditingName(true)}>{RepIcons.edit}</button>
                         </div>}
                 </div>
+
+                {/* Vote image editing */}
                 <div className='bg-dark-shade-600 p-3'>
-                    <span className='text-xl font-semibold'>Vote set image</span>
+                    <span className='text-xl font-semibold mb-2'>Vote set image</span>
                     {isEditingImage ?
-                        <div className='flex flex-col space-y-1'>
+                        <div className='flex flex-col space-y-2'>
                             <ImageUpload storeImage={newImage} storeImageFn={setNewImage} />
                             <div className='flex flex-row items-center space-x-3'>
                                 <button className='btn-success' onClick={handleChangeImage}>Save</button>
@@ -172,6 +178,7 @@ export const Settings: React.FC<SettingsProps> = ({
 
 
             <div className='p-3 border-dark-shade-500 bg-dark-shade-800'>
+                {/* Vote set ID copy  */}
                 <div className='flex flex-col space-y-1'>
                     <div className='text-xl font-bold flex flex-row space-x-3 items-center'>
                         <div>{RepIcons.key}</div>
@@ -189,8 +196,12 @@ export const Settings: React.FC<SettingsProps> = ({
                 </div>
             </div>
 
+            {/* Vote set deletion  */}
             <div className='p-3 bg-dark-shade-800 flex flex-col space-y-1'>
-                <span className='text-xl font-bold'>Delete the project</span>
+                <div className='text-xl font-bold flex flex-row space-x-3 items-center'>
+                    <div className='text-indicative-danger'>{RepIcons.bin}</div>
+                    <div>Delete the vote set</div>
+                </div>
                 <span className='text-muted text-indicative-danger'>Deleting is permanent and can not be undone!</span>
                 <button
                     className='btn-danger w-full lg:max-w-[120px]'
