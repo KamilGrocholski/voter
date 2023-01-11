@@ -50,19 +50,19 @@ npm run dev
 ## App screens
 
 Home\
-![screenshot](https://github.com/nexxeln/nexdle/blob/main/readme-images/home.png?raw=true)
+![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/home.png?raw=true)
 
 Vote set page\
-![screenshot](https://github.com/nexxeln/nexdle/blob/main/readme-images/vote-set_page.png?raw=true)
+![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/vote-set_page.png?raw=true)
 
 Dashboard main\
-![screenshot](https://github.com/nexxeln/nexdle/blob/main/readme-images/dashboard.png?raw=true)
+![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/dashboard.png?raw=true)
 
 Dashboard vote set overview\
-![screenshot](https://github.com/nexxeln/nexdle/blob/main/readme-images/dashboard_my-vote-set_overview.png?raw=true)
+![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/dashboard_my-vote-set_overview.png?raw=true)
 
 Dashboard vote set items\
-![screenshot](https://github.com/nexxeln/nexdle/blob/main/readme-images/dashboard_my-vote-set_items.png?raw=true)
+![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/dashboard_my-vote-set_items.png?raw=true)
 
 Dashboard vote set settings\
-![screenshot](https://github.com/nexxeln/nexdle/blob/main/readme-images/dashboard_my-vote-set_settings.png?raw=true)
+![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/dashboard_my-vote-set_settings.png?raw=true)
