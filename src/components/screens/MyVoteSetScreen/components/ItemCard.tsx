@@ -25,7 +25,7 @@ const ItemCard: React.FC<ItemCardProps> = (props) => {
             <div className='flex flex-col space-y-1 items-start'>
                 <div className='flex flex-row space-x-1 items-center'><span className='text-muted'>Name:</span><span>{props.name}</span></div>
                 <div className='flex flex-row space-x-1 items-center'><span className='text-muted'>Created at:</span><span>{parseDate(props.createdAt)}</span></div>
-                <div className='flex flex-row space-x-1 items-center'><span className='text-muted'>For/Against:</span><span>{getVotesPercentage(props._count.votesFor, props._count.votesAgainst)}%</span></div>
+                <div className='flex flex-row space-x-1 items-center'><span className='text-muted'>For/All:</span><span>{getVotesPercentage(props._count.votesFor, props._count.votesAgainst)}%</span></div>
                 <div className='flex flex-row space-x-1 items-center'>
                     <span className='text-muted text-indicative-success'>For:</span><span>{props._count.votesFor}</span>
                     <span className='text-muted text-indicative-danger'>Against:</span><span>{props._count.votesAgainst}</span>

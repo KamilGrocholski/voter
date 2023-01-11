@@ -1,5 +1,6 @@
 import { Transition } from "@headlessui/react"
 import { VoteSet } from "@prisma/client"
+import { useSession } from "next-auth/react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -19,6 +20,8 @@ const VotesTracker = dynamic<VotesTrackerProps>(() => import('../../common/Votes
 })
 
 const VotingScreen: React.FC = () => {
+    const { data: session } = useSession()
+
     const router = useRouter()
     const { voteSetId } = router.query as unknown as { voteSetId: VoteSet['id'] }
     const [canShowPair, setCanShowPair] = useState<boolean>(true)
@@ -38,13 +41,20 @@ const VotingScreen: React.FC = () => {
             setIsErrorModalOpen(true)
         }
     })
-    const castVoteMutation = trpc.vote.castProtected.useMutation({
-        onSuccess: () => {
-            utils.voteItem.getPair.refetch(voteSetId)
-            utils.vote.getMyRecentVotes.invalidate({ voteSetId })
-        },
-        onError: () => setIsErrorModalOpen(true)
-    })
+    const castVoteMutation = session?.user?.id ?
+        trpc.vote.castProtected.useMutation({
+            onSuccess: () => {
+                utils.voteItem.getPair.refetch(voteSetId)
+                utils.vote.getMyRecentVotes.invalidate({ voteSetId })
+            },
+            onError: () => setIsErrorModalOpen(true)
+        }) :
+        trpc.vote.castPublic.useMutation({
+            onSuccess: () => {
+                utils.voteItem.getPair.refetch(voteSetId)
+            },
+            onError: () => setIsErrorModalOpen(true)
+        })
 
     const handleSkipVoting = () => {
         setCanShowPair(false)
@@ -68,7 +78,7 @@ const VotingScreen: React.FC = () => {
                 isOpen={isErrorModalOpen}
                 error={''}
             />
-            <VotesTracker voteSetId={voteSetId} />
+            {session?.user?.id ? <VotesTracker voteSetId={voteSetId} /> : <></>}
             <EmptyStateWrapper
                 isError={votePairQuery.isError || castVoteMutation.isError}
                 isLoading={votePairQuery.isLoading || castVoteMutation.isLoading}

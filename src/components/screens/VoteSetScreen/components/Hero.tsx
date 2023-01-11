@@ -4,6 +4,7 @@ import { VoteSet } from '../types'
 import { sumSetVotes } from '../../../../utils/sumVotes'
 import { useRouter } from 'next/router'
 import UserInfoSmall from '../../../common/UserThings/UserInfoSmall'
+import { RepIcons } from "../../../../assets/repIcons"
 
 export type VoteSetHeroProps = VoteSet
 
@@ -16,17 +17,17 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
     }
 
     return (
-        <div className='w-full bg-dark-shade-800'>
+        <div className='w-full bg-dark-shade-800 mb-10'>
             <div className='relative rounded-md overflow-hidden w-full max-h-[300px] min-h-[300px]'>
-                <Image
-                    src={props.image ?? 'd'}
-                    alt='xd'
-                    layout="fill"
-                    sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-                    className='absolute top-0 left-0 right-0 blur-sm'
-                />
+                <div className='absolute top-0 left-0 bottom-0 right-0'>
+                    <Image
+                        src={props.image ?? 'd'}
+                        alt='img'
+                        layout="responsive"
+                        width={550}
+                        height={350}
+                    />
+                </div>
                 {/* <Image
                     src={props.image ?? 'd'}
                     alt='xd'
@@ -37,7 +38,7 @@ const VoteSetHero: React.FC<VoteSetHeroProps> = (props) => {
                     <Info {...props} />
                     <button
                         onClick={handleGoToVoting}
-                        className='w-48 rounded-sm font-semibold btn hover:text-purple-800'
+                        className='bg-dark-shade-900/50 text-center w-fit px-2 h-10 rounded-sm transition-all duration-200 ease-in-out hover:bg-purple-800/50'
                     >
                         Go to voting page
                     </button>
@@ -93,10 +94,10 @@ const Timestamps: React.FC<Pick<VoteSetHeroProps, 'createdAt' | 'updatedAt'>> = 
     return (
         <div className='flex flex-col space-y-1 text-xs text-white/50'>
             <span>
-                created on {parseDate(createdAt)}
+                created at {parseDate(createdAt)}
             </span>
             <span>
-                updated on {parseDate(updatedAt)}
+                last update {parseDate(updatedAt)}
             </span>
         </div>
     )
@@ -107,9 +108,15 @@ const ItemsVotesCounter: React.FC<Pick<VoteSetHeroProps, '_count' | 'voteItems'>
     voteItems
 }) => {
     return (
-        <div>
-            <div>Items: {_count.voteItems}</div>
-            <div>Votes: {sumSetVotes(voteItems)}</div>
+        <div className='text-lg font-semibold items-center'>
+            <div className='flex flex-row space-x-1'>
+                <span>{RepIcons.voteItem}</span>
+                <span>{_count.voteItems}</span>
+            </div>
+            <div className='flex flex-row space-x-1'>
+                <span>{RepIcons.vote}</span>
+                <span>{sumSetVotes(voteItems)}</span>
+            </div>
         </div>
     )
 }
