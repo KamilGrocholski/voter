@@ -52,6 +52,9 @@ npm run dev
 Home\
 ![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/home.png?raw=true)
 
+Vote set voting\
+![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/vote-set_voting.png?raw=true)
+
 Vote set page\
 ![screenshot](https://github.com/KamilGrocholski/voter/blob/main/readme-images/vote-set_page.png?raw=true)
 
