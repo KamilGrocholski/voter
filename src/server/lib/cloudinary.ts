@@ -11,7 +11,7 @@ cloudinary.config({
 
 export const uploadImage = async (url: string) => {
     return (await cloudinary.uploader.upload(url, {
-        folder: 'voter'
+        folder: envServer.CLOUDINARY_FOLDER_NAME
     })).url
 }
 
