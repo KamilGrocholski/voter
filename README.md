@@ -41,6 +41,12 @@ copy from voter/.env.example
 and set the required env variables
 ```
 
+- Prisma
+
+```bash
+npx prisma db push
+```
+
 - Run the app
 
 ```bash
