@@ -7,11 +7,11 @@ const ItemsList: React.FC = () => {
     return (
         <div className='flex flex-col space-y-1'>
             {items.map((item, i) => (
-                <Item 
-                    key={ i }
-                    name={ item.name }
-                    image={ item.image }
-                    index={ i }
+                <Item
+                    key={i}
+                    name={item.name}
+                    image={item.image}
+                    index={i}
                 />
             ))}
         </div>

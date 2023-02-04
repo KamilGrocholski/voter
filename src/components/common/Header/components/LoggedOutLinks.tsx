@@ -14,7 +14,7 @@ const LoggedOutLinks: React.FC = () => {
         <div className='flex flex-row space-x-3 items-center text-md text-dark-shade-200'>
             {LOGGED_OUT_LINKS.map((link, i) => (
                 <Link
-                    key={link.href + i}
+                    key={link.href}
                     href={link.href}
                     aria-current={'page'}
                 >

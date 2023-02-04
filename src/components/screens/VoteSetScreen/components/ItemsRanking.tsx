@@ -24,7 +24,7 @@ const ItemsRanking: React.FC<ItemsRankingProps> = ({
                 <tbody>
                     {sortByTopVotesForPercentage(items).map((item, i) => (
                         <ItemCard
-                            key={i}
+                            key={item.id}
                             id={item.id}
                             name={item.name}
                             image={item.image}

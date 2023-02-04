@@ -13,7 +13,7 @@ const ItemsRanking: React.FC<ItemsRankingProps> = ({
         <div className='flex flex-col bg-dark-shade-7 py-3 mx-auto rounded-md'>
             {sortByTopVotesForPercentage(items).map((item, i) => (
                 <ItemCard
-                    key={i}
+                    key={item.id}
                     id={item.id}
                     name={item.name}
                     image={item.image}

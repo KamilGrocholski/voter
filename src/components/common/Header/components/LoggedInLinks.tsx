@@ -41,9 +41,9 @@ const LoggedInLinks: React.FC<Props> = ({
 }) => {
     return (
         <div className='flex flex-row space-x-3 items-center text-md text-dark-shade-200'>
-            {ROLE_BASED_LINKS.base.map((link, i) => (
+            {ROLE_BASED_LINKS.base.map((link) => (
                 <div
-                    key={link.href + i}
+                    key={link.href}
                     className='hover:text-white'
                 >
                     <Link

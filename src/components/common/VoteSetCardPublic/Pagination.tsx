@@ -11,8 +11,8 @@ const VotesSetsPagination: React.FC<Props> = ({
 
     return (
         <div className='grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-            {votesSets.map((set, i) => (
-                <VoteSetCard key={i} {...set} />
+            {votesSets.map((set) => (
+                <VoteSetCard key={set.id} {...set} />
             ))}
             {/* <Pagination
                 currentPage={currentPage}

@@ -31,9 +31,9 @@ export const VotesTracker: React.FC<VotesTrackerProps> = ({
                         <div
                             className={`h-[60vh] scroll-hidden scrollbar-hide overscroll-none overflow-y-scroll flex flex-col space-y-3`}
                         >
-                            {votes.map((vote, i) => (
+                            {votes.map((vote) => (
                                 <VotePair
-                                    key={i}
+                                    key={vote.votedAgainst.id + " " + vote.votedFor.id}
                                     forItem={{ ...vote.votedFor, isChosen: true }}
                                     againstItem={{ ...vote.votedAgainst, isChosen: false }}
                                 />

@@ -28,8 +28,8 @@ export const Tabs: React.FC<MyVoteSetByIdProtected> = (voteSet) => {
                         </div>
                     </div>
                     <div className='flex flex-row space-x-3'>
-                        {TABS.map((tab, index) => (
-                            <Tab key={index}>
+                        {TABS.map((tab) => (
+                            <Tab key={tab}>
                                 {({ selected }) => (
                                     <button className={`btn ${selected && 'bg-dark-shade-100'}`}>
                                         {tab}
